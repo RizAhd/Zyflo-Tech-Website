@@ -34,3 +34,6 @@ pnpm-debug.log*
 # Cache
 .vite/
 .eslintcache
+
+# TypeScript build cache
+*.tsbuildinfo

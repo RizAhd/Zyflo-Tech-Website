@@ -56,40 +56,56 @@
     <link rel="manifest" href="/site.webmanifest" />
 
     <!--
-      Inter is self-hosted from /public/fonts, so body copy needs no third party
-      request and cannot be blocked by a slow font CDN. The two weights the
-      first screen actually uses are preloaded; 500 and 700 load with the CSS.
+      Both families are self-hosted from /public/fonts, so the page makes no
+      third party request and the headline never swaps from a fallback face to
+      Instrument Sans after load (that swap was part of the "loads in pieces"
+      feel). The faces the first screen uses are preloaded.
     -->
-    <link
-      rel="preload"
-      as="font"
-      type="font/woff2"
-      href="/fonts/inter-400.woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      as="font"
-      type="font/woff2"
-      href="/fonts/inter-600.woff2"
-      crossorigin
-    />
-
-    <!--
-      Instrument Sans (headings and UI) is not self-hosted, so it stays on
-      Google Fonts. That is the site's only external request, hence the two
-      preconnects below and no others.
-    -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap"
-    />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-400.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-600.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/instrument-sans-latin.woff2" crossorigin />
 
     <style>
       /* Paint the ground before any CSS loads, which kills the flash of colour */
       html { background: #FFFFFF; }
+
+      /* Instrument Sans is one variable file covering 400 to 700. */
+      @font-face {
+        font-family: 'Instrument Sans';
+        font-style: normal;
+        font-weight: 400 700;
+        font-display: swap;
+        src: url('/fonts/instrument-sans-latin.woff2') format('woff2');
+      }
+
+      /* Before React mounts the visitor sees a calm logo, not a page of
+         unstyled text. The crawlable copy stays in the DOM, visually hidden. */
+      #zyflo-splash {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
+      }
+      #zyflo-splash img {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        animation: zyflo-splash 1.2s ease-in-out infinite;
+      }
+      @keyframes zyflo-splash {
+        50% { transform: scale(0.92); opacity: 0.7; }
+      }
+      #zyflo-static {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
 
       @font-face {
         font-family: 'Inter';
@@ -126,11 +142,27 @@
       The block inside #root is a real, readable version of the page, generated
       from src/data/site.config.ts by the zyflo-seo plugin. Crawlers that do not
       run JavaScript (GPTBot, ClaudeBot, PerplexityBot, Google-Extended) and
-      visitors with JavaScript disabled read it. React's createRoot().render()
-      clears the container on mount, so everyone else sees the app instead.
-      Do not hide it, do not add aria-hidden, and do not move it out of #root.
+      screen readers read it. It is clipped out of sight rather than hidden:
+      no display:none and no aria-hidden, so it stays in the accessibility tree
+      and in the text a crawler extracts. With JavaScript off, the noscript rule
+      below shows it as an ordinary page. React's createRoot().render() clears
+      #root on mount, taking the splash and this block with it.
+      Do not move it out of #root.
     -->
-    <div id="root"><!--ZYFLO:STATIC-FALLBACK--></div>
+    <noscript>
+      <style>
+        #zyflo-splash { display: none !important; }
+        #zyflo-static {
+          position: static !important;
+          width: auto !important;
+          height: auto !important;
+          overflow: visible !important;
+          clip-path: none !important;
+          white-space: normal !important;
+        }
+      </style>
+    </noscript>
+    <div id="root"><div id="zyflo-splash" aria-hidden="true"><img src="/brand/icon-192.png" alt="" width="56" height="56" /></div><!--ZYFLO:STATIC-FALLBACK--></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

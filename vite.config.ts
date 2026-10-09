@@ -163,6 +163,8 @@ function buildStaticFallback(): string {
       '</p>',
   )
 
+  // Positioning and clipping live in index.html (#zyflo-static) so the
+  // noscript rule can undo them; this is only the readable typography.
   const style =
     'max-width:46rem;margin:0 auto;padding:2.5rem 1.25rem;' +
     'font-family:Inter,system-ui,-apple-system,sans-serif;color:#1A1A1A;line-height:1.6'
@@ -191,7 +193,7 @@ function buildJsonLd(): JsonLdNode {
   const hasUrl = SITE_URL !== null
 
   const businessId = tokenUrl('/#business')
-  const personId = tokenUrl('/#hysham')
+  const personId = tokenUrl('/#owner')
 
   const businessRef: JsonLdNode = hasUrl
     ? { '@id': businessId }
