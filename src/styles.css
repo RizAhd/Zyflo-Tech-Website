@@ -1,0 +1,338 @@
+@import "tailwindcss" source(none);
+@source "../src";
+
+/* ==========================================================================
+   Zyflo Tech: design system
+
+   A white, minimal, high clarity studio site built on shadcn's token
+   architecture (semantic tokens consumed everywhere, never raw hex in
+   components) with Magic UI style animated accents.
+
+   A NOTE ON A REVERT. An attempt was made to replace Instrument Sans and Inter
+   with Archivo and IBM Plex Mono, sharpen every corner and drop the centred
+   hero, on the theory that the composition was what read as generic. The owner
+   preferred the original and asked for the motion to be improved instead, so
+   the type, the radii and the layout are back as they were. The motion work
+   from that round was kept: it is the part that was actually asked for.
+
+   CONTRAST: measured, never guessed.
+   On --background #FFFFFF:
+     foreground   #0E1512  18.51:1  body and headings          AAA
+     muted-fg     #55655C   6.17:1  secondary copy             AA
+     brand        #008B48   4.39:1  ICONS, RULES, LARGE TEXT ONLY
+     brand-strong #00753E   5.81:1  links, small text, button fills
+   On --ink #06341C (dark bands):
+     white        #FFFFFF  13.85:1  headings and body          AAA
+     ink-muted    #B7C9BE   7.99:1  secondary copy             AAA
+     brand-bright #3DDC84   7.76:1  accents on dark            AAA
+   ========================================================================== */
+@theme {
+  /* Three type roles kept apart as names
+     so a future split (a separate display face, say) is a one line change here
+     rather than a sweep through every component. */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-ui: "Instrument Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Instrument Sans", "Inter", ui-sans-serif, sans-serif;
+
+  /* The second voice. Every label, eyebrow, ordinal, tag, spec value and
+     figure on the site is set in this, and nothing else is. */
+
+  --color-background: #ffffff;
+  --color-foreground: #0e1512;
+  --color-muted: #f4f7f5;
+  --color-muted-foreground: #55655c;
+  --color-border: #e4eae6;
+
+  /* The brand, and its two working variants. */
+  --color-brand: #008b48;          /* 4.39:1 for icons, rules, large text */
+  --color-brand-strong: #00753e;   /* 5.81:1 for links, small text, fills */
+  --color-brand-bright: #3ddc84;   /* accents on the dark bands          */
+  --color-brand-tint: #eef7f2;     /* faint surface wash                 */
+
+  --color-ink: #06341c;            /* dark band ground                   */
+  --color-ink-muted: #b7c9be;      /* 7.99:1 on ink                      */
+
+  /* Corners are sharp now. 16px was soft enough to read as a stock card; at
+     4px the card reads as a drawn panel instead. Buttons take this same 4px,
+     which is what replaced rounded-full. Chips and tags go tighter still.
+     The only circles left on the site are the ring nodes and the traffic
+     lights inside the service figures, and both are drawn, not radiused. */
+  --radius-card: 16px;
+
+  --animate-marquee: marquee 42s linear infinite;
+  --animate-beam: beam 6s linear infinite;
+  --animate-float: float 7s ease-in-out infinite;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+  }
+  html,
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  /* The base voice: Inter at the browser default size. Instrument Sans
+     than the 1rem/1.7 it replaces. Tabular numerals are set here rather than
+     per component so every figure on the page lines up by default. */
+  body {
+    font-family: var(--font-sans);
+  }
+  /* Headings carry counts, years and prices often enough that tabular is the
+     right default for all of them. The negative tracking is the section title
+     value; the hero tightens further to -0.03em in its own component. */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  ::selection {
+    background: var(--color-brand);
+    color: #fff;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-brand-strong);
+    outline-offset: 2px;
+  }
+}
+
+/* Honour the operating system by default. The `data-force-motion` escape hatch
+   exists because the owner of the site needs a way to see it the way a visitor
+   without that setting sees it: a machine with Windows animation effects turned
+   off reports prefers-reduced-motion, and this reset would otherwise flatten
+   every animation on the page with no way to check the work. Set by ?motion=on,
+   cleared by ?motion=off, and never set on its own.
+
+   The JS side of the same gate is the MOTION_OK constant exported from
+   src/components/motion.tsx, which reads the settled attribute. Scripts must
+   test that constant, never a hardcoded media query string, or the override
+   works for CSS and silently fails for GSAP. */
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-force-motion]) *,
+  html:not([data-force-motion]) *::before,
+  html:not([data-force-motion]) *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Type utilities
+
+   the @theme tokens above, so they are not redefined here. The old hand
+   written `font-display` utility that added letter-spacing 0.02em is gone:
+   positive tracking on a display face was part of the generic look, and the
+   new scale tracks headings negative. `text-balance` is gone too, because
+   Tailwind v4 ships it.
+   -------------------------------------------------------------------------- */
+
+/* The nano label. Smallest text on the site: section ordinals, ring node
+   numerals and figure captions, set in the UI face so it holds at
+   10px, tracked wide because uppercase mono at this size closes up. */
+/* Numeric and label voice: slightly tracked out so indices and small figures
+   read as deliberate rather than as body text. */
+@utility font-display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+@utility font-ui {
+  font-family: var(--font-ui);
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+@utility dot-grid {
+  background-image: radial-gradient(circle at 1px 1px, #d9e3dc 1px, transparent 0);
+  background-size: 22px 22px;
+}
+
+/* Magic UI's border-beam: a light travelling around a card's edge. Drawn with
+   a conic gradient on a masked pseudo-element, so it costs one composited
+   layer and no JS. Inherits the 4px card radius rather than the old 16px, so
+   the light now turns a hard corner instead of rolling round one. */
+@utility border-beam {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(
+      from var(--beam-angle, 0deg),
+      transparent 0deg,
+      transparent 300deg,
+      var(--color-brand-bright) 340deg,
+      var(--color-brand) 360deg
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: var(--animate-beam);
+    pointer-events: none;
+  }
+}
+
+@property --beam-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes beam {
+  to {
+    --beam-angle: 360deg;
+  }
+}
+
+/* Two identical tracks sit side by side, so a seamless loop means each track
+   travels exactly one track width. -50% moved each by half its own width, which
+   restarted the loop mid-track and showed a visible jump. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Cursor-tracked glow. Sits behind card content, which is why anything drawn
+   on top of it is marked `relative z-10`. */
+@utility spotlight {
+  position: relative;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+    background: radial-gradient(
+      320px circle at var(--mx, 50%) var(--my, 0%),
+      color-mix(in srgb, var(--color-brand) 15%, transparent),
+      transparent 68%
+    );
+  }
+  &:hover::before {
+    opacity: 1;
+  }
+}
+
+/* Animated rule under a phrase, decorative, so it carries no contrast burden
+   and the text above it can stay solid brand-strong. The rule itself is now
+   square ended: it is a drawn hairline, not a pill. */
+@utility underline-sweep {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.12em;
+    height: 3px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-brand-bright),
+      var(--color-brand),
+      transparent
+    );
+    background-size: 200% 100%;
+    animation: shimmer 3.5s linear infinite;
+  }
+}
+
+/* Sweeps a brand fill in from the left on hover. */
+@utility fill-sweep {
+  position: relative;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: var(--color-brand-tint);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  &:hover::before {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -260% 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Motion layer
+   -------------------------------------------------------------------------- */
+
+/* Lenis drives scrolling now. Native smooth behaviour fights it for control of
+   the same scrollTop, so it has to be off wherever Lenis is active. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* The service figures are decorative mocks of product interfaces. Labels inside
+   them ("100", "iOS", "Play", "+12%") are part of a drawing, not page copy, so
+   they must not join the text a reader selects, copies or has read aloud. The
+   svg already carries aria-hidden; this stops the selection leak as well. */
+[aria-hidden='true'] text,
+[aria-hidden='true'] tspan {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* SplitText word wrappers. Promoted up front because every one of them is
+   animating transform and filter together. */
+.split-word {
+  display: inline-block;
+  will-change: transform, filter;
+}

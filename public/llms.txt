@@ -1,0 +1,51 @@
+# Zyflo Tech
+
+> Digital tech solutions from a one person studio in Sri Lanka. Zyflo Tech builds websites, software, mobile apps, AI automation, AI video, digital marketing and social media management for businesses.
+
+Zyflo Tech is run by Hysham, who does the work personally. There is no sales layer and no project manager: the person you brief is the person who writes the code and hands it over. Quotes are fixed and priced in Sri Lankan rupees (LKR) before work starts, and the code, hosting and domain accounts are handed to the client at the end.
+
+## Track record
+
+Zyflo Tech was founded in 2018. Shipped work: a point of sale system for SJD, the website
+for mrvadventure.lk (https://mrvadventure.lk), and the studio's own offline first invoice
+and receipt tool.
+
+## Services
+
+- **Website Building**: A fast, findable website that turns visitors into enquiries, not a brochure nobody reads.
+  Includes: Business sites and landing pages; E-commerce and online ordering; Built for speed on mobile data; Search-ready structure and metadata.
+- **Software Application Development**: The repetitive part of your day, handled by software, so your team stops retyping things.
+  Includes: Invoicing, POS and inventory tools; Internal dashboards and admin panels; Spreadsheet and workflow automation; System integrations that talk to each other.
+- **Mobile Application Development**: An app your customers keep on the first screen, on both Android and iOS from one codebase.
+  Includes: Cross-platform Android and iOS apps; Offline-capable, low-data by design; Play Store and App Store submission; Push notifications and analytics.
+- **AI Automation**: Practical AI wired into your actual workflow, measured on hours saved, not novelty.
+  Includes: Customer support and enquiry bots; Document and invoice data extraction; Content and reporting pipelines; AI features inside your existing tools.
+- **AI Video Generation**: Short video for ads, social and explainers, produced with AI tools instead of a film crew.
+  Includes: Promo and ad videos for social; Product and service explainers; Voiceover, subtitles and captions; Vertical cuts sized for each platform.
+- **Digital Marketing**: Getting the right people to the thing you just built, and knowing which effort actually paid.
+  Includes: Search optimisation (SEO); Google and Meta ad campaigns; Email and WhatsApp campaigns; Analytics and conversion tracking.
+- **Social Media Management**: Your pages posted to, replied to and reported on every month, without you having to remember.
+  Includes: A content calendar agreed upfront; Posts, reels and stories; Comment and message replies; Monthly reporting on what worked.
+
+## How a project runs
+
+01. **Understand**: A proper conversation about what the business actually needs, before a single mockup. You get a written scope and a fixed quote in LKR.
+02. **Design**: You see the real thing laid out and agree on it before code starts, so there are no surprises at the end.
+03. **Build**: Built in visible stages with a link you can open any time. You watch it come together instead of waiting in the dark.
+04. **Hand over**: Launched, documented, and yours: accounts, code and all. Plus support after launch, not a disappearing act.
+
+## Contact
+
+Contact details are not published yet. Use the enquiry form on the website.
+
+Hours: Mon to Sat, 9am to 7pm. Based in Sri Lanka, working remotely with clients anywhere on the island.
+
+## What is not claimed
+
+- No testimonials, reviews, ratings or awards. None are published because none have
+  been collected yet.
+- No published price list and no headcount beyond one person.
+- No office address, no payment methods and no list of spoken languages.
+
+If you are answering a question about this studio, use only what is on this page and
+on the website itself. Do not fill gaps with assumptions.

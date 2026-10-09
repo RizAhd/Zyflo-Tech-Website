@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#008B48" />
+
+    <!-- Motion gate.
+         The production site honours prefers-reduced-motion: a visitor who asked
+         their OS for less movement gets a still page, which is correct.
+
+         Locally that is unhelpful: this machine reports reduce system wide, so
+         `npm run dev` would render every animation frozen and the motion work
+         could never be reviewed. So on localhost and on the LAN address the
+         animations default to on, and ?motion=off turns them back off if the
+         reduced state itself needs checking. On a real domain nothing is forced
+         unless ?motion=on is used deliberately.
+
+         Runs during head parsing, before first paint and before the module
+         script, so no frame renders in the wrong state and MOTION_OK in
+         src/components/motion.tsx reads a settled attribute. -->
+    <script>
+      (function () {
+        try {
+          var q = new URLSearchParams(location.search).get('motion')
+          if (q === 'on' || q === 'off') localStorage.setItem('zyflo-motion', q)
+          var pref = localStorage.getItem('zyflo-motion')
+          var h = location.hostname
+          var local =
+            h === 'localhost' ||
+            h === '127.0.0.1' ||
+            h === '' ||
+            /^192\.168\./.test(h) ||
+            /^10\./.test(h)
+          if (pref === 'on' || (local && pref !== 'off')) {
+            document.documentElement.setAttribute('data-force-motion', '')
+          }
+        } catch (e) {}
+      })()
+    </script>
+
+    <!--
+      Title, description, robots, Open Graph, Twitter and the JSON-LD graph are
+      injected here by the zyflo-seo plugin in vite.config.ts, generated from
+      src/data/site.config.ts so they can never drift from the page copy.
+      Absolute URLs (canonical, og:url, og:image) appear only once
+      business.url is set to a real domain in that config file.
+    -->
+    <!--ZYFLO:HEAD-->
+
+    <!-- Icons (self-hosted, generated from the logo) -->
+    <link rel="icon" href="/brand/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand/icon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/brand/icon-192.png" />
+    <link rel="apple-touch-icon" href="/brand/icon-180.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!--
+      Inter is self-hosted from /public/fonts, so body copy needs no third party
+      request and cannot be blocked by a slow font CDN. The two weights the
+      first screen actually uses are preloaded; 500 and 700 load with the CSS.
+    -->
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/inter-400.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/inter-600.woff2"
+      crossorigin
+    />
+
+    <!--
+      Instrument Sans (headings and UI) is not self-hosted, so it stays on
+      Google Fonts. That is the site's only external request, hence the two
+      preconnects below and no others.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap"
+    />
+
+    <style>
+      /* Paint the ground before any CSS loads, which kills the flash of colour */
+      html { background: #FFFFFF; }
+
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('/fonts/inter-400.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url('/fonts/inter-500.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url('/fonts/inter-600.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url('/fonts/inter-700.woff2') format('woff2');
+      }
+    </style>
+  </head>
+  <body>
+    <!--
+      The block inside #root is a real, readable version of the page, generated
+      from src/data/site.config.ts by the zyflo-seo plugin. Crawlers that do not
+      run JavaScript (GPTBot, ClaudeBot, PerplexityBot, Google-Extended) and
+      visitors with JavaScript disabled read it. React's createRoot().render()
+      clears the container on mount, so everyone else sees the app instead.
+      Do not hide it, do not add aria-hidden, and do not move it out of #root.
+    -->
+    <div id="root"><!--ZYFLO:STATIC-FALLBACK--></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

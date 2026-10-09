@@ -1,0 +1,35 @@
+# Zyflo Tech
+# Generated at build time by the zyflo-seo plugin in vite.config.ts.
+# The copy in public/robots.txt is the dev fallback, keep the two in step.
+
+User-agent: *
+Allow: /
+
+# Answer engines and AI assistants are welcome to read and quote this site.
+User-agent: GPTBot
+User-agent: ChatGPT-User
+User-agent: OAI-SearchBot
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: ClaudeBot
+User-agent: anthropic-ai
+User-agent: Claude-Web
+User-agent: Claude-User
+User-agent: Claude-SearchBot
+User-agent: Google-Extended
+User-agent: Applebot
+User-agent: Applebot-Extended
+User-agent: CCBot
+User-agent: Amazonbot
+User-agent: Meta-ExternalAgent
+User-agent: Bytespider
+Allow: /
+
+# Commercial SEO scrapers: all cost, no benefit.
+User-agent: AhrefsBot
+User-agent: SemrushBot
+User-agent: MJ12bot
+User-agent: DotBot
+User-agent: BLEXBot
+User-agent: rogerbot
+Disallow: /
