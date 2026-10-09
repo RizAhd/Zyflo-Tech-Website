@@ -43,10 +43,29 @@ import {
 /** Placeholder that stands in for business.url until the token is substituted. */
 const SITE_URL_TOKEN = '__SITE_URL__'
 
-/** The real origin with any trailing slash removed, or null while it is a TODO. */
-const SITE_URL: string | null = isTodo(business.url)
-  ? null
-  : business.url.replace(/\/+$/, '')
+/**
+ * The public origin. Order of preference: business.url from site.config.ts,
+ * then a SITE_URL environment variable, then the production URL the host
+ * reports during a build (Vercel and Netlify both set one). That means the
+ * canonical link, sitemap and structured data are correct on the first deploy
+ * without editing any code, and switch to a custom domain automatically once
+ * one is attached on the host. Null in dev, and while nothing is known.
+ */
+function resolveSiteUrl(): string | null {
+  const fromHost = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  const candidates = [
+    isTodo(business.url) ? undefined : business.url,
+    process.env.SITE_URL,
+    fromHost ? `https://${fromHost}` : undefined,
+    process.env.URL,
+  ]
+  for (const c of candidates) {
+    if (c && /^https?:\/\//.test(c)) return c.replace(/\/+$/, '')
+  }
+  return null
+}
+
+const SITE_URL: string | null = resolveSiteUrl()
 
 /** Markers in index.html that the plugin fills in. */
 const HEAD_MARKER = '<!--ZYFLO:HEAD-->'
@@ -266,6 +285,24 @@ function buildJsonLd(): JsonLdNode {
     // to a parser, a "TODO_EMAIL" value would be a visible lie.
     ...(realEmail ? { email: realEmail } : {}),
     ...(realPhone ? { telephone: realPhone } : {}),
+    ...(realEmail || realPhone
+      ? {
+          contactPoint: {
+            '@type': 'ContactPoint',
+            contactType: 'customer service',
+            areaServed: 'LK',
+            availableLanguage: 'English',
+            ...(realEmail ? { email: realEmail } : {}),
+            ...(realPhone ? { telephone: realPhone } : {}),
+            hoursAvailable: {
+              '@type': 'OpeningHoursSpecification',
+              dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+              opens: '09:00',
+              closes: '19:00',
+            },
+          },
+        }
+      : {}),
     ...(realSocials.length ? { sameAs: realSocials } : {}),
     hasOfferCatalog: offerCatalog,
   }
@@ -310,7 +347,10 @@ function buildHeadTags(): string {
   tags.push(`<title>${esc(seo.title)}</title>`)
   tags.push(`<meta name="description" content="${esc(seo.description)}" />`)
   tags.push(`<meta name="keywords" content="${esc(seo.keywords)}" />`)
-  tags.push(`<meta name="author" content="${esc(business.name)}" />`)
+  tags.push(`<meta name="author" content="${esc(business.owner)}" />`)
+  tags.push('<meta name="geo.region" content="LK" />')
+  tags.push(`<meta name="geo.placename" content="${esc(business.location)}" />`)
+  tags.push('<meta name="format-detection" content="telephone=no" />')
 
   // max-snippet:-1 and max-image-preview:large are what allow search engines
   // and assistants to quote a full answer sentence instead of a stub.

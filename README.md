@@ -20,18 +20,26 @@ npm run preview  # serve the production build locally
 Everything a human needs to change lives in one file: [src/data/site.config.ts](src/data/site.config.ts).
 Search it for `TODO_` and replace each one.
 
-| What | Where | Notes |
+| What | Where | Status |
 |---|---|---|
-| WhatsApp number | `contact.whatsapp` | Digits only, with country code, e.g. `94771234567` |
-| Business email | `contact.email` | |
-| Phone | `contact.phone` | Human-readable, e.g. `+94 77 123 4567` |
-| Social links | `socials[]` | Facebook, Instagram, LinkedIn, GitHub |
-| Contact form key | `contact.web3formsKey` | Free key from [web3forms.com](https://web3forms.com) |
-| Site URL | `business.url` | Once you pick a domain |
+| WhatsApp number | `contact.whatsapp` | Set |
+| Business email | `contact.email` | Set |
+| Phone | `contact.phone` | Set |
+| Social links | `socials[]` | Still `TODO_`, hidden until filled |
+| Contact form key | `contact.web3formsKey` | Optional, see below |
+| Site URL | `business.url` | Optional, see below |
 
-Any value still set to `TODO_` is hidden automatically: the WhatsApp button does not render, empty
-footer columns disappear, and the form shows direct contact links instead of a form that would
-silently fail. Fill a value in and its UI appears on its own.
+Any value still set to `TODO_` is hidden automatically. Fill a value in and its UI appears on its own.
+
+**Contact form.** With no `web3formsKey` the form still works: pressing send opens WhatsApp with the
+enquiry already written out. Add a free key from [web3forms.com](https://web3forms.com) if you would
+rather have enquiries land in your inbox without leaving the page.
+
+**Site URL.** The canonical link, Open Graph URLs, `sitemap.xml`, the `Sitemap:` line in `robots.txt`
+and the structured data all need the public address. The build finds it by itself, in this order:
+`business.url` in `site.config.ts`, a `SITE_URL` environment variable, then the production URL that
+Vercel or Netlify report during the build. So the first deploy is already correct, and when you
+attach a custom domain, set `SITE_URL` (or `business.url`) to it and redeploy.
 
 Work cards come from `projects[]` and the "Shipped for" list from `clients[]`. Only add an entry
 once the project is live.
@@ -40,8 +48,14 @@ once the project is live.
 
 The build is fully static, so `dist/` works as-is on:
 
-- **Vercel, Netlify or Cloudflare Pages**: build command `npm run build`, publish directory `dist`
-- **cPanel or any FTP host**: upload the contents of `dist/` to `public_html`
+- **Vercel, Netlify or Cloudflare Pages**: import the GitHub repo, build command `npm run build`,
+  publish directory `dist`. Security and caching headers are already set in `vercel.json` and
+  `public/_headers`.
+- **cPanel or any FTP host**: run `SITE_URL=https://your-domain npm run build` and upload the contents
+  of `dist/` to `public_html`
+
+After it is live: add the site to Google Search Console, submit `https://your-domain/sitemap.xml`, and
+claim the business on Google Business Profile.
 
 ## SEO, GEO and AEO
 

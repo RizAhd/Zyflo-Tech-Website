@@ -10,6 +10,7 @@ import {
   KeyRound,
   LifeBuoy,
   Menu,
+  MessageCircle,
   MessageSquare,
   Receipt,
   Share2,
@@ -769,10 +770,31 @@ function EnquiryForm() {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (!formKey) return
     const form = e.currentTarget
     const data = new FormData(form)
     if (data.get('botcheck')) return // honeypot
+
+    // No form service key: hand the enquiry to WhatsApp (or the mail app) with
+    // every field already written out, so the form works from day one and the
+    // visitor only has to press send.
+    if (!formKey) {
+      const text = [
+        `Hi ${business.name}, I'd like to talk about a project.`,
+        '',
+        `Name: ${data.get('name')}`,
+        `Email: ${data.get('email')}`,
+        `Service: ${data.get('service')}`,
+        `Budget: ${data.get('budget')}`,
+        '',
+        `${data.get('message')}`,
+      ].join('\n')
+      if (contact.whatsapp && !isTodo(contact.whatsapp)) {
+        window.open(`https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(text)}`, '_blank', 'noopener')
+      } else if (email) {
+        window.location.href = `mailto:${email}?subject=${encodeURIComponent('Project enquiry')}&body=${encodeURIComponent(text)}`
+      }
+      return
+    }
 
     data.append('access_key', formKey)
     setStatus('sending')
@@ -919,18 +941,25 @@ function EnquiryForm() {
         </p>
       )}
 
-      <Button type="submit" className="mt-6 w-full" disabled={!formKey || status === 'sending'}>
-        {status === 'sending' ? 'Sending' : 'Send enquiry'}
+      <Button
+        type="submit"
+        className="mt-6 w-full"
+        disabled={(!formKey && !whatsapp && !email) || status === 'sending'}
+      >
+        {status === 'sending' ? 'Sending' : formKey ? 'Send enquiry' : whatsapp ? 'Send on WhatsApp' : 'Send by email'}
         <ArrowRight className="h-4 w-4" />
       </Button>
 
-      {/* Visitor facing, not a note to the developer. The form switches on when
-          a web3forms key is added to site.config.ts. */}
+      {/* Visitor facing. With no form service key the enquiry opens in
+          WhatsApp (or email) pre-written; with a key it posts straight to the
+          inbox. */}
       {!formKey && (
         <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
-          {email || whatsapp
-            ? 'This form is not connected yet. Please reach me directly using the details alongside and I will reply within a day or two.'
-            : 'This form is not connected yet. Contact details are being finalised and will appear here shortly.'}
+          {whatsapp
+            ? 'Pressing send opens WhatsApp with your enquiry already written. I read every message myself and reply within a day or two.'
+            : email
+              ? 'Pressing send opens your email app with your enquiry already written.'
+              : 'Contact details are being finalised and will appear here shortly.'}
         </p>
       )}
     </form>
@@ -1020,9 +1049,26 @@ function Contact() {
                     <dd className="mt-2 text-sm text-ink-muted">
                       <a
                         href={`tel:${phone.replace(/[^\d+]/g, '')}`}
-                        className="hover:text-brand-bright"
+                        className="inline-flex min-h-[32px] items-center hover:text-brand-bright"
                       >
                         {phone}
+                      </a>
+                    </dd>
+                  </div>
+                )}
+                {whatsapp && (
+                  <div>
+                    <dt className="font-display text-[11px] uppercase tracking-[0.2em] text-white/40">
+                      WhatsApp
+                    </dt>
+                    <dd className="mt-2 text-sm text-ink-muted">
+                      <a
+                        href={whatsapp}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex min-h-[32px] items-center hover:text-brand-bright"
+                      >
+                        Message me
                       </a>
                     </dd>
                   </div>
@@ -1075,6 +1121,23 @@ function Footer() {
         <p className="text-xs text-ink-muted">
           {business.tagline} &middot; Built in {business.location}
         </p>
+        <nav className="flex items-center gap-5 text-xs text-ink-muted" aria-label="Contact">
+          {email && (
+            <a href={`mailto:${email}`} className="inline-flex min-h-[44px] items-center hover:text-brand-bright">
+              Email
+            </a>
+          )}
+          {whatsapp && (
+            <a
+              href={whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-[44px] items-center hover:text-brand-bright"
+            >
+              WhatsApp
+            </a>
+          )}
+        </nav>
       </Container>
     </footer>
   )
@@ -1106,6 +1169,17 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      {whatsapp && (
+        <a
+          href={whatsapp}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Chat on WhatsApp"
+          className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-40 inline-flex h-14 w-14 items-center justify-center rounded-full bg-brand-strong text-white shadow-[0_12px_30px_-10px_rgba(6,52,28,0.6)] transition-transform duration-300 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand sm:bottom-6 sm:right-6"
+        >
+          <MessageCircle className="h-6 w-6" aria-hidden="true" />
+        </a>
+      )}
     </>
   )
 }

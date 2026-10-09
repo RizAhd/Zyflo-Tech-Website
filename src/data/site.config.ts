@@ -38,13 +38,13 @@ export const clients = [
 // ---------------------------------------------------------------------------
 export const contact = {
   /** International format, digits only, no + or spaces. e.g. 94771234567 */
-  whatsapp: 'TODO_WHATSAPP_NUMBER',
+  whatsapp: '94784342391',
   /** Pre-filled first message when someone taps WhatsApp. */
   whatsappMessage: "Hi Zyflo Tech, I'd like to talk about a project.",
 
-  email: 'TODO_EMAIL',
+  email: 'rizlanahmd4545@gmail.com',
   /** Human-readable phone, e.g. +94 77 123 4567 */
-  phone: 'TODO_PHONE',
+  phone: '+94 78 434 2391',
 
   /**
    * Free access key from https://web3forms.com, which makes the contact form
