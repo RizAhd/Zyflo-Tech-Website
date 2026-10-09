@@ -156,7 +156,7 @@ function Nav() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         hidden && !open ? '-translate-y-full' : 'translate-y-0'
-      } ${scrolled ? 'bg-white/80 shadow-[0_6px_24px_-16px_rgba(6,52,28,0.45)] backdrop-blur-xl' : 'bg-transparent'}`}
+      } ${scrolled ? 'bg-white/[0.98] shadow-[0_6px_24px_-16px_rgba(6,52,28,0.45)] backdrop-blur-xl' : 'bg-transparent'}`}
     >
       <Container className="flex h-16 items-center justify-between sm:h-20">
         <a
@@ -311,7 +311,7 @@ function Hero() {
           </SplitHeading>
 
           <BlurIn delay={0.15}>
-            <p className="mx-auto mt-7 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+            <p className="mx-auto mt-7 max-w-xl text-balance text-base leading-relaxed text-muted-foreground sm:text-lg">
               {hero.lead}
             </p>
           </BlurIn>
@@ -606,28 +606,41 @@ function Capabilities() {
           align="center"
         />
 
-        <StaggerGrid
-          className="mt-14 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3"
-          stagger={0.03}
-          from="center"
-        >
-          {capabilities.map((c) => {
-            const Icon = SERVICE_ICON[c.service] ?? Globe
+        {/* Seven rows, one per service, instead of twenty-one identical chips.
+            Each capability still points at the service card that owns it, the
+            same anchor the structured data references. */}
+        <StaggerGrid className="mt-14 flex flex-col gap-3" stagger={0.06}>
+          {services.map((s) => {
+            const Icon = SERVICE_ICON[s.id] ?? Globe
+            const items = capabilities.filter((c) => c.service === s.id)
             return (
-              <a
-                key={c.title}
-                // Points at the service card that owns it rather than back to
-                // the top of the section, and it is the same anchor the
-                // structured data references.
-                href={`#service-${c.service}`}
-                className="fill-sweep group flex min-h-[52px] items-center gap-3.5 rounded-xl border border-border bg-white px-4 py-3.5 transition-colors duration-300 hover:border-brand/40"
+              <div
+                key={s.id}
+                className="group grid items-center gap-4 rounded-2xl border border-border bg-white p-4 transition-colors duration-300 hover:border-brand/40 sm:p-5 lg:grid-cols-[17rem_1fr] lg:gap-8"
               >
-                <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-tint text-brand-strong transition-colors duration-300 group-hover:bg-brand-strong group-hover:text-white">
-                  <Icon className="h-4 w-4" />
-                </span>
-                <span className="font-ui text-sm font-medium">{c.title}</span>
-                <ArrowUpRight className="ml-auto h-4 w-4 shrink-0 text-muted-foreground/40 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-brand-strong" />
-              </a>
+                <a
+                  href={`#service-${s.id}`}
+                  className="flex items-center gap-3.5 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
+                >
+                  <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-tint text-brand-strong transition-colors duration-300 group-hover:bg-brand-strong group-hover:text-white">
+                    <Icon className="h-[18px] w-[18px]" />
+                  </span>
+                  <span className="font-ui text-base font-semibold leading-snug">{s.title}</span>
+                </a>
+                <ul className="flex flex-wrap gap-x-7 gap-y-2 lg:justify-end">
+                  {items.map((c) => (
+                    <li key={c.title}>
+                      <a
+                        href={`#service-${c.service}`}
+                        className="inline-flex min-h-[32px] items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-brand-strong focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                      >
+                        <span className="h-1.5 w-1.5 rounded-full bg-brand/60" aria-hidden="true" />
+                        {c.title}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             )
           })}
         </StaggerGrid>

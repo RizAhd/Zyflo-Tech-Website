@@ -20,7 +20,7 @@ export const business = {
   tagline: 'Digital tech solutions',
   /** Used in the footer copyright and JSON-LD. */
   legalName: 'Zyflo Tech',
-  owner: 'Hysham',
+  owner: 'Riflan Mohamed',
   location: 'Sri Lanka',
   /** Public site URL. Set this once you pick a domain. */
   url: 'TODO_SITE_URL', // e.g. https://zyflotech.com
