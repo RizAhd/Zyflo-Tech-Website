@@ -6,9 +6,16 @@ Zyflo Tech is run by Riflan Mohamed, who does the work personally. There is no s
 
 ## Track record
 
-Zyflo Tech was founded in March 2022. Shipped work: a point of sale system for SJD, the website
-for mradventure.lk (https://mradventure.lk), and the studio's own offline first invoice
-and receipt tool.
+Zyflo Tech was founded in March 2022. Shipped work: SJD POS (POS system) and mradventure.lk (Website), alongside the studio's own offline first invoice and receipt tool.
+
+## Pages
+
+- [Home](https://zyflo.tech/): Zyflo Tech builds websites, apps, software, AI automation, AI video, marketing and social media for businesses in Sri Lanka. Fixed quotes in LKR, full handover.
+- [Services](https://zyflo.tech/services/): Seven services from one studio in Sri Lanka: website building, software and mobile apps, AI automation, AI video, digital marketing and social media management.
+- [Process](https://zyflo.tech/process/): Every Zyflo Tech project runs the same four steps with a fixed quote in LKR up front: understand, design, build and hand over, with support after launch.
+- [Work](https://zyflo.tech/work/): Shipped work from Zyflo Tech: a point of sale system for SJD, the website for mradventure.lk and the studio’s own offline first invoice and receipt tool.
+- [About](https://zyflo.tech/about/): Zyflo Tech is run by Riflan Mohamed, who does the work personally. Running since March 2022, based in Sri Lanka, with direct contact, fixed quotes and full handover.
+- [Contact](https://zyflo.tech/contact/): Tell Zyflo Tech what you want to build. Message on WhatsApp, email or use the enquiry form, and get a fixed quote in LKR. Answers to common questions about cost and ownership.
 
 ## Services
 
@@ -36,7 +43,10 @@ and receipt tool.
 
 ## Contact
 
-Contact details are not published yet. Use the enquiry form on the website.
+- Email: rizlanahmd4545@gmail.com
+- Phone: +94 78 434 2391
+- WhatsApp: +94784342391
+- Website: https://zyflo.tech/
 
 Hours: Mon to Sat, 9am to 7pm. Based in Sri Lanka, working remotely with clients anywhere on the island.
 

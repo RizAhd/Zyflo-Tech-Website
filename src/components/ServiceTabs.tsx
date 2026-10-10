@@ -76,8 +76,8 @@ export default function ServiceTabs() {
       }
     }
     const onClick = (e: MouseEvent) => {
-      const a = (e.target as HTMLElement | null)?.closest?.('a[href^="#service-"]')
-      if (a) open(a.getAttribute('href') ?? '')
+      const a = (e.target as HTMLElement | null)?.closest?.('a[href*="#service-"]')
+      if (a) open(`#${(a.getAttribute('href') ?? '').split('#')[1] ?? ''}`)
     }
     document.addEventListener('click', onClick)
 
@@ -104,7 +104,7 @@ export default function ServiceTabs() {
     <section id="services" ref={rootRef} className="py-20 sm:py-24">
       <Container>
         <SectionHead
-          index="01"
+          h1
           eyebrow="What I do"
           title={
             <>

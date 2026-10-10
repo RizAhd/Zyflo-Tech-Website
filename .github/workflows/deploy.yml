@@ -41,7 +41,11 @@ jobs:
             echo "SITE_URL=https://${OWNER}.github.io/${{ github.event.repository.name }}" >> "$GITHUB_ENV"
           fi
 
+      # The GitHub Pages copy lives under /<repo>/, so the build needs that
+      # as its base path. The zyflo.tech build (Cloudflare) uses the root.
       - run: npm run build
+        env:
+          BASE_PATH: /${{ github.event.repository.name }}/
 
       - uses: actions/upload-pages-artifact@v3
         with:

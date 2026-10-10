@@ -65,17 +65,15 @@ export const socials = [
 ] as const
 
 // ---------------------------------------------------------------------------
-// Navigation: the single source of truth for section order and labels.
-// Order here drives the nav, the scroll-spy and the tunnel stations, so every
-// `id` must match the id of a section actually rendered on the page.
+// Navigation: the order and labels of the header and footer links. Every
+// `path` must be one of the `pages` below.
 // ---------------------------------------------------------------------------
 export const navLinks = [
-  { id: 'services', label: 'Services' },
-  { id: 'process',  label: 'Process' },
-  { id: 'work',     label: 'Work' },
-  { id: 'about',    label: 'Studio' },
-  { id: 'faq',      label: 'FAQ' },
-  { id: 'contact',  label: 'Contact' },
+  { path: '/services', label: 'Services' },
+  { path: '/process',  label: 'Process' },
+  { path: '/work',     label: 'Work' },
+  { path: '/about',    label: 'About' },
+  { path: '/contact',  label: 'Contact' },
 ] as const
 
 // ---------------------------------------------------------------------------
@@ -88,8 +86,8 @@ export const hero = {
   lead:
     'Websites, apps and automations built for real businesses: designed with care, ' +
     'shipped on time, and handed over so you own every line of it.',
-  primaryCta: { label: "Start a project", href: '#contact' },
-  secondaryCta: { label: 'See what I do', href: '#services' },
+  primaryCta: { label: "Start a project", href: '/contact' },
+  secondaryCta: { label: 'See what I do', href: '/services' },
 } as const
 
 // ---------------------------------------------------------------------------
@@ -425,6 +423,86 @@ export const faqs: Faq[] = [
       'development, AI automation, AI video generation, digital marketing and social media ' +
       'management. They are meant to fit together, so one person can build the site, wire up ' +
       'the automation behind it and then run the pages that feed it.',
+  },
+]
+
+// ---------------------------------------------------------------------------
+// Pages: one entry per URL. The build writes a real HTML file for each, with
+// its own title, description, canonical and structured data (vite.config.ts),
+// and the router (src/router.tsx) moves between them without a reload.
+// ---------------------------------------------------------------------------
+export interface PageMeta {
+  /** App path, no base and no trailing slash. "/" is the home page. */
+  path: string
+  /** Short name used in breadcrumbs and the sitemap. */
+  name: string
+  title: string
+  description: string
+  /** The page's h1, as plain text, for the crawlable copy. */
+  heading: string
+  lead: string
+}
+
+export const pages: PageMeta[] = [
+  {
+    path: '/',
+    name: 'Home',
+    title: 'Zyflo Tech: Web, Apps, AI and Marketing in Sri Lanka',
+    description:
+      'Zyflo Tech builds websites, apps, software, AI automation, AI video, marketing and ' +
+      'social media for businesses in Sri Lanka. Fixed quotes in LKR, full handover.',
+    heading: 'Digital work that pulls its weight.',
+    lead: 'Websites, apps and automations built for real businesses, designed with care and handed over so you own every line of it.',
+  },
+  {
+    path: '/services',
+    name: 'Services',
+    title: 'Services: Websites, Apps, AI and Marketing | Zyflo Tech',
+    description:
+      'Seven services from one studio in Sri Lanka: website building, software and mobile apps, ' +
+      'AI automation, AI video, digital marketing and social media management.',
+    heading: 'Seven ways to make the business run better.',
+    lead: 'Most projects touch more than one of these. Tell me the problem and I will tell you which of them it actually needs.',
+  },
+  {
+    path: '/process',
+    name: 'Process',
+    title: 'How a Project Runs: Four Steps | Zyflo Tech',
+    description:
+      'Every Zyflo Tech project runs the same four steps with a fixed quote in LKR up front: ' +
+      'understand, design, build and hand over, with support after launch.',
+    heading: 'No mystery, no surprises at the end.',
+    lead: 'Every project runs the same four steps, so you always know where things stand and what happens next.',
+  },
+  {
+    path: '/work',
+    name: 'Work',
+    title: 'Work: SJD POS and mradventure.lk | Zyflo Tech',
+    description:
+      'Shipped work from Zyflo Tech: a point of sale system for SJD, the website for ' +
+      'mradventure.lk and the studio’s own offline first invoice and receipt tool.',
+    heading: 'Built, shipped and handed over.',
+    lead: 'A point of sale system for SJD, the website for mradventure.lk, and the invoicing tool the studio runs on.',
+  },
+  {
+    path: '/about',
+    name: 'About',
+    title: 'About Zyflo Tech: a One Person Studio in Sri Lanka',
+    description:
+      'Zyflo Tech is run by Riflan Mohamed, who does the work personally. Running since ' +
+      'March 2022, based in Sri Lanka, with direct contact, fixed quotes and full handover.',
+    heading: 'One person. Fully accountable.',
+    lead: 'You talk to the person who writes the code. Nothing gets lost between a salesperson, a project manager and a developer.',
+  },
+  {
+    path: '/contact',
+    name: 'Contact',
+    title: 'Contact Zyflo Tech: Start a Project or Ask a Question',
+    description:
+      'Tell Zyflo Tech what you want to build. Message on WhatsApp, email or use the enquiry ' +
+      'form, and get a fixed quote in LKR. Answers to common questions about cost and ownership.',
+    heading: "Let's talk about what you need.",
+    lead: 'Tell me what you are trying to build and I will tell you honestly whether I am the right person for it.',
   },
 ]
 

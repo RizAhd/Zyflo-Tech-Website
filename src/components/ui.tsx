@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 
 import { BlurIn, SplitHeading } from './motion'
+import { Link } from '../router'
 
 /*
   The small vocabulary every section is built from.
@@ -54,8 +55,11 @@ export function SectionHead({
   lead,
   align = 'left',
   onInk = false,
+  h1 = false,
 }: {
   index?: string
+  /** The one page heading: render as h1 instead of h2. */
+  h1?: boolean
   eyebrow: string
   title: ReactNode
   lead?: string
@@ -72,6 +76,7 @@ export function SectionHead({
       </BlurIn>
 
       <SplitHeading
+        as={h1 ? 'h1' : 'h2'}
         className={`mt-4 font-ui text-3xl font-semibold leading-[1.12] tracking-tight text-balance sm:text-4xl md:text-5xl ${
           onInk ? 'text-white' : 'text-foreground'
         }`}
@@ -128,6 +133,14 @@ export function Button({
 }: ButtonProps) {
   const cls = `inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full px-6 py-3 font-ui text-sm font-medium transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50 ${VARIANTS[variant]} ${className}`
 
+  // Paths inside the site go through the router; anything else is a plain anchor.
+  if (href?.startsWith('/')) {
+    return (
+      <Link to={href} className={cls} onClick={onClick}>
+        {children}
+      </Link>
+    )
+  }
   if (href) {
     return (
       <a

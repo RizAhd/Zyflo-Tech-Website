@@ -44,7 +44,9 @@ interface Props {
   /** The section's id, used by the nav and scroll spy. */
   id: string
   /** Section number, e.g. "02". */
-  eyebrowIndex: string
+  eyebrowIndex?: string
+  /** Render the heading as the page's h1. */
+  h1?: boolean
   eyebrow: string
   heading: ReactNode
   lead: string
@@ -130,6 +132,7 @@ export default function ScrollTimeline(props: Props) {
 function Pinned({
   id,
   eyebrowIndex,
+  h1 = false,
   eyebrow,
   heading,
   lead,
@@ -305,9 +308,14 @@ function Pinned({
               first thing on the track. */}
           <div className="w-[30vw] min-w-[19rem] shrink-0 max-[600px]:w-[86vw]">
             <Eyebrow index={eyebrowIndex}>{eyebrow}</Eyebrow>
-            <h2 className="mt-4 font-ui text-[clamp(1.9rem,3.1vw,3.4rem)] font-semibold leading-[1.08] tracking-tight text-balance max-[600px]:text-[8.4vw]">
-              {heading}
-            </h2>
+            {(() => {
+              const H = h1 ? 'h1' : 'h2'
+              return (
+                <H className="mt-4 font-ui text-[clamp(1.9rem,3.1vw,3.4rem)] font-semibold leading-[1.08] tracking-tight text-balance max-[600px]:text-[8.4vw]">
+                  {heading}
+                </H>
+              )
+            })()}
             <p className="mt-5 max-w-md text-[clamp(0.95rem,1.15vw,1.2rem)] leading-relaxed text-muted-foreground max-[600px]:text-[4.4vw]">
               {lead}
             </p>

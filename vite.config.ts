@@ -1,18 +1,22 @@
 import { defineConfig, type Plugin, type ResolvedConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import fs from 'node:fs'
 import path from 'node:path'
 import type { IncomingMessage, ServerResponse } from 'node:http'
 
 import {
   about,
   business,
+  capabilities,
   clients,
   contact,
   faqs,
   hero,
   isTodo,
+  pages,
   process as projectProcess,
+  projects,
   seo,
   services,
   socials,
@@ -131,56 +135,88 @@ const headline = hero.headline.split('|').join(' ').trim()
 // 1. The crawlable static fallback that goes inside <div id="root">
 // ---------------------------------------------------------------------------
 
-function buildStaticFallback(): string {
+type Page = (typeof pages)[number]
+
+/** "/services" -> "/services/", "/" -> "/". The form every URL is published in. */
+const publicPath = (p: string): string => (p === '/' ? '/' : `${p}/`)
+
+const homePage = pages.find((p) => p.path === '/')!
+
+function buildStaticFallback(page: Page, base: string): string {
   const parts: string[] = []
+  const link = (p: Page) => `<a href="${esc(base + publicPath(p.path))}">${esc(p.name)}</a>`
 
-  parts.push(`<h1>${esc(headline)}</h1>`)
-  parts.push(
-    `<p><strong>${esc(business.name)}</strong>, ${esc(business.tagline.toLowerCase())}, ` +
-      `based in ${esc(business.location)}.</p>`,
-  )
-  parts.push(`<p>${esc(hero.lead)}</p>`)
-
-  for (const service of services) {
-    parts.push(`<h2>${esc(service.index)}. ${esc(service.title)}</h2>`)
-    parts.push(`<p>${esc(service.promise)}</p>`)
-    parts.push(
-      `<ul>${service.deliverables.map((d) => `<li>${esc(d)}</li>`).join('')}</ul>`,
-    )
-  }
-
-  parts.push('<h2>How a project runs</h2>')
-  for (const step of projectProcess) {
-    parts.push(`<h3>${esc(step.step)}. ${esc(step.title)}</h3>`)
-    parts.push(`<p>${esc(step.body)}</p>`)
-  }
-
-  parts.push(`<h2>${esc(about.heading)}</h2>`)
-  for (const paragraph of about.body) {
-    parts.push(`<p>${esc(paragraph)}</p>`)
-  }
-  parts.push(
-    `<ul>${about.points
-      .map((p) => `<li>${esc(p.label)}: ${esc(p.value)}</li>`)
-      .join('')}</ul>`,
-  )
-
-  parts.push('<h2>Questions and answers</h2>')
-  for (const faq of faqs) {
-    parts.push(`<h3>${esc(faq.q)}</h3>`)
-    parts.push(`<p>${esc(faq.a)}</p>`)
-  }
-
-  parts.push('<h2>Get in touch</h2>')
   const contactBits: string[] = []
   if (realEmail) contactBits.push(`<a href="mailto:${esc(realEmail)}">${esc(realEmail)}</a>`)
   if (realPhone) contactBits.push(`<a href="tel:${esc(realPhone.replace(/\s+/g, ''))}">${esc(realPhone)}</a>`)
-  parts.push(
-    `<p>${esc(business.name)} works remotely with clients across ${esc(business.location)}. ` +
-      'Mon to Sat, 9am to 7pm.' +
-      (contactBits.length ? ` ${contactBits.join(', ')}` : '') +
-      '</p>',
-  )
+
+  // The page's own heading and lead first, then the body for that page only.
+  parts.push(`<h1>${esc(page.path === '/' ? headline : page.heading)}</h1>`)
+
+  switch (page.path) {
+    case '/':
+      parts.push(
+        `<p><strong>${esc(business.name)}</strong>, ${esc(business.tagline.toLowerCase())}, ` +
+          `based in ${esc(business.location)}.</p>`,
+      )
+      parts.push(`<p>${esc(hero.lead)}</p>`)
+      parts.push('<h2>Services</h2>')
+      parts.push(`<ul>${services.map((sv) => `<li><strong>${esc(sv.title)}</strong>: ${esc(sv.promise)}</li>`).join('')}</ul>`)
+      break
+
+    case '/services':
+      parts.push(`<p>${esc(page.lead)}</p>`)
+      for (const service of services) {
+        parts.push(`<h2 id="service-${esc(service.id)}">${esc(service.title)}</h2>`)
+        parts.push(`<p>${esc(service.promise)}</p>`)
+        parts.push(`<ul>${service.deliverables.map((d) => `<li>${esc(d)}</li>`).join('')}</ul>`)
+      }
+      parts.push('<h2>Capabilities</h2>')
+      parts.push(`<ul>${capabilities.map((c) => `<li>${esc(c.title)}</li>`).join('')}</ul>`)
+      break
+
+    case '/process':
+      parts.push(`<p>${esc(page.lead)}</p>`)
+      for (const step of projectProcess) {
+        parts.push(`<h2>${esc(step.step)}. ${esc(step.title)}</h2>`)
+        parts.push(`<p>${esc(step.body)}</p>`)
+      }
+      parts.push(`<ul>${about.points.map((p) => `<li>${esc(p.label)}: ${esc(p.value)}</li>`).join('')}</ul>`)
+      break
+
+    case '/work':
+      parts.push(`<p>${esc(page.lead)}</p>`)
+      for (const project of projects) {
+        parts.push(`<h2>${esc(project.title)}</h2>`)
+        parts.push(`<p>${esc(project.category)}. ${esc(project.summary)}</p>`)
+        if (project.href) parts.push(`<p><a href="${esc(project.href)}">${esc(project.href)}</a></p>`)
+      }
+      break
+
+    case '/about':
+      parts.push(`<p>${esc(business.name)} is run by ${esc(business.owner)} and has been running since ${esc(business.foundedMonth)} ${business.foundedYear}.</p>`)
+      for (const paragraph of about.body) parts.push(`<p>${esc(paragraph)}</p>`)
+      parts.push(`<ul>${about.points.map((p) => `<li>${esc(p.label)}: ${esc(p.value)}</li>`).join('')}</ul>`)
+      parts.push(`<p>Shipped for: ${clients.map((c) => `${esc(c.name)} (${esc(c.kind)})`).join(', ')}.</p>`)
+      break
+
+    case '/contact':
+      parts.push(`<p>${esc(page.lead)}</p>`)
+      parts.push(
+        `<p>${esc(business.name)} works remotely with clients across ${esc(business.location)}. ` +
+          'Mon to Sat, 9am to 7pm.' +
+          (contactBits.length ? ` ${contactBits.join(', ')}` : '') +
+          '</p>',
+      )
+      parts.push('<h2>Questions and answers</h2>')
+      for (const faq of faqs) {
+        parts.push(`<h3>${esc(faq.q)}</h3>`)
+        parts.push(`<p>${esc(faq.a)}</p>`)
+      }
+      break
+  }
+
+  parts.push(`<nav aria-label="Pages">${pages.map(link).join(' ')}</nav>`)
 
   // Positioning and clipping live in index.html (#zyflo-static) so the
   // noscript rule can undo them; this is only the readable typography.
@@ -192,6 +228,16 @@ function buildStaticFallback(): string {
   return (
     `<div id="zyflo-static" style="${style}">` +
     parts.map((part) => `${indent}${part}`).join('') +
+    '\n      </div>'
+  )
+}
+
+/** The 404 page: no content worth indexing, only a way back. */
+function buildNotFoundFallback(base: string): string {
+  return (
+    '<div id="zyflo-static" style="max-width:46rem;margin:0 auto;padding:2.5rem 1.25rem;font-family:Inter,system-ui,sans-serif">' +
+    '\n        <h1>That page does not exist.</h1>' +
+    `\n        <p><a href="${esc(base)}/">Back to the ${esc(business.name)} home page</a></p>` +
     '\n      </div>'
   )
 }
@@ -208,7 +254,7 @@ const COUNTRY: JsonLdNode = {
   identifier: 'LK',
 }
 
-function buildJsonLd(): JsonLdNode {
+function buildJsonLd(page: Page): JsonLdNode {
   const hasUrl = SITE_URL !== null
 
   const businessId = tokenUrl('/#business')
@@ -238,8 +284,8 @@ function buildJsonLd(): JsonLdNode {
         // anchors resolve to the part of the page that describes the service.
         ...(hasUrl
           ? {
-              '@id': tokenUrl(`/#service-${service.id}`),
-              url: tokenUrl(`/#service-${service.id}`),
+              '@id': tokenUrl(`/services/#service-${service.id}`),
+              url: tokenUrl(`/services/#service-${service.id}`),
             }
           : {}),
         name: service.title,
@@ -257,7 +303,7 @@ function buildJsonLd(): JsonLdNode {
     name: business.name,
     legalName: business.legalName,
     slogan: business.tagline,
-    description: seo.description,
+    description: homePage.description,
     ...(hasUrl
       ? { logo: tokenUrl(LOGO_PATH), image: tokenUrl(OG_IMAGE_PATH) }
       : {}),
@@ -312,14 +358,14 @@ function buildJsonLd(): JsonLdNode {
     '@id': tokenUrl('/#website'),
     url: tokenUrl('/'),
     name: business.name,
-    description: seo.description,
+    description: homePage.description,
     inLanguage: 'en',
     publisher: { '@id': businessId },
   }
 
   const faqPage: JsonLdNode = {
     '@type': 'FAQPage',
-    ...(hasUrl ? { '@id': tokenUrl('/#faq') } : {}),
+    ...(hasUrl ? { '@id': tokenUrl('/contact/#faq') } : {}),
     mainEntity: faqs.map((faq) => ({
       '@type': 'Question',
       name: faq.q,
@@ -327,11 +373,46 @@ function buildJsonLd(): JsonLdNode {
     })),
   }
 
+  // This page, and where it sits. Every page repeats the business and the
+  // site (that is how a crawler that lands deep still learns who it is), then
+  // adds its own WebPage and breadcrumb. FAQPage is emitted only where the
+  // questions are visible, which is the contact page.
+  const pageUrl = tokenUrl(publicPath(page.path))
+  const webPage: JsonLdNode = {
+    '@type': page.path === '/contact' ? 'ContactPage' : page.path === '/about' ? 'AboutPage' : 'WebPage',
+    '@id': `${pageUrl}#webpage`,
+    url: pageUrl,
+    name: page.title,
+    description: page.description,
+    inLanguage: 'en',
+    isPartOf: { '@id': tokenUrl('/#website') },
+    about: { '@id': businessId },
+    breadcrumb: { '@id': `${pageUrl}#breadcrumb` },
+  }
+  const crumbs = page.path === '/' ? [homePage] : [homePage, page]
+  const breadcrumb: JsonLdNode = {
+    '@type': 'BreadcrumbList',
+    '@id': `${pageUrl}#breadcrumb`,
+    itemListElement: crumbs.map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: c.name,
+      item: tokenUrl(publicPath(c.path)),
+    })),
+  }
+
   const graph: JsonLdNode[] = hasUrl
-    ? [professionalService, website, faqPage, person]
+    ? [
+        professionalService,
+        website,
+        person,
+        webPage,
+        breadcrumb,
+        ...(page.path === '/contact' ? [faqPage] : []),
+      ]
     : // No domain yet, so no absolute @id and no WebSite node worth emitting.
       // The founder Person is nested inside the business instead.
-      [professionalService, faqPage]
+      [professionalService, ...(page.path === '/contact' ? [faqPage] : [])]
 
   return { '@context': 'https://schema.org', '@graph': graph }
 }
@@ -340,12 +421,12 @@ function buildJsonLd(): JsonLdNode {
 // 3. <head> tags
 // ---------------------------------------------------------------------------
 
-function buildHeadTags(): string {
+function buildHeadTags(page: Page | null): string {
   const hasUrl = SITE_URL !== null
   const tags: string[] = []
 
-  tags.push(`<title>${esc(seo.title)}</title>`)
-  tags.push(`<meta name="description" content="${esc(seo.description)}" />`)
+  tags.push(`<title>${esc((page?.title ?? `Page not found | ${business.name}`))}</title>`)
+  tags.push(`<meta name="description" content="${esc((page?.description ?? seo.description))}" />`)
   tags.push(`<meta name="keywords" content="${esc(seo.keywords)}" />`)
   tags.push(`<meta name="author" content="${esc(business.owner)}" />`)
   tags.push('<meta name="geo.region" content="LK" />')
@@ -355,20 +436,22 @@ function buildHeadTags(): string {
   // max-snippet:-1 and max-image-preview:large are what allow search engines
   // and assistants to quote a full answer sentence instead of a stub.
   tags.push(
-    '<meta name="robots" content="index, follow, max-snippet:-1, ' +
-      'max-image-preview:large, max-video-preview:-1" />',
+    page
+      ? '<meta name="robots" content="index, follow, max-snippet:-1, ' +
+          'max-image-preview:large, max-video-preview:-1" />'
+      : '<meta name="robots" content="noindex, follow" />',
   )
 
-  if (hasUrl) tags.push(`<link rel="canonical" href="${tokenUrl('/')}" />`)
+  if (hasUrl && page) tags.push(`<link rel="canonical" href="${tokenUrl(publicPath(page.path))}" />`)
 
   tags.push('<meta property="og:type" content="website" />')
   tags.push(`<meta property="og:site_name" content="${esc(business.name)}" />`)
   tags.push('<meta property="og:locale" content="en_US" />')
-  tags.push(`<meta property="og:title" content="${esc(seo.title)}" />`)
-  tags.push(`<meta property="og:description" content="${esc(seo.description)}" />`)
+  tags.push(`<meta property="og:title" content="${esc((page?.title ?? `Page not found | ${business.name}`))}" />`)
+  tags.push(`<meta property="og:description" content="${esc((page?.description ?? seo.description))}" />`)
 
   if (hasUrl) {
-    tags.push(`<meta property="og:url" content="${tokenUrl('/')}" />`)
+    if (page) tags.push(`<meta property="og:url" content="${tokenUrl(publicPath(page.path))}" />`)
     tags.push(`<meta property="og:image" content="${tokenUrl(OG_IMAGE_PATH)}" />`)
     tags.push('<meta property="og:image:width" content="1200" />')
     tags.push('<meta property="og:image:height" content="630" />')
@@ -381,13 +464,13 @@ function buildHeadTags(): string {
   tags.push(
     `<meta name="twitter:card" content="${hasUrl ? 'summary_large_image' : 'summary'}" />`,
   )
-  tags.push(`<meta name="twitter:title" content="${esc(seo.title)}" />`)
-  tags.push(`<meta name="twitter:description" content="${esc(seo.description)}" />`)
+  tags.push(`<meta name="twitter:title" content="${esc((page?.title ?? `Page not found | ${business.name}`))}" />`)
+  tags.push(`<meta name="twitter:description" content="${esc((page?.description ?? seo.description))}" />`)
   if (hasUrl) {
     tags.push(`<meta name="twitter:image" content="${tokenUrl(OG_IMAGE_PATH)}" />`)
   }
 
-  tags.push(jsonLdScript(buildJsonLd()))
+  if (page) tags.push(jsonLdScript(buildJsonLd(page)))
 
   return tags.join('\n    ')
 }
@@ -451,19 +534,21 @@ function buildRobotsTxt(): string {
 }
 
 /**
- * One page, one URL. The nav anchors (#services, #faq and the rest) are parts
- * of that page, not separate documents, so they are not listed here.
+ * One entry per page. Section anchors (#service-web and the like) are parts of
+ * a page, not separate documents, so they are not listed here.
  * No lastmod: nothing in the build gives an honest last-modified date.
  */
 function buildSitemapXml(origin: string): string {
   return [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-    '  <url>',
-    `    <loc>${origin}/</loc>`,
-    '    <changefreq>monthly</changefreq>',
-    '    <priority>1.0</priority>',
-    '  </url>',
+    ...pages.flatMap((p) => [
+      '  <url>',
+      `    <loc>${origin}${publicPath(p.path)}</loc>`,
+      '    <changefreq>monthly</changefreq>',
+      `    <priority>${p.path === '/' ? '1.0' : '0.8'}</priority>`,
+      '  </url>',
+    ]),
     '</urlset>',
     '',
   ].join('\n')
@@ -485,11 +570,15 @@ function buildLlmsTxt(): string {
     '',
     '## Track record',
     '',
-    `${business.name} was founded in ${business.foundedMonth} ${business.foundedYear}. Shipped work:` +
+    `${business.name} was founded in ${business.foundedMonth} ${business.foundedYear}. Shipped work: ` +
       clients
         .map((c) => `${c.name} (${c.kind})`)
         .join(' and ') +
       ', alongside the studio\'s own offline first invoice and receipt tool.',
+    '',
+    '## Pages',
+    '',
+    ...pages.map((p) => `- [${p.name}](${SITE_URL ?? ''}${publicPath(p.path)}): ${p.description}`),
     '',
     '## Services',
     '',
@@ -550,6 +639,9 @@ function buildLlmsTxt(): string {
 function zyfloSeo(): Plugin {
   let resolved: ResolvedConfig | undefined
   let warned = false
+
+  /** The base without its trailing slash: '' at the root, '/repo' under a sub path. */
+  const baseNoSlash = () => (resolved?.base ?? '/').replace(/\/+$/, '')
 
   const warnAboutSiteUrl = (warn: (msg: string) => void) => {
     if (warned || SITE_URL) return
@@ -616,14 +708,14 @@ function zyfloSeo(): Plugin {
         // Function replacers, so a "$" in any config string cannot be read as
         // a replacement pattern.
         if (out.includes(HEAD_MARKER)) {
-          out = out.replace(HEAD_MARKER, () => buildHeadTags())
+          out = out.replace(HEAD_MARKER, () => buildHeadTags(homePage))
         } else {
           warn(`zyflo-seo: ${HEAD_MARKER} missing from index.html, appending to <head>.`)
-          out = out.replace('</head>', () => `  ${buildHeadTags()}\n  </head>`)
+          out = out.replace('</head>', () => `  ${buildHeadTags(homePage)}\n  </head>`)
         }
 
         if (out.includes(FALLBACK_MARKER)) {
-          out = out.replace(FALLBACK_MARKER, () => buildStaticFallback())
+          out = out.replace(FALLBACK_MARKER, () => buildStaticFallback(homePage, baseNoSlash()))
         } else {
           warn(
             `zyflo-seo: ${FALLBACK_MARKER} missing from index.html, so crawlers ` +
@@ -642,6 +734,52 @@ function zyfloSeo(): Plugin {
 
         return out
       },
+    },
+
+    /**
+     * The app is one HTML shell, but every page must exist as its own file so a
+     * crawler, a refresh or a shared link gets that page's title, description,
+     * canonical, structured data and text without running any JavaScript.
+     * Each file is the built index.html with the home page's head tags and
+     * crawlable copy swapped for the page's own (the strings swapped out are
+     * regenerated here, exactly as the transform produced them).
+     */
+    writeBundle() {
+      if (!resolved) return
+      const warn = (msg: string) => resolved?.logger.warn(`\n${msg}\n`)
+      const outDir = path.resolve(resolved.root, resolved.build.outDir)
+      const indexFile = path.join(outDir, 'index.html')
+      if (!fs.existsSync(indexFile)) return
+      const shell = fs.readFileSync(indexFile, 'utf8')
+      const base = baseNoSlash()
+
+      const homeHead = substituteSiteUrl(buildHeadTags(homePage), warn)
+      const homeBody = buildStaticFallback(homePage, base)
+      if (!shell.includes(homeHead) || !shell.includes(homeBody)) {
+        warn('zyflo-seo: could not find the home page head or copy in index.html, so no per-page files were written.')
+        return
+      }
+
+      const emit = (html: string, file: string) => {
+        fs.mkdirSync(path.dirname(file), { recursive: true })
+        fs.writeFileSync(file, html)
+      }
+
+      for (const page of pages) {
+        if (page.path === '/') continue
+        const html = shell
+          .replace(homeHead, () => substituteSiteUrl(buildHeadTags(page), warn))
+          .replace(homeBody, () => buildStaticFallback(page, base))
+        emit(html, path.join(outDir, page.path.slice(1), 'index.html'))
+      }
+
+      // Unknown addresses: GitHub Pages and Cloudflare both serve 404.html.
+      emit(
+        shell
+          .replace(homeHead, () => buildHeadTags(null))
+          .replace(homeBody, () => buildNotFoundFallback(base)),
+        path.join(outDir, '404.html'),
+      )
     },
 
     /**
@@ -671,9 +809,11 @@ export default defineConfig({
     alias: { '@': path.resolve(import.meta.dirname, './src') },
   },
 
-  // Relative base so the same dist/ works on Vercel, Netlify, Cloudflare Pages
-  // AND a plain cPanel sub-folder upload without a rebuild.
-  base: './',
+  // Absolute, because the pages live at /services/, /work/ and so on, and a
+  // relative base would point their assets at /services/assets/. The site is
+  // served from the domain root; the GitHub Pages preview (a project served
+  // under /<repo>/) sets BASE_PATH in its workflow.
+  base: process.env.BASE_PATH ? `/${process.env.BASE_PATH.replace(/^\/+|\/+$/g, '')}/` : '/',
 
   build: {
     target: 'es2020',

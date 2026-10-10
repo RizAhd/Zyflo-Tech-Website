@@ -44,10 +44,32 @@ attach a custom domain, set `SITE_URL` (or `business.url`) to it and redeploy.
 Work cards come from `projects[]` and the "Shipped for" list from `clients[]`. Only add an entry
 once the project is live.
 
+## Pages
+
+Six pages, each a real file in `dist/` with its own title, description, canonical and structured
+data, so search engines and AI crawlers read each one without running JavaScript:
+
+| URL | Page |
+|---|---|
+| `/` | Home |
+| `/services/` | Services (tabs, capabilities) |
+| `/process/` | How a project runs |
+| `/work/` | Selected work |
+| `/about/` | The studio |
+| `/contact/` | Contact form and FAQ |
+
+The page list, titles and descriptions live in `pages[]` in `src/data/site.config.ts`. Adding a page
+means: an entry in `pages[]`, a file in `src/pages/`, a line in the `ROUTES` table in `src/App.tsx`,
+and (for the nav) an entry in `navLinks[]`. The build then writes the HTML file, the sitemap entry and
+the `llms.txt` line. Navigation between pages runs in the browser (`src/router.tsx`) with no reload,
+and old links such as `/#process` redirect to the matching page.
+
 ## Deploy
 
-The build is fully static and uses relative paths, so `dist/` works at a domain root or under a
-sub-path. The plan is three steps, in this order.
+The build is fully static. Pages are written to `dist/<page>/index.html`, so the host must serve
+`/services/` from that folder, which GitHub Pages, Cloudflare and Vercel all do. Assets use absolute
+paths (`/assets/...`); the GitHub Pages preview, which lives under `/<repo>/`, sets `BASE_PATH` in its
+workflow so those paths gain the prefix. The plan is three steps, in this order.
 
 **1. GitHub Pages (first, for a live preview)**
 1. Repo Settings, Pages, Source: **GitHub Actions**.
