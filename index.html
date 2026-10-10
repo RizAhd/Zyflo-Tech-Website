@@ -42,8 +42,13 @@
     <!--ZYFLO:HEAD-->
 
     <!-- Icons (self-hosted, generated from the logo) -->
-    <link rel="icon" href="/brand/favicon.ico" sizes="any" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/brand/icon-32.png" />
+    <!-- /favicon.ico also lives at the site root, because browsers and Google
+         ask for that exact path whatever the page says. The small sizes are the
+         atom mark alone (the full logo is unreadable at 16px). The ?v= bumps
+         past any old icon a browser cached. -->
+    <link rel="icon" href="/favicon.ico?v=2" sizes="16x16 32x32 48x48" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/brand/icon-48.png?v=2" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand/icon-32.png?v=2" />
     <link rel="icon" type="image/png" sizes="192x192" href="/brand/icon-192.png" />
     <link rel="apple-touch-icon" href="/brand/icon-180.png" />
     <link rel="manifest" href="/site.webmanifest" />
