@@ -263,7 +263,7 @@ function buildJsonLd(): JsonLdNode {
       : {}),
     areaServed: COUNTRY,
     founder: hasUrl ? { '@id': personId } : person,
-    foundingDate: String(business.foundedYear),
+    foundingDate: business.foundingDate,
     numberOfEmployees: { '@type': 'QuantitativeValue', value: 1 },
     currenciesAccepted: 'LKR',
     openingHoursSpecification: [
@@ -485,7 +485,7 @@ function buildLlmsTxt(): string {
     '',
     '## Track record',
     '',
-    `${business.name} was founded in ${business.foundedYear}. Shipped work: ` +
+    `${business.name} was founded in ${business.foundedMonth} ${business.foundedYear}. Shipped work:` +
       clients
         .map((c) => `${c.name} (${c.kind})`)
         .join(' and ') +

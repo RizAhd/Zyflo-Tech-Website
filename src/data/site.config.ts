@@ -24,7 +24,10 @@ export const business = {
   location: 'Sri Lanka',
   /** Public site URL. Set this once you pick a domain. */
   url: 'https://zyflo.tech',
-  foundedYear: 2018,
+  foundedYear: 2022,
+  foundedMonth: 'March',
+  /** ISO year and month, used in the structured data. */
+  foundingDate: '2022-03',
 } as const
 
 /** Clients with shipped work. Only add a name here once the project is live. */
@@ -410,7 +413,7 @@ export const faqs: Faq[] = [
   {
     q: 'Who have you built for?',
     a:
-      'Zyflo Tech has been running since 2018. Shipped work includes a point of sale system ' +
+      'Zyflo Tech has been running since March 2022. Shipped work includes a point of sale system ' +
       'for SJD and the website for mradventure.lk, alongside the studio\'s own invoice and ' +
       'receipt tool. Each was built and handed over by the same person, so you can ask me ' +
       'about any of them directly.',

@@ -341,7 +341,7 @@ function Studio() {
                 <dl className="mt-7 divide-y divide-border border-t border-border">
                   <div className="flex items-baseline justify-between gap-6 py-3.5">
                     <dt className="text-sm text-muted-foreground">Since</dt>
-                    <dd className="text-right font-ui text-sm font-medium">{business.foundedYear}</dd>
+                    <dd className="text-right font-ui text-sm font-medium">{business.foundedMonth} {business.foundedYear}</dd>
                   </div>
                   <div className="flex items-baseline justify-between gap-6 py-3.5">
                     <dt className="text-sm text-muted-foreground">Shipped for</dt>
