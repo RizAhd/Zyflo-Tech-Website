@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef, useState, type ComponentType } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useRef, useState, type ComponentType } from 'react'
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -16,6 +16,8 @@ import {
 } from './components/motion'
 import { Link, usePath, useScrollOnNavigate } from './router'
 import Home from './pages/Home'
+import Footer from './sections/Footer'
+import { Ready, ReadyContext } from './ready'
 
 /*
   Zyflo Tech, six pages.
@@ -39,16 +41,19 @@ import Home from './pages/Home'
   accident.
 */
 
-const ROUTES: Record<string, ComponentType> = {
-  '/': Home,
-  '/services': lazy(() => import('./pages/Services')),
-  '/process': lazy(() => import('./pages/Process')),
-  '/work': lazy(() => import('./pages/Work')),
-  '/about': lazy(() => import('./pages/About')),
-  '/contact': lazy(() => import('./pages/Contact')),
+const loaders: Record<string, () => Promise<{ default: ComponentType }>> = {
+  '/services': () => import('./pages/Services'),
+  '/process': () => import('./pages/Process'),
+  '/work': () => import('./pages/Work'),
+  '/about': () => import('./pages/About'),
+  '/contact': () => import('./pages/Contact'),
 }
 
-const Footer = lazy(() => import('./sections/Footer'))
+const ROUTES: Record<string, ComponentType> = {
+  '/': Home,
+  ...Object.fromEntries(Object.entries(loaders).map(([path, load]) => [path, lazy(load)])),
+}
+
 
 // ---------------------------------------------------------------------------
 // Navigation
@@ -279,8 +284,9 @@ function useDocumentMeta(path: string) {
   }, [path])
 }
 
-function Page() {
+function Page({ onReady }: { onReady: (path: string) => void }) {
   const path = usePath()
+  const markReady = useCallback(() => onReady(path), [onReady, path])
   useDocumentMeta(path)
   useScrollOnNavigate(() => ScrollTrigger.refresh())
   const View = ROUTES[path] ?? NotFound
@@ -289,26 +295,34 @@ function Page() {
   // and cleaned up with it) and fades in. There is no exit animation, so the
   // old page's pinned sections never linger while the new one loads.
   return (
-    <div key={path} className="page-in">
-      <Suspense fallback={<div className="min-h-[70svh]" aria-busy="true" />}>
-        <View />
-      </Suspense>
-    </div>
+    <ReadyContext.Provider value={markReady}>
+      <div key={path} className="page-in">
+        <Suspense fallback={<div className="min-h-[70svh]" aria-busy="true" />}>
+          <View />
+          {/* The home page reports itself once its lower half has loaded. */}
+          {path !== '/' && <Ready />}
+        </Suspense>
+      </div>
+    </ReadyContext.Provider>
   )
 }
 
 // ---------------------------------------------------------------------------
 export default function App() {
   useSmoothScroll()
-  const [footer, setFooter] = useState(false)
+  const path = usePath()
+  const [readyPath, setReadyPath] = useState<string | null>(null)
+
+  // Once the first page has painted, fetch the other pages in the background
+  // so moving to one is instant instead of waiting on a download.
   useEffect(() => {
-    const go = () => setFooter(true)
+    const warm = () => Object.values(loaders).forEach((load) => void load())
     const ric = window.requestIdleCallback as typeof window.requestIdleCallback | undefined
     if (ric) {
-      const id = ric(go, { timeout: 900 })
+      const id = ric(warm, { timeout: 4000 })
       return () => window.cancelIdleCallback(id)
     }
-    const id = window.setTimeout(go, 200)
+    const id = window.setTimeout(warm, 2500)
     return () => window.clearTimeout(id)
   }, [])
 
@@ -323,13 +337,9 @@ export default function App() {
       </a>
       <Nav />
       <main id="main" tabIndex={-1} className="min-h-[65svh] outline-none">
-        <Page />
+        <Page onReady={setReadyPath} />
       </main>
-      {footer && (
-        <Suspense fallback={null}>
-          <Footer />
-        </Suspense>
-      )}
+      {readyPath === path && <Footer />}
       {whatsapp && (
         <a
           href={whatsapp}

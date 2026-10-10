@@ -6,6 +6,7 @@ import { StaggerGrid } from '../components/motion'
 import PageCta from '../components/PageCta'
 import { Link } from '../router'
 import Work from '../sections/Work'
+import { Ready } from '../ready'
 import { SERVICE_ICON } from '../sections/icons'
 
 /** What follows the hero on the home page: a way into each part of the site. */
@@ -66,6 +67,7 @@ export default function HomeMore() {
         to="/contact"
         label="Start a project"
       />
+      <Ready />
     </>
   )
 }
