@@ -46,7 +46,7 @@ import {
   useProcessPin,
 } from './components/motion'
 import { ProjectScene, StepGlyph } from './components/scenes'
-import ServiceTimeline from './components/ServiceTimeline'
+import ServiceTabs from './components/ServiceTabs'
 
 /*
   Everything below the first screen. App.tsx loads this file after the hero has
@@ -258,7 +258,7 @@ function Capabilities() {
                 className="group grid items-center gap-4 rounded-2xl border border-border bg-white p-4 transition-colors duration-300 hover:border-brand/40 sm:p-5 lg:grid-cols-[17rem_1fr] lg:gap-8"
               >
                 <a
-                  href="#services"
+                  href={`#service-${s.id}`}
                   className="flex items-center gap-3.5 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
                 >
                   <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-tint text-brand-strong transition-colors duration-300 group-hover:bg-brand-strong group-hover:text-white">
@@ -270,7 +270,7 @@ function Capabilities() {
                   {items.map((c) => (
                     <li key={c.title}>
                       <a
-                        href="#services"
+                        href={`#service-${c.service}`}
                         className="inline-flex min-h-[32px] items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-brand-strong focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
                       >
                         <span className="h-1.5 w-1.5 rounded-full bg-brand/60" aria-hidden="true" />
@@ -837,7 +837,7 @@ export function Sections() {
 
   return (
     <>
-      <ServiceTimeline />
+      <ServiceTabs />
       <Principles />
       <Process />
       <Work />
