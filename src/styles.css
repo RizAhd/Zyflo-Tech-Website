@@ -77,7 +77,16 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     -webkit-font-smoothing: antialiased;
+  }
+  /* html clips sideways overflow for the viewport. body uses clip, not hidden:
+     hidden would make body a scroll container of its own, and the sticky panel
+     in the services timeline would then stick to a body that never scrolls
+     and not move at all. */
+  html {
     overflow-x: hidden;
+  }
+  body {
+    overflow-x: clip;
   }
   /* The base voice: Inter at the browser default size. Instrument Sans
      than the 1rem/1.7 it replaces. Tabular numerals are set here rather than

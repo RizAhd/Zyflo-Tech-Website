@@ -40,13 +40,13 @@ import {
   CardParallax,
   Magnetic,
   Parallax,
-  Spotlight,
   SplitHeading,
   StaggerGrid,
   Tilt,
   useProcessPin,
 } from './components/motion'
-import { ProjectScene, ServiceScene, StepGlyph } from './components/scenes'
+import { ProjectScene, StepGlyph } from './components/scenes'
+import ServiceTimeline from './components/ServiceTimeline'
 
 /*
   Everything below the first screen. App.tsx loads this file after the hero has
@@ -66,91 +66,7 @@ const SERVICE_ICON: Record<string, LucideIcon> = {
 }
 
 const POINT_ICON: LucideIcon[] = [MessageSquare, Receipt, KeyRound, LifeBuoy]
-// ---------------------------------------------------------------------------
-// Services
-// ---------------------------------------------------------------------------
-function ServiceCard({ s, featured }: { s: (typeof services)[number]; featured: boolean }) {
-  const Icon = SERVICE_ICON[s.id] ?? Globe
-
-  return (
-    <Spotlight
-      as="article"
-      id={`service-${s.id}`}
-      className={`group flex h-full flex-col overflow-hidden rounded-card border border-border bg-white transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:shadow-[0_18px_40px_-24px_rgba(6,52,28,0.4)] ${
-        featured ? 'lg:col-span-3' : ''
-      }`}
-    >
-      <div className={`relative z-10 flex h-full flex-col ${featured ? 'lg:flex-row' : ''}`}>
-        {/* The figure performs the service the card describes. The web card
-            builds a page, the video card renders a cut and plays it back. */}
-        <div
-          className={`relative h-32 border-b border-border bg-[linear-gradient(135deg,#f8fbf9,#eef7f2)] ${
-            featured ? 'lg:h-auto lg:w-[42%] lg:border-b-0 lg:border-r' : ''
-          }`}
-        >
-          <ServiceScene id={s.id} />
-        </div>
-
-        <div className={`flex flex-1 flex-col p-6 ${featured ? 'lg:p-8' : ''}`}>
-          <div className="flex items-center gap-3">
-            <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-tint text-brand-strong transition-all duration-300 group-hover:scale-110 group-hover:bg-brand group-hover:text-white">
-              <Icon className="h-4 w-4" />
-            </span>
-            <h3 className={`font-ui font-semibold leading-snug ${featured ? 'text-xl' : 'text-lg'}`}>
-              {s.title}
-            </h3>
-            <span className="ml-auto shrink-0 self-start font-display text-[11px] text-muted-foreground/60">
-              {s.index}
-            </span>
-          </div>
-
-          <p className="mt-3 pb-5 text-sm leading-relaxed text-muted-foreground">{s.promise}</p>
-
-          <ul
-            className={`mt-auto space-y-2 border-t border-border pt-5 ${
-              featured ? 'sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-2 sm:space-y-0' : ''
-            }`}
-          >
-            {s.deliverables.map((d) => (
-              <li key={d} className="flex items-start gap-2.5 text-sm text-foreground/80">
-                <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
-                {d}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </Spotlight>
-  )
-}
-
-function Services() {
-  return (
-    <section id="services" className="py-20 sm:py-24">
-      <Container>
-        <SectionHead
-          index="01"
-          eyebrow="What I do"
-          title={
-            <>
-              Seven ways to make the business <span className="text-brand-strong">run better</span>.
-            </>
-          }
-          lead="Most projects touch more than one of these. Tell me the problem and I will tell you which of them it actually needs, including when the answer is less than you think."
-        />
-
-        {/* Seven cards in a three column grid would leave one orphan on the
-            last row, so the first runs full width as a featured card and the
-            remaining six fill two even rows. */}
-        <StaggerGrid className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" from="start">
-          {services.map((s, i) => (
-            <ServiceCard key={s.id} s={s} featured={i === 0} />
-          ))}
-        </StaggerGrid>
-      </Container>
-    </section>
-  )
-}
+// Services: see components/ServiceTimeline.tsx
 
 // ---------------------------------------------------------------------------
 // Principles
@@ -342,7 +258,7 @@ function Capabilities() {
                 className="group grid items-center gap-4 rounded-2xl border border-border bg-white p-4 transition-colors duration-300 hover:border-brand/40 sm:p-5 lg:grid-cols-[17rem_1fr] lg:gap-8"
               >
                 <a
-                  href={`#service-${s.id}`}
+                  href="#services"
                   className="flex items-center gap-3.5 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
                 >
                   <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-tint text-brand-strong transition-colors duration-300 group-hover:bg-brand-strong group-hover:text-white">
@@ -354,7 +270,7 @@ function Capabilities() {
                   {items.map((c) => (
                     <li key={c.title}>
                       <a
-                        href={`#service-${c.service}`}
+                        href="#services"
                         className="inline-flex min-h-[32px] items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-brand-strong focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
                       >
                         <span className="h-1.5 w-1.5 rounded-full bg-brand/60" aria-hidden="true" />
@@ -921,7 +837,7 @@ export function Sections() {
 
   return (
     <>
-      <Services />
+      <ServiceTimeline />
       <Principles />
       <Process />
       <Work />
