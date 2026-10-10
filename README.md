@@ -46,16 +46,32 @@ once the project is live.
 
 ## Deploy
 
-The build is fully static, so `dist/` works as-is on:
+The build is fully static and uses relative paths, so `dist/` works at a domain root or under a
+sub-path. The plan is three steps, in this order.
 
-- **Vercel, Netlify or Cloudflare Pages**: import the GitHub repo, build command `npm run build`,
-  publish directory `dist`. Security and caching headers are already set in `vercel.json` and
-  `public/_headers`.
-- **cPanel or any FTP host**: run `SITE_URL=https://your-domain npm run build` and upload the contents
-  of `dist/` to `public_html`
+**1. GitHub Pages (first, for a live preview)**
+1. Repo Settings, Pages, Source: **GitHub Actions**.
+2. Push to `main`. `.github/workflows/deploy.yml` builds and publishes to
+   `https://rizahd.github.io/Zyflo-Tech-Website/`. The canonical link, sitemap and structured data
+   use that address automatically.
 
-After it is live: add the site to Google Search Console, submit `https://your-domain/sitemap.xml`, and
-claim the business on Google Business Profile.
+**2. Cloudflare Pages**
+1. Cloudflare dashboard, Workers and Pages, Create, Pages, connect the GitHub repo.
+2. Build command `npm run build`, output directory `dist`, framework preset none.
+3. Security and caching headers come from `public/_headers`.
+
+**3. Namecheap domain**
+1. Add the domain to Cloudflare (free plan) and copy the two nameservers Cloudflare gives you.
+2. In Namecheap, Domain List, Manage, Nameservers, choose Custom DNS and paste them in.
+3. In Cloudflare Pages, Custom domains, add the domain (and `www`).
+4. Tell the build the real address so SEO switches over: add a repository variable `SITE_URL`
+   (GitHub, Settings, Secrets and variables, Actions, Variables) for the GitHub build, and an
+   environment variable `SITE_URL` in the Cloudflare Pages project. Use `https://your-domain`.
+5. Redeploy, then in Google Search Console add the domain and submit `/sitemap.xml`. Claim the
+   business on Google Business Profile.
+
+Any other static host works the same way: run `SITE_URL=https://your-domain npm run build` and upload
+`dist/`.
 
 ## SEO, GEO and AEO
 
