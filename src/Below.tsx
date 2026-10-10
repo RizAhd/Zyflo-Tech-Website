@@ -33,6 +33,7 @@ import {
   isTodo,
 } from './data/site.config'
 import { activeSocials, email, formKey, phone, whatsapp } from './data/contact'
+import { LOGO_SRC } from './data/assets'
 import { Button, Container, Eyebrow, SectionHead } from './components/ui'
 import {
   BlurIn,
@@ -407,7 +408,7 @@ function Studio() {
             <Tilt max={5}>
               <div className="rounded-card border border-border bg-white p-8 shadow-[0_20px_50px_-32px_rgba(6,52,28,0.35)]">
                 <img
-                  src="/brand/logo.png"
+                  src={LOGO_SRC}
                   alt="Zyflo Tech logo"
                   width={56}
                   height={56}
@@ -834,7 +835,7 @@ function Footer() {
     <footer className="border-t border-white/10 bg-ink py-10 text-white">
       <Container className="flex flex-col items-center justify-between gap-4 text-center sm:flex-row sm:text-left">
         <div className="flex items-center gap-2.5">
-          <img src="/brand/logo.png" alt="" width={26} height={26} className="rounded-md" />
+          <img src={LOGO_SRC} alt="" width={26} height={26} className="rounded-md" />
           <span className="font-ui text-sm font-medium">
             &copy; {year} {business.legalName}
           </span>

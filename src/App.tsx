@@ -4,6 +4,7 @@ import { ArrowRight, Menu, MessageCircle, X } from 'lucide-react'
 
 import { business, hero, navLinks } from './data/site.config'
 import { whatsapp } from './data/contact'
+import { LOGO_SRC } from './data/assets'
 import { Badge, Button, Container } from './components/ui'
 import {
   BlurIn,
@@ -135,7 +136,7 @@ function Nav() {
           className="flex items-center gap-2.5"
           aria-label={`${business.name}, back to top`}
         >
-          <img src="/brand/logo.png" alt="" width={34} height={34} className="rounded-lg" />
+          <img src={LOGO_SRC} alt="" width={34} height={34} className="rounded-lg" />
           <span className="font-ui text-[17px] font-semibold tracking-tight">
             Zyflo Tech
           </span>
