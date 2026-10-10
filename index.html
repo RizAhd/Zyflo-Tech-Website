@@ -6,15 +6,13 @@
     <meta name="theme-color" content="#008B48" />
 
     <!-- Motion gate.
-         The production site honours prefers-reduced-motion: a visitor who asked
-         their OS for less movement gets a still page, which is correct.
+         Animation is ON for everyone by default, whatever the operating system
+         reports: many Windows laptops switch "animation effects" off (battery
+         saver does it too), which used to leave the whole site looking frozen.
 
-         Locally that is unhelpful: this machine reports reduce system wide, so
-         `npm run dev` would render every animation frozen and the motion work
-         could never be reviewed. So on localhost and on the LAN address the
-         animations default to on, and ?motion=off turns them back off if the
-         reduced state itself needs checking. On a real domain nothing is forced
-         unless ?motion=on is used deliberately.
+         A visitor can still turn it off: the "Motion" button in the footer
+         stores 'off', and ?motion=off does the same. That choice is remembered
+         and wins over the default. ?motion=on turns it back on.
 
          Runs during head parsing, before first paint and before the module
          script, so no frame renders in the wrong state and MOTION_OK in
@@ -24,18 +22,13 @@
         try {
           var q = new URLSearchParams(location.search).get('motion')
           if (q === 'on' || q === 'off') localStorage.setItem('zyflo-motion', q)
-          var pref = localStorage.getItem('zyflo-motion')
-          var h = location.hostname
-          var local =
-            h === 'localhost' ||
-            h === '127.0.0.1' ||
-            h === '' ||
-            /^192\.168\./.test(h) ||
-            /^10\./.test(h)
-          if (pref === 'on' || (local && pref !== 'off')) {
+          if (localStorage.getItem('zyflo-motion') !== 'off') {
             document.documentElement.setAttribute('data-force-motion', '')
           }
-        } catch (e) {}
+        } catch (e) {
+          // Storage can be blocked. Fall back to the default: motion on.
+          document.documentElement.setAttribute('data-force-motion', '')
+        }
       })()
     </script>
 
