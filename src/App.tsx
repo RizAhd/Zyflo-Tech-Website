@@ -1,4 +1,5 @@
 ﻿import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowRight, Menu, MessageCircle, X } from 'lucide-react'
 
@@ -189,10 +190,15 @@ function Nav() {
         </div>
       </Container>
 
+      {/* Portalled to <body>. The header carries a transform and a backdrop
+          filter, and either one makes it the containing block for any `fixed`
+          child, so the sheet was sized to the 64px header instead of the
+          screen and the links hung below it on a transparent background. */}
+      {createPortal(
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-50 overscroll-contain bg-white md:hidden"
+            className="fixed inset-0 z-[80] overflow-y-auto overscroll-contain bg-white md:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -235,7 +241,9 @@ function Nav() {
             </Container>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence>,
+      document.body,
+      )}
     </header>
   )
 }
