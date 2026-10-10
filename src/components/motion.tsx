@@ -13,7 +13,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
 import { CustomEase } from 'gsap/CustomEase'
-import Lenis from 'lenis'
+import type Lenis from 'lenis'
 
 /*
   Motion primitives.
@@ -485,16 +485,24 @@ export function useSmoothScroll() {
     let lenis: Lenis | null = null
     let tick: ((time: number) => void) | null = null
 
+    let cancelled = false
+
+    // Loaded on demand: the first paint does not need smooth scrolling, so the
+    // library stays out of the entry bundle and arrives just after it.
     if (smooth) {
-      lenis = new Lenis({
-        duration: 1.05,
-        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        touchMultiplier: 1.6,
+      import('lenis').then(({ default: LenisCtor }) => {
+        if (cancelled) return
+        const instance = new LenisCtor({
+          duration: 1.05,
+          easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          touchMultiplier: 1.6,
+        })
+        lenis = instance
+        instance.on('scroll', ScrollTrigger.update)
+        tick = (time: number) => instance.raf(time * 1000)
+        gsap.ticker.add(tick)
+        gsap.ticker.lagSmoothing(0)
       })
-      lenis.on('scroll', ScrollTrigger.update)
-      tick = (time: number) => lenis?.raf(time * 1000)
-      gsap.ticker.add(tick)
-      gsap.ticker.lagSmoothing(0)
     }
 
     const headerOffset = () => {
@@ -539,6 +547,7 @@ export function useSmoothScroll() {
     document.addEventListener('click', onClick)
 
     return () => {
+      cancelled = true
       document.removeEventListener('click', onClick)
       if (tick) {
         gsap.ticker.remove(tick)
@@ -680,7 +689,9 @@ export function SplitHeading({
         // headline's length rather than growing without limit with it.
         const requested = stagger ?? (chars ? 0.017 : 0.05)
         const gaps = Math.max(1, items.length - 1)
-        const cap = chars ? 1.05 : 0.85
+        // Tight on purpose: the first screen should be fully in within about a
+        // second of the page arriving, not still assembling itself.
+        const cap = chars ? 0.5 : 0.5
         const each = Math.min(requested, cap / gaps)
 
         const spread = { each, from: 'start' as const, ease: ez('stagger') }
@@ -711,7 +722,7 @@ export function SplitHeading({
           // Characters are many and small, so each one moves quickly and the
           // line as a whole carries the length. Words are few and large, so
           // each one gets the longer curve.
-          duration: chars ? (cond.small ? 0.66 : 0.82) : cond.small ? 0.72 : 0.92,
+          duration: chars ? (cond.small ? 0.5 : 0.6) : cond.small ? 0.58 : 0.7,
           ease: ez('lead'),
           stagger: spread,
           delay,
