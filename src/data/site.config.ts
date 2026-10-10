@@ -23,7 +23,7 @@ export const business = {
   owner: 'Riflan Mohamed',
   location: 'Sri Lanka',
   /** Public site URL. Set this once you pick a domain. */
-  url: 'TODO_SITE_URL', // e.g. https://zyflotech.com
+  url: 'https://zyflo.tech',
   foundedYear: 2018,
 } as const
 
