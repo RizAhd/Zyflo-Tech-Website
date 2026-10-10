@@ -4,6 +4,7 @@ import { services } from '../data/site.config'
 import { Container, SectionHead } from '../components/ui'
 import { StaggerGrid } from '../components/motion'
 import PageCta from '../components/PageCta'
+import ScrollStroke from '../components/ScrollStroke'
 import { Link } from '../router'
 import Work from '../sections/Work'
 import { Ready } from '../ready'
@@ -13,6 +14,8 @@ import { SERVICE_ICON } from '../sections/icons'
 export default function HomeMore() {
   return (
     <>
+      <ScrollStroke />
+
       <section className="py-20 sm:py-24">
         <Container>
           <SectionHead

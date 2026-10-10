@@ -1,4 +1,4 @@
-import Capabilities from '../sections/Capabilities'
+import FeatureParallax from '../components/FeatureParallax'
 import PageCta from '../components/PageCta'
 import ServiceTabs from '../components/ServiceTabs'
 
@@ -6,7 +6,7 @@ export default function Services() {
   return (
     <div className="pt-12 sm:pt-16">
       <ServiceTabs />
-      <Capabilities />
+      <FeatureParallax />
       <PageCta
         title="See how a project runs."
         body="Four steps, a fixed quote in LKR up front, and a full handover at the end."
