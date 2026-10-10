@@ -30,7 +30,7 @@ export const business = {
 /** Clients with shipped work. Only add a name here once the project is live. */
 export const clients = [
   { name: 'SJD POS', kind: 'POS system', href: undefined },
-  { name: 'mrvadventure.lk', kind: 'Website', href: 'https://mrvadventure.lk' },
+  { name: 'mradventure.lk', kind: 'Website', href: 'https://mradventure.lk' },
 ] as const
 
 // ---------------------------------------------------------------------------
@@ -265,14 +265,14 @@ export const projects: Project[] = [
     tags: ['POS', 'Custom software', 'Shipped'],
   },
   {
-    id: 'mrvadventure',
-    title: 'mrvadventure.lk',
+    id: 'mradventure',
+    title: 'mradventure.lk',
     category: 'Website Building',
     summary:
-      'The website for mrvadventure.lk, designed, built and launched by Zyflo Tech. ' +
+      'The website for mradventure.lk, designed, built and launched by Zyflo Tech. ' +
       'Live on the web today.',
     tags: ['Website', 'Live', 'Sri Lanka'],
-    href: 'https://mrvadventure.lk',
+    href: 'https://mradventure.lk',
   },
 ]
 
@@ -411,7 +411,7 @@ export const faqs: Faq[] = [
     q: 'Who have you built for?',
     a:
       'Zyflo Tech has been running since 2018. Shipped work includes a point of sale system ' +
-      'for SJD and the website for mrvadventure.lk, alongside the studio\'s own invoice and ' +
+      'for SJD and the website for mradventure.lk, alongside the studio\'s own invoice and ' +
       'receipt tool. Each was built and handed over by the same person, so you can ask me ' +
       'about any of them directly.',
   },

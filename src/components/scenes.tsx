@@ -1894,7 +1894,7 @@ function PosScene() {
   )
 }
 
-/* --- mrvadventure.lk: a landing page assembling itself -------------------- */
+/* --- mradventure.lk: a landing page assembling itself -------------------- */
 function buildSite(el: SVGSVGElement) {
   const tl = loop(1)
   tl.from(q(el, '.sw-nav'), { opacity: 0, y: -8, duration: 0.35, stagger: 0.06 })

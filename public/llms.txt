@@ -7,7 +7,7 @@ Zyflo Tech is run by Riflan Mohamed, who does the work personally. There is no s
 ## Track record
 
 Zyflo Tech was founded in 2018. Shipped work: a point of sale system for SJD, the website
-for mrvadventure.lk (https://mrvadventure.lk), and the studio's own offline first invoice
+for mradventure.lk (https://mradventure.lk), and the studio's own offline first invoice
 and receipt tool.
 
 ## Services

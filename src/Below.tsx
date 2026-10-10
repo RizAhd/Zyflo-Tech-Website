@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
@@ -249,7 +249,7 @@ function Work() {
               Built, shipped and <span className="text-brand-strong">handed over</span>.
             </>
           }
-          lead="A point of sale system for SJD, the website for mrvadventure.lk, and the invoicing tool the studio runs on. Each one was built by the same person who answers your enquiry."
+          lead="A point of sale system for SJD, the website for mradventure.lk, and the invoicing tool the studio runs on. Each one was built by the same person who answers your enquiry."
         />
 
         <StaggerGrid className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3" stagger={0.08}>
