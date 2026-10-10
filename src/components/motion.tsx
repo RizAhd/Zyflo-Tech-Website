@@ -127,8 +127,6 @@ const NO_PREF = MOTION_OK
 const FINE = '(pointer: fine)'
 const COARSE = '(pointer: coarse)'
 const SMALL = '(max-width: 640px)'
-const DESKTOP = `(min-width: 1024px) and ${NO_PREF}`
-const HANDHELD = `(max-width: 1023px) and ${NO_PREF}`
 
 /** Live boolean for a media query, so changing the preference re-renders. */
 function useMedia(query: string) {
@@ -946,108 +944,6 @@ export function StaggerGrid({
       {children}
     </div>
   )
-}
-
-// ---------------------------------------------------------------------------
-// The pinned process section
-// ---------------------------------------------------------------------------
-/*
-  CONTRACT WITH THE INTEGRATOR
-
-  Render the process steps in a plain container, with NO StaggerGrid and no
-  other reveal wrapper around them, and put `className="process-step"` on each
-  step element. Give the section a ref and pass it here:
-
-      const ref = useRef<HTMLElement>(null)
-      useProcessPin(ref, process.length)
-      <section id="process" ref={ref}> ... </section>
-
-  This hook is then the single owner of opacity and transform on every
-  .process-step. Nothing else may write those two properties on those elements,
-  or two owners fight and one of them wins at random.
-*/
-/**
- * Desktop: pins the section and scrubs a spotlight through the steps, lighting
- * each one in turn as the reader scrolls. The step arriving uses the lead
- * curve and the step leaving uses the soft one, so attention moves forward
- * rather than two things trading places. Handheld: one simple staggered reveal
- * instead, because pinning a short screen just steals it.
- *
- * Exactly one branch owns the steps per breakpoint, and neither branch exists
- * under prefers-reduced-motion, where the steps are left entirely alone at
- * their natural CSS appearance. Side effect only, returns nothing.
- */
-export function useProcessPin(sectionRef: RefObject<HTMLElement | null>, stepCount: number) {
-  useLayoutEffect(() => {
-    const section = sectionRef.current
-    if (!section || stepCount < 1) return
-
-    const ctx = gsap.context(() => {
-      const mm = gsap.matchMedia()
-
-      mm.add(DESKTOP, () => {
-        const steps = gsap.utils.toArray<HTMLElement>('.process-step', section)
-        if (!steps.length) return
-
-        const dim = { opacity: 0.32, scale: 0.985, y: 16 }
-        gsap.set(steps, { ...dim, transformOrigin: '50% 50%', willChange: 'transform, opacity' })
-
-        // A scrubbed timeline may safely be attached to its trigger: scrub
-        // re-derives progress from scroll position on every update, so a
-        // ScrollTrigger.refresh() cannot strand it at progress 0.
-        const tl = gsap.timeline({
-          defaults: { ease: ez('soft') },
-          scrollTrigger: {
-            trigger: section,
-            // If the section is taller than the screen, pin from its bottom so
-            // nothing at the foot of it is ever cut off.
-            start: () => (section.offsetHeight > window.innerHeight ? 'bottom bottom' : 'top top'),
-            end: () => `+=${Math.round(stepCount * 55)}%`,
-            pin: true,
-            anticipatePin: 1,
-            scrub: 0.6,
-            invalidateOnRefresh: true,
-          },
-        })
-
-        steps.forEach((step, i) => {
-          tl.to(step, { opacity: 1, scale: 1, y: 0, duration: 0.55, ease: ez('lead') }, i)
-          // The outgoing step keeps travelling in the direction it was already
-          // going, which is what makes the pair read as one handover.
-          if (i > 0) tl.to(steps[i - 1], { ...dim, y: -12, duration: 0.55, ease: ez('exit') }, i)
-        })
-        // A beat of hold on the last step before the pin releases.
-        tl.to({}, { duration: 0.5 })
-
-        return () => {
-          tl.scrollTrigger?.kill()
-          tl.kill()
-          gsap.set(steps, { clearProps: 'all' })
-        }
-      })
-
-      mm.add(HANDHELD, () => {
-        const steps = gsap.utils.toArray<HTMLElement>('.process-step', section)
-        if (!steps.length) return
-        const travel = travelFor('support', undefined, steps[0])
-        return revealOnEnter(
-          section,
-          steps,
-          { y: travel, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: durationFor('support', travel),
-            ease: ez('out'),
-            stagger: { each: 0.1, from: 'start', ease: ez('stagger') },
-          },
-          'top 78%',
-        )
-      })
-    }, section)
-
-    return () => ctx.revert()
-  }, [sectionRef, stepCount])
 }
 
 // ---------------------------------------------------------------------------
