@@ -244,6 +244,8 @@ export interface Project {
   summary: string
   tags: string[]
   href?: string
+  /** A real screenshot in /public, used instead of the drawn figure. */
+  image?: { src: string; alt: string }
 }
 
 export const projects: Project[] = [
@@ -270,10 +272,14 @@ export const projects: Project[] = [
     title: 'mradventure.lk',
     category: 'Website Building',
     summary:
-      'The website for mradventure.lk, designed, built and launched by Zyflo Tech. ' +
-      'Live on the web today.',
-    tags: ['Website', 'Live', 'Sri Lanka'],
+      'The website for Mr Adventure Tours & Travels, an island-wide taxi and cab service in ' +
+      'Sri Lanka. Designed, built and launched by Zyflo Tech, and live today.',
+    tags: ['Website', 'WhatsApp bookings', 'Live'],
     href: 'https://mradventure.lk',
+    image: {
+      src: 'work/mradventure.webp',
+      alt: 'The mradventure.lk home page: island-wide taxi and cab service across Sri Lanka, with a fare request bar over a lighthouse photograph.',
+    },
   },
 ]
 

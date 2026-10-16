@@ -27,6 +27,12 @@ jobs:
 
       - run: npm ci
 
+      # Every page loads, has its own title, canonical and structured data, no
+      # console errors, no sideways scroll and no serious accessibility issue.
+      # A failure here stops the deploy. Uses the Chrome the runner already has.
+      - name: Check the site
+        run: npm run test:e2e
+
       # The build writes the canonical link, sitemap and structured data from
       # SITE_URL. Until a custom domain exists that is the github.io address.
       # Once the domain is live, add a repository variable named SITE_URL

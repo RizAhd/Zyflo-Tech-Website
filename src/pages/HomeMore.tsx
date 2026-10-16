@@ -4,7 +4,7 @@ import { business, clients, services } from '../data/site.config'
 import { Container, SectionHead } from '../components/ui'
 import { StaggerGrid } from '../components/motion'
 import PageCta from '../components/PageCta'
-import ScrollStroke from '../components/ScrollStroke'
+import HowIWork from '../components/HowIWork'
 import { Link } from '../router'
 import Work from '../sections/Work'
 import { Ready } from '../ready'
@@ -48,7 +48,7 @@ export default function HomeMore() {
         </Container>
       </section>
 
-      <ScrollStroke />
+      <HowIWork />
 
       <section className="py-20 sm:py-24">
         <Container>

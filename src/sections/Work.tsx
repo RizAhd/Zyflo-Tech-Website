@@ -36,9 +36,21 @@ export default function Work({
             <Tilt key={p.id} max={5} className="h-full">
               <article className="group h-full overflow-hidden rounded-card border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:shadow-[0_22px_50px_-28px_rgba(10,22,71,0.4)]">
                 <div className="relative aspect-[16/10] overflow-hidden border-b border-border">
-                  <CardParallax className="absolute inset-0">
-                    <ProjectScene index={i} />
-                  </CardParallax>
+                  {p.image ? (
+                    <img
+                      src={`${import.meta.env.BASE_URL}${p.image.src}`}
+                      alt={p.image.alt}
+                      width={1200}
+                      height={750}
+                      loading="lazy"
+                      decoding="async"
+                      className="absolute inset-0 h-full w-full object-cover object-top"
+                    />
+                  ) : (
+                    <CardParallax className="absolute inset-0">
+                      <ProjectScene index={i} />
+                    </CardParallax>
+                  )}
                 </div>
 
                 <div className="p-6">

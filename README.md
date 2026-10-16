@@ -2,9 +2,10 @@
 
 The marketing site for Zyflo Tech. Vite, React, TypeScript, Tailwind CSS v4, GSAP and framer-motion.
 
-Fonts (Inter and Instrument Sans) are self-hosted, every library is bundled, and there is no CDN,
-no analytics and no third-party embed. The only network call the site makes is the contact-form
-POST when a visitor submits it.
+Fonts (Inter and Instrument Sans) are self-hosted, every library is bundled, and there is no CDN
+and no third-party embed. Analytics are off unless `CF_BEACON_TOKEN` is set at build time (see
+below). Otherwise the only network call the site makes is the contact-form POST when a visitor
+submits it.
 
 ## Run it
 
@@ -43,6 +44,20 @@ attach a custom domain, set `SITE_URL` (or `business.url`) to it and redeploy.
 
 Work cards come from `projects[]` and the "Shipped for" list from `clients[]`. Only add an entry
 once the project is live.
+
+## Checks
+
+`npm run test:e2e` builds the site and runs the Playwright checks in `tests/` against the
+production build: every page loads with its own title, canonical and structured data, one h1, no
+console errors, no sideways scroll on a phone or laptop, and no serious accessibility violation
+(axe, WCAG 2.2 AA). The GitHub workflow runs them before every deploy.
+
+## Optional build variables
+
+Set these in the host's build settings (never in the repository):
+
+- `GSC_VERIFICATION`: the content value of Google Search Console's HTML tag.
+- `CF_BEACON_TOKEN`: turns on Cloudflare Web Analytics (no cookies, no personal data).
 
 ## Pages
 
@@ -105,6 +120,5 @@ crawlers that do not run JavaScript. It is clipped out of sight, and shown norma
 
 ## Motion
 
-The site honours `prefers-reduced-motion`, so a visitor who asked their OS for less movement gets a
-still page. On `localhost` and LAN addresses animation is forced on for review. On a real domain, add
-`?motion=on` to preview it (`?motion=off` clears it).
+Motion is on by default. A visitor can switch it off with the Motion button in the footer, and the
+choice is remembered. `?motion=off` and `?motion=on` do the same from a link.

@@ -6,6 +6,7 @@ import { whatsapp } from '../data/contact'
 import { Badge, Button, Container } from '../components/ui'
 import { BlurIn, Magnetic, SplitHeading } from '../components/motion'
 import { HeroCarousel } from '../components/visuals'
+import PageLine from '../components/PageLine'
 
 const HomeMore = lazy(() => import('./HomeMore'))
 
@@ -113,13 +114,13 @@ function Hero() {
 export default function Home() {
   const rest = useAfterFirstPaint()
   return (
-    <>
+    <PageLine>
       <Hero />
       {rest && (
         <Suspense fallback={null}>
           <HomeMore />
         </Suspense>
       )}
-    </>
+    </PageLine>
   )
 }
