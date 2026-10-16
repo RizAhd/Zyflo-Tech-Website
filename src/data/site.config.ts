@@ -223,6 +223,10 @@ export const services: Service[] = [
       'Voiceover, subtitles and captions',
       'Vertical cuts sized for each platform',
     ],
+    image: {
+      src: 'services/video.webp',
+      alt: 'A video editor and a colleague review a product clip on a large monitor with an editing timeline, in a warmly lit editing room.',
+    },
   },
   {
     id: 'marketing',
