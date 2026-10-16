@@ -82,12 +82,12 @@ export const navLinks = [
 export const hero = {
   eyebrow: 'Zyflo Tech, Sri Lanka',
   /** Split on `|` for the line-by-line reveal. */
-  headline: 'Digital work that|pulls its weight.',
+  headline: 'We build the tech|your business runs on.',
   lead:
-    'A one person website, app and AI automation studio in Sri Lanka. Built for real ' +
-    'businesses: designed with care, shipped on time, and handed over so you own every line of it.',
+    'Websites, apps and AI automation for businesses in Sri Lanka and abroad. Designed with ' +
+    'care, shipped on time, and handed over so you own every line of it.',
   primaryCta: { label: "Start a project", href: '/contact' },
-  secondaryCta: { label: 'See what I do', href: '/services' },
+  secondaryCta: { label: 'See what we do', href: '/services' },
 } as const
 
 // ---------------------------------------------------------------------------
@@ -457,8 +457,8 @@ export const pages: PageMeta[] = [
     description:
       'Zyflo Tech builds websites, apps, software, AI automation, AI video, marketing and ' +
       'social media for businesses in Sri Lanka. Fixed quotes in LKR, full handover.',
-    heading: 'Digital work that pulls its weight.',
-    lead: 'Websites, apps and automations built for real businesses, designed with care and handed over so you own every line of it.',
+    heading: 'We build the tech your business runs on.',
+    lead: 'Websites, apps and AI automation for businesses in Sri Lanka and abroad, designed with care and handed over so you own every line of it.',
   },
   {
     path: '/services',

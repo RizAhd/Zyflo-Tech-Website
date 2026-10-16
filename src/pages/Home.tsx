@@ -1,9 +1,9 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { ArrowRight, MessageCircle } from 'lucide-react'
 
-import { business, hero } from '../data/site.config'
+import { hero } from '../data/site.config'
 import { whatsapp } from '../data/contact'
-import { Badge, Button, Container } from '../components/ui'
+import { Button, Container } from '../components/ui'
 import { BlurIn, Magnetic, SplitHeading } from '../components/motion'
 import HandwritingText from '../components/HandwritingText'
 import PageLine from '../components/PageLine'
@@ -34,20 +34,10 @@ function Hero() {
       {/* Pure white behind the headline: no glow, no pattern. */}
       <Container className="relative w-full">
         <div className="mx-auto max-w-3xl text-center">
-          <BlurIn y={10}>
-            <Badge>
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-75" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-brand" />
-              </span>
-              {business.location} &middot; Est. {business.foundedYear}
-            </Badge>
-          </BlurIn>
-
           {/* Characters, not words: the headline is the one place on the page
               where the extra granularity earns the extra nodes. Fluid size so
               it never overflows a 360px screen. */}
-          <h1 className="mt-6 font-ui text-[clamp(2.05rem,8.6vw,2.6rem)] font-semibold leading-[1.05] tracking-tight text-balance sm:text-6xl md:text-7xl">
+          <h1 className="font-ui text-[clamp(2.05rem,8.6vw,2.6rem)] font-semibold leading-[1.05] tracking-tight text-balance sm:text-6xl md:text-7xl">
             <SplitHeading as="span" type="chars" className="block">
               {line1}
             </SplitHeading>

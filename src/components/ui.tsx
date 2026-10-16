@@ -162,27 +162,6 @@ export function Button({
   )
 }
 
-/** Small rounded label. */
-export function Badge({
-  children,
-  onInk = false,
-}: {
-  children: ReactNode
-  onInk?: boolean
-}) {
-  return (
-    <span
-      className={`inline-flex items-center gap-2 rounded-full px-3 py-1 font-ui text-xs font-medium ${
-        onInk
-          ? 'border border-white/20 text-white/80'
-          : 'border border-border bg-card text-muted-foreground'
-      }`}
-    >
-      {children}
-    </span>
-  )
-}
-
 /**
  * Infinite marquee. The children are rendered twice and the track translates
  * exactly -50%, so the seam is invisible and nothing runs per frame in JS.
