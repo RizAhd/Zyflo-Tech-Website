@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import fs from 'node:fs'
 import path from 'node:path'
 import type { IncomingMessage, ServerResponse } from 'node:http'
+import opentype from 'opentype.js'
 
 import {
   about,
@@ -652,6 +653,53 @@ function buildLlmsTxt(): string {
 // The plugin
 // ---------------------------------------------------------------------------
 
+/* ==========================================================================
+   zyflo-pen: the hand written hero line, traced at build time.
+
+   The pen animation needs the outline of every letter, which a web font does
+   not expose. Parsing the font in the browser meant shipping opentype.js and
+   a TTF (about 120 kB) before the line could appear, so the second line of
+   the headline arrived a second after the first. The text and the font never
+   change between builds, so the outlines are traced here instead and the
+   page imports a few kilobytes of SVG path data: `virtual:pen-paths`.
+   ========================================================================== */
+const PEN_ID = 'virtual:pen-paths'
+const PEN_RESOLVED = `\0${PEN_ID}`
+const PEN_EM = 100
+const PEN_TRACKING = -0.04
+
+function zyfloPen(): Plugin {
+  return {
+    name: 'zyflo-pen',
+    resolveId(id) {
+      return id === PEN_ID ? PEN_RESOLVED : null
+    },
+    load(id) {
+      if (id !== PEN_RESOLVED) return null
+      const file = path.resolve(import.meta.dirname, 'src/assets/fonts/geist-600.ttf')
+      this.addWatchFile(file)
+      const buf = fs.readFileSync(file)
+      const font = opentype.parse(buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength))
+      const text = hero.headline.split('|')[1] ?? ''
+      const glyphs = font.getPath(text, 0, PEN_EM, PEN_EM, { letterSpacing: PEN_TRACKING })
+      const box = glyphs.getBoundingBox()
+      const pad = PEN_EM * 0.08
+      const full = glyphs.toPathData(2)
+      const pen = {
+        text,
+        em: PEN_EM,
+        full,
+        contours: full.split(/(?=M)/).filter((d: string) => d.trim().length > 1),
+        x: box.x1 - pad,
+        y: box.y1 - pad,
+        w: box.x2 - box.x1 + pad * 2,
+        h: box.y2 - box.y1 + pad * 2,
+      }
+      return `export default ${JSON.stringify(pen)}`
+    },
+  }
+}
+
 function zyfloSeo(): Plugin {
   let resolved: ResolvedConfig | undefined
   let warned = false
@@ -818,7 +866,7 @@ function zyfloSeo(): Plugin {
 }
 
 export default defineConfig({
-  plugins: [react(), tailwindcss(), zyfloSeo()],
+  plugins: [react(), tailwindcss(), zyfloPen(), zyfloSeo()],
 
   // shadcn-style "@/..." imports
   resolve: {

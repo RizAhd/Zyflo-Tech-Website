@@ -43,7 +43,7 @@ function Hero() {
             </SplitHeading>
             {/* The second line is written by pen, then inked in, in the same face. */}
             <span className="text-brand-strong sm:underline-sweep sm:inline-block">
-              <HandwritingText text={line2} letterSpacing={-0.04} />
+              <HandwritingText text={line2} />
             </span>
           </h1>
 

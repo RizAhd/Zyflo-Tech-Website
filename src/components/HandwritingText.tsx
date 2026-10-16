@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import type { Font } from 'opentype.js'
+import pen from 'virtual:pen-paths'
 
 import { MOTION_OK } from './motion'
 
@@ -7,54 +7,28 @@ import { MOTION_OK } from './motion'
   Text that writes itself with a pen, then inks in.
 
   Adapted from the 21st.dev handwriting text. A web font renders as filled
-  shapes with no outline, so there is nothing to stroke: the font is parsed
-  from its TTF (opentype.js) and each letter turned into SVG paths. Every
-  contour is its own path, because a dash pattern restarts at each subpath;
-  staggering them is what moves the pen across the word. One filled copy of
-  the whole phrase sits underneath and fades in as the strokes finish, so the
-  holes in letters like "e" and "g" stay holes.
+  shapes with no outline, so there is nothing to stroke: the letters are
+  traced into SVG paths. Every contour is its own path, because a dash
+  pattern restarts at each subpath; staggering them is what moves the pen
+  across the word. One filled copy of the whole phrase sits underneath and
+  fades in as the strokes finish, so the holes in letters like "e" and "g"
+  stay holes.
 
   Differences from the original, for this site:
-    - opentype.js is bundled (a lazy chunk), not loaded from a CDN, and the font
-      is the hero's own Geist SemiBold, self hosted, so the written
-      line is the same text in the same face as the line above it.
+    - the tracing happens at build time (vite.config.ts, `virtual:pen-paths`)
+      from the hero's own Geist SemiBold, so the page ships a few kilobytes of
+      path data instead of a font parser and a font file, and the pen starts
+      the moment the headline appears.
     - the SVG is sized in em from the glyph box and sat on the text baseline,
       so it takes exactly the space the plain text would.
-    - until the font is parsed the text holds its space invisibly (no flash of
-      plain text that then vanishes), and if parsing fails or takes too long
-      the plain text simply appears.
-    - with motion off it is plain text.
+    - with motion off, or for any text that was not traced, it is plain text.
 */
-
-const FONT_URL = `${import.meta.env.BASE_URL}fonts/geist-600.ttf`
-const EM = 100
-
-let fontPromise: Promise<Font> | null = null
-function loadFont(): Promise<Font> {
-  if (!fontPromise) {
-    fontPromise = Promise.all([
-      import('opentype.js'),
-      fetch(FONT_URL).then((res) => {
-        if (!res.ok) throw new Error(`font ${res.status}`)
-        return res.arrayBuffer()
-      }),
-    ]).then(([mod, buffer]) => {
-      const lib = (mod as unknown as { parse?: typeof import('opentype.js').parse; default?: { parse: typeof import('opentype.js').parse } })
-      const parse = lib.parse ?? lib.default!.parse
-      return parse(buffer)
-    })
-  }
-  return fontPromise
-}
-
-type Geometry = { full: string; contours: string[]; x: number; y: number; w: number; h: number }
 
 export default function HandwritingText({
   text,
   duration = 1.6,
   delay = 0.35,
   strokeWidth = 1.6,
-  letterSpacing = -0.025,
   className,
 }: {
   text: string
@@ -64,49 +38,17 @@ export default function HandwritingText({
   delay?: number
   /** Stroke weight, in units of a 100px em. */
   strokeWidth?: number
-  /** In em, to match the heading's tracking. */
-  letterSpacing?: number
   className?: string
 }) {
   const motionOn = typeof window !== 'undefined' && window.matchMedia(MOTION_OK).matches
-  const [geom, setGeom] = useState<Geometry | null>(null)
-  const [failed, setFailed] = useState(false)
+  const traced = motionOn && pen.text === text
   const [drawn, setDrawn] = useState(false)
   const [lengths, setLengths] = useState<number[]>([])
   const refs = useRef<(SVGPathElement | null)[]>([])
 
   useEffect(() => {
-    if (!motionOn) return
-    let cancelled = false
-    // Never leave the line blank: if the font is slow, show the text.
-    const giveUp = window.setTimeout(() => !cancelled && setFailed(true), 3000)
-    loadFont()
-      .then((font) => {
-        if (cancelled) return
-        const path = font.getPath(text, 0, EM, EM, { letterSpacing })
-        const box = path.getBoundingBox()
-        const pad = EM * 0.08
-        const full = path.toPathData(2)
-        window.clearTimeout(giveUp)
-        setGeom({
-          full,
-          contours: full.split(/(?=M)/).filter((d) => d.trim().length > 1),
-          x: box.x1 - pad,
-          y: box.y1 - pad,
-          w: box.x2 - box.x1 + pad * 2,
-          h: box.y2 - box.y1 + pad * 2,
-        })
-      })
-      .catch(() => !cancelled && setFailed(true))
-    return () => {
-      cancelled = true
-      window.clearTimeout(giveUp)
-    }
-  }, [motionOn, text, letterSpacing])
-
-  useEffect(() => {
-    if (!geom) return
-    setLengths(refs.current.slice(0, geom.contours.length).map((el) => (el ? el.getTotalLength() : 0)))
+    if (!traced) return
+    setLengths(refs.current.slice(0, pen.contours.length).map((el) => (el ? el.getTotalLength() : 0)))
     // Two frames: the first commits full length offsets, the second animates to zero.
     let inner = 0
     const outer = requestAnimationFrame(() => {
@@ -116,38 +58,32 @@ export default function HandwritingText({
       cancelAnimationFrame(outer)
       cancelAnimationFrame(inner)
     }
-  }, [geom])
+  }, [traced])
 
-  if (!motionOn || failed) return <span className={className}>{text}</span>
-  if (!geom) {
-    return (
-      <span className={className} style={{ visibility: 'hidden' }}>
-        {text}
-      </span>
-    )
-  }
+  if (!traced) return <span className={className}>{text}</span>
 
-  const count = Math.max(1, geom.contours.length)
-  // The pen line is drawn with baseline at y = EM; sit that on the text baseline.
-  const below = (geom.y + geom.h - EM) / EM
+  const { em, x, y, w, h } = pen
+  const count = Math.max(1, pen.contours.length)
+  // The pen line is drawn with baseline at y = em; sit that on the text baseline.
+  const below = (y + h - em) / em
 
   return (
     <svg
-      viewBox={`${geom.x} ${geom.y} ${geom.w} ${geom.h}`}
+      viewBox={`${x} ${y} ${w} ${h}`}
       role="img"
       aria-label={text}
       className={className}
       style={{
         display: 'inline-block',
-        height: `${geom.h / EM}em`,
-        width: `${geom.w / EM}em`,
+        height: `${h / em}em`,
+        width: `${w / em}em`,
         verticalAlign: `${-below}em`,
-        marginInline: `${-(EM * 0.08) / EM}em`,
+        marginInline: '-0.08em',
         overflow: 'visible',
       }}
     >
       <path
-        d={geom.full}
+        d={pen.full}
         fill="currentColor"
         stroke="none"
         style={{
@@ -155,7 +91,7 @@ export default function HandwritingText({
           transition: drawn ? `opacity 0.5s ease-out ${(delay + duration * 0.75).toFixed(3)}s` : 'none',
         }}
       />
-      {geom.contours.map((d, i) => {
+      {pen.contours.map((d, i) => {
         const length = lengths[i] || 0
         const each = (duration / count) * 2.4
         const start = delay + (i / count) * duration
@@ -172,8 +108,9 @@ export default function HandwritingText({
             strokeLinecap="round"
             strokeLinejoin="round"
             style={{
-              strokeDasharray: length || 1,
-              strokeDashoffset: drawn ? 0 : length || 1,
+              // Until measured, a huge dash keeps the stroke invisible rather than flashing in.
+              strokeDasharray: length || 1e4,
+              strokeDashoffset: drawn ? 0 : length || 1e4,
               transition: drawn ? `stroke-dashoffset ${each.toFixed(3)}s ease-out ${start.toFixed(3)}s` : 'none',
             }}
           />
