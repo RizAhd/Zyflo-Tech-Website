@@ -189,6 +189,10 @@ export const services: Service[] = [
       'Play Store and App Store submission',
       'Push notifications and analytics',
     ],
+    image: {
+      src: 'services/mobile.webp',
+      alt: 'Two app developers test an app side by side on their iPhones at a standing desk in a bright studio.',
+    },
   },
   {
     id: 'ai',
