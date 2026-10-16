@@ -1,10 +1,10 @@
 import { useEffect, useRef, type ReactNode } from 'react'
-import { motion, useMotionValue, useScroll, useTransform } from 'framer-motion'
+import { animate, motion, useMotionValue, useScroll, useTransform } from 'framer-motion'
 
 import { MOTION_OK } from './motion'
 
 /*
-  One royal blue line that starts at the very top of the home page, beside the
+  One emerald line that starts at the very top of the home page, beside the
   hero, and draws itself down the right edge as you scroll through the page.
 
   It wraps the page so it can measure it: progress is how far the visitor has
@@ -43,7 +43,15 @@ export default function PageLine({ children }: { children: ReactNode }) {
   // The line only ever runs downwards, so revealing it top to bottom with a clip is the
   // same as drawing it. The pen tip sits 40% of the way down the screen at the top of the
   // page and level with the bottom of the screen at the end, so it is always in view.
-  const clip = useTransform([scrollY, resized], ([y]: number[]) => {
+  // On load the pen draws down the first screen by itself, so a page too short
+  // to scroll far (the home page is one screen) still gets the whole stroke.
+  const intro = useMotionValue(0)
+  useEffect(() => {
+    const run = animate(intro, 1, { duration: 2.4, delay: 0.5, ease: [0.22, 1, 0.36, 1] })
+    return () => run.stop()
+  }, [intro])
+
+  const clip = useTransform([scrollY, resized, intro], ([y, , drawn]: number[]) => {
     const el = ref.current
     if (!el) return 'inset(0 0 100% 0)'
     const height = el.offsetHeight
@@ -51,7 +59,8 @@ export default function PageLine({ children }: { children: ReactNode }) {
     const rel = y - (el.getBoundingClientRect().top + window.scrollY)
     const along = Math.min(1, Math.max(0, rel / Math.max(1, height - vh)))
     const tip = rel + vh * (0.4 + 0.6 * along)
-    const share = Math.min(1, Math.max(0.02, tip / height))
+    const firstScreen = Math.min(1, vh / height)
+    const share = Math.min(1, Math.max(0.02, tip / height, drawn * firstScreen))
     return `inset(0 0 ${(1 - share) * 100}% 0)`
   })
 
