@@ -43,10 +43,13 @@
 
     <!-- Icons (self-hosted, generated from the logo) -->
     <!-- /favicon.ico also lives at the site root, because browsers and Google
-         ask for that exact path whatever the page says. The small sizes are the
-         atom mark alone (the full logo is unreadable at 16px). The ?v= bumps
-         past any old icon a browser cached. -->
+         ask for that exact path whatever the page says. Every icon is the Z tile
+         (the full logo is unreadable at 16px). The SVG stays sharp at any size,
+         which is what Google search and modern browsers use; the PNGs are 48px
+         multiples, as Google asks. The ?v= bumps past any old icon a browser
+         cached. -->
     <link rel="icon" href="/favicon.ico?v=3" sizes="16x16 32x32 48x48" />
+    <link rel="icon" type="image/svg+xml" href="/brand/zyflo-tile.svg?v=3" />
     <link rel="icon" type="image/png" sizes="48x48" href="/brand/icon-48.png?v=3" />
     <link rel="icon" type="image/png" sizes="32x32" href="/brand/icon-32.png?v=3" />
     <link rel="icon" type="image/png" sizes="192x192" href="/brand/icon-192.png?v=3" />
