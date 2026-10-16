@@ -73,6 +73,21 @@ export default function Studio() {
             </Tilt>
           </Parallax>
         </div>
+
+        {/* The studio at work: a scene photo, not a portrait of named staff. */}
+        {about.image && (
+          <BlurIn delay={0.1} className="mt-16 sm:mt-20">
+            <img
+              src={`${import.meta.env.BASE_URL}${about.image.src}`}
+              alt={about.image.alt}
+              width={1800}
+              height={772}
+              loading="lazy"
+              decoding="async"
+              className="aspect-[16/9] w-full rounded-card object-cover sm:aspect-[21/9]"
+            />
+          </BlurIn>
+        )}
       </Container>
     </section>
   )

@@ -358,6 +358,11 @@ export const about = {
     { label: 'Full handover', value: 'You own the code & accounts' },
     { label: 'After launch', value: 'Support that continues' },
   ],
+  /** The studio at work. A scene photo, never captioned as named staff. */
+  image: {
+    src: 'studio/studio.webp',
+    alt: 'A long oak worktable in a sunlit studio with MacBooks, coffee and notebooks of wireframe sketches, people working at their desks in the background.',
+  },
 } as const
 
 /** The photo beside the "Start a project" band on the home and about pages. */
