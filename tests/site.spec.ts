@@ -80,6 +80,20 @@ for (const { path, canonical } of PAGES) {
   })
 }
 
+// House style: no em or en dashes anywhere a visitor or a search engine reads.
+test('no em or en dashes on any page', async ({ page }) => {
+  for (const { path } of PAGES) {
+    await page.goto(path)
+    await page.waitForSelector('main h1')
+    const text = [
+      await page.title(),
+      await page.locator('meta[name=description]').getAttribute('content'),
+      await page.locator('body').innerText(),
+    ].join('\n')
+    expect(text, path).not.toMatch(/[–—]/)
+  }
+})
+
 test('titles are unique across pages', async ({ page }) => {
   const titles = new Set<string>()
   for (const { path } of PAGES) {
