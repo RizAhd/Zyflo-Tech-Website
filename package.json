@@ -8,7 +8,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "typecheck": "tsc -b --noEmit"
+    "typecheck": "tsc -b --noEmit",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "framer-motion": "^13.2.0",
@@ -19,6 +20,8 @@
     "react-dom": "19.2.8"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.64.1",
     "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^26.2.0",
     "@types/react": "^19.2.0",
