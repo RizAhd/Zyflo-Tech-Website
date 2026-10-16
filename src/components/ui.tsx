@@ -102,7 +102,7 @@ export function SectionHead({
 type ButtonProps = {
   children: ReactNode
   href?: string
-  variant?: 'primary' | 'outline' | 'ghost' | 'onInk'
+  variant?: 'primary' | 'accent' | 'outline' | 'ghost' | 'onInk'
   className?: string
   type?: 'button' | 'submit'
   disabled?: boolean
@@ -111,14 +111,15 @@ type ButtonProps = {
 }
 
 const VARIANTS: Record<string, string> = {
-  // brand-strong for fills and small text: white on #1f3fae is 8.8:1 and it
-  // reads 8.2:1 on the cream ground. The lighter brand blue (6.4:1 with white)
-  // is for icons, rules and large text.
+  // Matte black with white text (18.9:1) is the main button. On a black band
+  // it would vanish, so there the white `accent` button takes over.
   primary:
-    'bg-brand-strong text-white hover:bg-brand shadow-sm hover:shadow-md',
+    'bg-ink text-white hover:bg-[#2b2b2b] shadow-sm hover:shadow-md',
+  accent:
+    'bg-white text-ink hover:bg-[#ebebeb] shadow-sm hover:shadow-md',
   outline:
-    'border border-border bg-card text-foreground hover:border-brand hover:text-brand-strong',
-  ghost: 'text-foreground hover:bg-muted',
+    'border border-border bg-card text-foreground hover:border-foreground',
+  ghost: 'text-foreground hover:bg-[#f2f2f2]',
   onInk: 'border border-white/25 text-white hover:bg-card hover:text-ink',
 }
 

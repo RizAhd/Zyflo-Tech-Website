@@ -69,7 +69,7 @@ export default function HomeMore() {
                 <Link
                   key={s.id}
                   to={`/services/#service-${s.id}`}
-                  className="group flex flex-col rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-brand/40 hover:shadow-[0_18px_40px_-28px_rgba(10,22,71,0.4)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                  className="group flex flex-col rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-brand/40 hover:shadow-[0_18px_40px_-28px_rgba(17,17,17,0.4)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
                 >
                   <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-tint text-brand-strong transition-colors duration-300 group-hover:bg-brand-strong group-hover:text-white">
                     <Icon className="h-[18px] w-[18px]" aria-hidden="true" />

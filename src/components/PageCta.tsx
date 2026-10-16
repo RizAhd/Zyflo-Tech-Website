@@ -26,7 +26,7 @@ export default function PageCta({
       <Container>
         <div className="relative overflow-hidden rounded-[2rem] bg-ink px-6 py-14 text-white sm:px-14 sm:py-20">
           <div
-            className="pointer-events-none absolute -top-24 left-1/2 h-72 w-[40rem] -translate-x-1/2 rounded-full bg-brand-bright/15 blur-[110px]"
+            className="pointer-events-none absolute -top-24 left-1/2 h-72 w-[40rem] -translate-x-1/2 rounded-full bg-white/[0.05] blur-[110px]"
             aria-hidden="true"
           />
           <div className="relative mx-auto flex max-w-2xl flex-col items-center text-center">
@@ -42,7 +42,7 @@ export default function PageCta({
             <BlurIn delay={0.18}>
               <div className="mt-9">
                 <Magnetic strength={0.25}>
-                  <Button href={to}>
+                  <Button href={to} variant="accent">
                     {label}
                     <ArrowRight className="h-4 w-4" />
                   </Button>

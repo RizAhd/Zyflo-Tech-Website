@@ -226,7 +226,7 @@ export default function Contact() {
   return (
     <section id="contact" className="relative overflow-hidden bg-ink py-24 text-white sm:py-32">
       <div
-        className="pointer-events-none absolute left-1/2 top-0 h-[26rem] w-[46rem] -translate-x-1/2 rounded-full bg-brand-bright/10 blur-[120px]"
+        className="pointer-events-none absolute left-1/2 top-0 h-[26rem] w-[46rem] -translate-x-1/2 rounded-full bg-white/[0.05] blur-[120px]"
         aria-hidden="true"
       />
 

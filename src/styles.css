@@ -16,15 +16,18 @@
    from that round was kept: it is the part that was actually asked for.
 
    CONTRAST: measured, never guessed.
+   Palette: matte black and pure white lead (black text, black buttons,
+   black bands), light greys for secondary surfaces, and the Zyflo green as
+   the third colour only: highlighted words, icons, the side line, links.
    On --background #FFFFFF:
-     foreground   #0e1430  18.51:1  body and headings          AAA
-     muted-fg     #596079   6.17:1  secondary copy             AA
-     brand        #2b52d6   4.39:1  ICONS, RULES, LARGE TEXT ONLY
-     brand-strong #1f3fae   5.81:1  links, small text, button fills
-   On --ink #0a1647 (dark bands):
-     white        #FFFFFF  13.85:1  headings and body          AAA
-     ink-muted    #b8c4ea   7.99:1  secondary copy             AAA
-     brand-bright #8eaaff   7.76:1  accents on dark            AAA
+     foreground   #111111  18.88:1  body, headings, main buttons  AAA
+     muted-fg     #525252   7.81:1  secondary copy                AAA
+     brand        #008b48   4.39:1  ICONS, RULES, LARGE TEXT ONLY
+     brand-strong #00753e   5.81:1  highlighted words, links
+   On --ink #111111 (black bands):
+     white        #FFFFFF  18.88:1  headings and body             AAA
+     ink-muted    #a3a3a3   7.49:1  secondary copy                AA
+     brand-bright #3ddc84  10.58:1  green accents on black        AAA
    ========================================================================== */
 @theme {
   /* Three type roles kept apart as names
@@ -37,21 +40,21 @@
   /* The second voice. Every label, eyebrow, ordinal, tag, spec value and
      figure on the site is set in this, and nothing else is. */
 
-  --color-background: #fbf6e9;      /* light cream page ground          */
-  --color-card: #fffdf7;            /* cards, inputs: a warm near white */
-  --color-foreground: #0e1430;
-  --color-muted: #f4edd9;
-  --color-muted-foreground: #596079;
-  --color-border: #e7dfc8;
+  --color-background: #ffffff;      /* white page ground                 */
+  --color-card: #ffffff;            /* cards and inputs                  */
+  --color-foreground: #111111;
+  --color-muted: #ffffff;           /* bands stay pure white; borders mark them */
+  --color-muted-foreground: #525252;
+  --color-border: #e6e6e6;
 
   /* The brand, and its two working variants. */
-  --color-brand: #2b52d6;          /* royal blue: icons, rules, large text (5.9:1 on cream) */
-  --color-brand-strong: #1f3fae;   /* 8.2:1 on cream: links, small text, fills */
-  --color-brand-bright: #8eaaff;   /* 7.7:1 on ink: accents on the dark bands */
-  --color-brand-tint: #e9eefd;     /* faint surface wash                 */
+  --color-brand: #008b48;          /* emerald: icons, rules, large text   */
+  --color-brand-strong: #00753e;   /* deep emerald: words, links, buttons */
+  --color-brand-bright: #3ddc84;   /* bright green: accents on black      */
+  --color-brand-tint: #f2f2f2;     /* light grey chip behind icons       */
 
-  --color-ink: #0a1647;            /* dark band ground                   */
-  --color-ink-muted: #b8c4ea;      /* 9.9:1 on ink                       */
+  --color-ink: #111111;            /* matte black: buttons, dark bands  */
+  --color-ink-muted: #a3a3a3;      /* secondary text on black           */
 
   /* Corners are sharp now. 16px was soft enough to read as a stock card; at
      4px the card reads as a drawn panel instead. Buttons take this same 4px,
@@ -168,7 +171,7 @@
   text-wrap: balance;
 }
 @utility dot-grid {
-  background-image: radial-gradient(circle at 1px 1px, #d9dde3 1px, transparent 0);
+  background-image: radial-gradient(circle at 1px 1px, #d9e3dc 1px, transparent 0);
   background-size: 22px 22px;
 }
 
