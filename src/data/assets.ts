@@ -6,4 +6,7 @@
  */
 const base = import.meta.env.BASE_URL
 
-export const LOGO_SRC = `${base}brand/logo.png`
+/** The ZYFLO TECH Z on a black tile: header, cards, icons. */
+export const LOGO_SRC = `${base}brand/zyflo-tile.svg`
+/** The white Z on its own, for the black footer. */
+export const LOGO_WHITE_SRC = `${base}brand/zyflo-z-white.svg`

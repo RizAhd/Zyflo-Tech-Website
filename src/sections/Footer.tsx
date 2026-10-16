@@ -1,6 +1,6 @@
 import { business, navLinks, services } from '../data/site.config'
 import { email, phone, whatsapp } from '../data/contact'
-import { LOGO_SRC } from '../data/assets'
+import { LOGO_WHITE_SRC } from '../data/assets'
 import { Container } from '../components/ui'
 import { Link } from '../router'
 
@@ -17,7 +17,7 @@ export default function Footer() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.3fr_1.2fr]">
           <div>
             <div className="flex items-center gap-2.5">
-              <img src={LOGO_SRC} alt="" width={30} height={30} className="rounded-md" />
+              <img src={LOGO_WHITE_SRC} alt="" width={30} height={26} />
               <span className="font-ui text-base font-semibold">{business.name}</span>
             </div>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink-muted">
