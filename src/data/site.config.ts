@@ -138,8 +138,8 @@ export interface Service {
   title: string
   promise: string
   deliverables: string[]
-  /** A photo in /public/services. Until there is one the drawn figure shows. */
-  image?: { src: string; alt: string }
+  /** A photo in /public/services of the work being done. */
+  image: { src: string; alt: string }
 }
 
 export const services: Service[] = [

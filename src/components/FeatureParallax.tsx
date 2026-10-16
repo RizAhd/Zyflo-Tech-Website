@@ -5,7 +5,6 @@ import { ArrowRight, Check } from 'lucide-react'
 import { services } from '../data/site.config'
 import { Container } from './ui'
 import { MOTION_OK } from './motion'
-import { ServiceScene } from './scenes'
 import { Link } from '../router'
 
 /*
@@ -13,8 +12,8 @@ import { Link } from '../router'
 
   As a band scrolls in, the figure is revealed left to right with a clip,
   driven by that band's own scroll progress. The text does not move: it is
-  there to be read. Bands alternate sides. A service shows its photo when it
-  has one (public/services) and the drawn product screen until then.
+  there to be read. Bands alternate sides, each with a photo of that work
+  being done (public/services).
 
   Every band carries the id `service-<id>`, which is what the jump links on
   this page, the home page cards and the footer point at.
@@ -70,22 +69,15 @@ function Band({ service, flip, motionOn }: { service: Service; flip: boolean; mo
 
       <motion.div style={motionOn ? { opacity, clipPath: clip } : undefined} className="relative">
         <div className="relative aspect-[16/11] w-full overflow-hidden rounded-3xl border border-border bg-white">
-          {service.image ? (
-            <img
-              src={`${import.meta.env.BASE_URL}${service.image.src}`}
-              alt={service.image.alt}
-              width={1600}
-              height={1067}
-              loading="lazy"
-              decoding="async"
-              className="h-full w-full object-cover"
-            />
-          ) : (
-            <div aria-hidden="true" className="absolute inset-0">
-              <div className="dot-grid pointer-events-none absolute inset-0 opacity-50" />
-              <ServiceScene id={service.id} />
-            </div>
-          )}
+          <img
+            src={`${import.meta.env.BASE_URL}${service.image.src}`}
+            alt={service.image.alt}
+            width={1600}
+            height={1067}
+            loading="lazy"
+            decoding="async"
+            className="h-full w-full object-cover"
+          />
         </div>
       </motion.div>
     </div>
