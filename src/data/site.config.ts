@@ -310,13 +310,13 @@ export const process = [
 ] as const
 
 // ---------------------------------------------------------------------------
-// About: honest solo-operator positioning. No invented headcount or awards.
+// About: honest studio positioning. No invented headcount, staff or awards.
 // ---------------------------------------------------------------------------
 export const about = {
-  heading: 'One person. Fully accountable.',
+  heading: 'Small studio. Fully accountable.',
   body: [
-    'Zyflo Tech is a one-person studio, and that is the point. You talk to the person who ' +
-      'writes the code. Nothing gets lost between a salesperson, a project manager and a ' +
+    'Zyflo Tech is a small studio, and that is the point. You talk to the people who ' +
+      'build your project. Nothing gets lost between a salesperson, a project manager and a ' +
       'developer who never heard what you asked for.',
     'That means honest scoping, direct answers, and work handed over properly. The accounts, ' +
       'the code and the documentation are yours at the end. No lock-in, no hostage situation.',
@@ -336,8 +336,8 @@ export const about = {
 export const contactSection = {
   heading: "Let's talk about what you need.",
   lead:
-    'Tell me what you are trying to build and I will tell you honestly whether I am the right ' +
-    'person for it, roughly what it costs, and how long it takes.',
+    'Tell us what you are trying to build and we will tell you honestly whether we are the ' +
+    'right fit for it, roughly what it costs, and how long it takes.',
   budgetOptions: [
     'Not sure yet',
     'Under Rs 50,000',
@@ -377,10 +377,9 @@ export const faqs: Faq[] = [
   {
     q: 'Who actually does the work?',
     a:
-      'I do, and I am the only person in the studio. Zyflo Tech is a one person ' +
-      'operation based in Sri Lanka, so the person you brief is the person who writes the ' +
-      'code and hands it over. There is no sales layer and no project manager repeating your ' +
-      'words back to you.',
+      'Our own studio in Sri Lanka, founded by Riflan Mohamed. The people you brief are the ' +
+      'people who build the project and hand it over. There is no sales layer and no ' +
+      'project manager repeating your words back to you.',
   },
   {
     q: 'Do I own the code and the accounts at the end?',
@@ -419,7 +418,7 @@ export const faqs: Faq[] = [
     a:
       'Zyflo Tech has been running since March 2022. Shipped work includes a point of sale system ' +
       'for SJD and the website for mradventure.lk, alongside the studio\'s own invoice and ' +
-      'receipt tool. Each was built and handed over by the same person, so you can ask me ' +
+      'receipt tool. Each was built and handed over by the studio, so you can ask us ' +
       'about any of them directly.',
   },
   {
@@ -427,7 +426,7 @@ export const faqs: Faq[] = [
     a:
       'Seven: website building, software application development, mobile application ' +
       'development, AI automation, AI video generation, digital marketing and social media ' +
-      'management. They are meant to fit together, so one person can build the site, wire up ' +
+      'management. They are meant to fit together, so we can build the site, wire up ' +
       'the automation behind it and then run the pages that feed it.',
   },
 ]
@@ -468,7 +467,7 @@ export const pages: PageMeta[] = [
       'Seven services from one studio in Sri Lanka: website building, software and mobile apps, ' +
       'AI automation, AI video, digital marketing and social media management.',
     heading: 'Seven ways to make the business run better.',
-    lead: 'Most projects touch more than one of these. Tell me the problem and I will tell you which of them it actually needs.',
+    lead: 'Most projects touch more than one of these. Tell us the problem and we will tell you which of them it actually needs.',
   },
   {
     path: '/process',
@@ -493,12 +492,12 @@ export const pages: PageMeta[] = [
   {
     path: '/about',
     name: 'About',
-    title: 'About Zyflo Tech: a One Person Studio in Sri Lanka',
+    title: 'About Zyflo Tech: a Digital Studio in Sri Lanka',
     description:
-      'Zyflo Tech is run by Riflan Mohamed, who does the work personally. Running since ' +
-      'March 2022, based in Sri Lanka, with direct contact, fixed quotes and full handover.',
-    heading: 'One person. Fully accountable.',
-    lead: 'You talk to the person who writes the code. Nothing gets lost between a salesperson, a project manager and a developer.',
+      'Zyflo Tech is a digital studio founded by Riflan Mohamed. Running since March 2022, ' +
+      'based in Sri Lanka, with direct contact, fixed quotes and full handover.',
+    heading: 'Small studio. Fully accountable.',
+    lead: 'You talk to the people who build your project. Nothing gets lost between a salesperson, a project manager and a developer.',
   },
   {
     path: '/contact',
@@ -508,7 +507,7 @@ export const pages: PageMeta[] = [
       'Tell Zyflo Tech what you want to build. Message on WhatsApp, email or use the enquiry ' +
       'form, and get a fixed quote in LKR. Answers to common questions about cost and ownership.',
     heading: "Let's talk about what you need.",
-    lead: 'Tell me what you are trying to build and I will tell you honestly whether I am the right person for it.',
+    lead: 'Tell us what you are trying to build and we will tell you honestly whether we are the right fit for it.',
   },
 ]
 

@@ -21,8 +21,7 @@ export default function Footer() {
               <span className="font-ui text-base font-semibold">{business.name}</span>
             </div>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink-muted">
-              {business.tagline} from a one person studio in {business.location}. Run by {business.owner} since{' '}
-              {business.foundedMonth} {business.foundedYear}.
+              {business.tagline} from a studio in {business.location}, founded by {business.owner}.
             </p>
           </div>
 

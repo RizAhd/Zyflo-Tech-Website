@@ -21,7 +21,7 @@ export default function Faqs() {
               The things people <span className="text-brand-strong">ask first</span>.
             </>
           }
-          lead="Straight answers about cost, ownership and what happens after launch. If yours is not here, ask me directly."
+          lead="Straight answers about cost, ownership and what happens after launch. If yours is not here, ask us directly."
         />
 
         <StaggerGrid className="mt-14 grid gap-x-12 gap-y-8 md:grid-cols-2" stagger={0.05}>

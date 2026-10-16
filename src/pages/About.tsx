@@ -7,7 +7,7 @@ export default function About() {
       <Studio />
       <PageCta
         eyebrow="Ready when you are"
-        title="Tell me what you need."
+        title="Tell us what you need."
         body="A short message is enough. You get an honest answer and a fixed quote in LKR."
         to="/contact"
         label="Start a project"

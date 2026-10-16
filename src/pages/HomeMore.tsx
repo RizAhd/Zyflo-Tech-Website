@@ -4,7 +4,7 @@ import { business, clients, services } from '../data/site.config'
 import { Container, SectionHead } from '../components/ui'
 import { StaggerGrid } from '../components/motion'
 import PageCta from '../components/PageCta'
-import HowIWork from '../components/HowIWork'
+import HowWeWork from '../components/HowWeWork'
 import { Link } from '../router'
 import Work from '../sections/Work'
 import { Ready } from '../ready'
@@ -48,12 +48,12 @@ export default function HomeMore() {
         </Container>
       </section>
 
-      <HowIWork />
+      <HowWeWork />
 
       <section className="py-20 sm:py-24">
         <Container>
           <SectionHead
-            eyebrow="What I do"
+            eyebrow="What we do"
             title={
               <>
                 One studio, <span className="text-brand-strong">seven services</span>.
@@ -99,8 +99,8 @@ export default function HomeMore() {
 
       <PageCta
         eyebrow="Start here"
-        title="Tell me what you need."
-        body="A short message is enough. You get an honest answer, a fixed quote in LKR and one person who stays with it to the end."
+        title="Tell us what you need."
+        body="A short message is enough. You get an honest answer, a fixed quote in LKR and a team that stays with it to the end."
         to="/contact"
         label="Start a project"
       />

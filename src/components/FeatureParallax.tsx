@@ -100,7 +100,7 @@ export default function FeatureParallax() {
               Each service, <span className="text-brand-strong">up close</span>.
             </>
           }
-          lead="What is included, what it looks like when it is working, and the pieces I build most often under it."
+          lead="What is included, what it looks like when it is working, and the pieces we build most often under it."
         />
         <div className="mt-6 divide-y divide-border">
           {services.map((s, i) => (

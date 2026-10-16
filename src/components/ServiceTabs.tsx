@@ -78,13 +78,13 @@ export default function ServiceTabs() {
       <Container>
         <SectionHead
           h1
-          eyebrow="What I do"
+          eyebrow="What we do"
           title={
             <>
               Seven ways to make the business <span className="text-brand-strong">run better</span>.
             </>
           }
-          lead="Most projects touch more than one of these. Tell me the problem and I will tell you which of them it actually needs, including when the answer is less than you think."
+          lead="Most projects touch more than one of these. Tell us the problem and we will tell you which of them it actually needs, including when the answer is less than you think."
         />
 
         <div className="mt-12 grid items-start gap-10 lg:grid-cols-12 lg:gap-14">

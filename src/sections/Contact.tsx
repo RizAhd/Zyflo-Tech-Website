@@ -76,7 +76,7 @@ function EnquiryForm() {
         </motion.span>
         <h3 className="mt-5 font-ui text-xl font-semibold">That came through.</h3>
         <p className="mt-2 text-sm text-muted-foreground">
-          I read every enquiry myself and reply within a day or two.
+          We read every enquiry and reply within a day or two.
         </p>
         <Button variant="outline" className="mt-6" onClick={() => setStatus('idle')}>
           Send another
@@ -187,7 +187,7 @@ function EnquiryForm() {
 
       {status === 'error' && (
         <p role="alert" className="mt-4 text-sm text-red-700">
-          That did not send. Please try again, or reach me directly.
+          That did not send. Please try again, or reach us directly.
         </p>
       )}
 
@@ -206,7 +206,7 @@ function EnquiryForm() {
       {!formKey && (
         <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
           {whatsapp
-            ? 'Pressing send opens WhatsApp with your enquiry already written. I read every message myself and reply within a day or two.'
+            ? 'Pressing send opens WhatsApp with your enquiry already written. We read every message and reply within a day or two.'
             : email
               ? 'Pressing send opens your email app with your enquiry already written.'
               : 'Contact details are being finalised and will appear here shortly.'}
@@ -256,7 +256,7 @@ export default function Contact() {
                   {...(whatsapp ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                   className="group mt-9 inline-flex items-center gap-3 font-ui text-xl font-medium text-brand-bright transition-colors hover:text-white sm:text-2xl"
                 >
-                  {whatsapp ? 'Message me on WhatsApp' : email}
+                  {whatsapp ? 'Message us on WhatsApp' : email}
                   <ArrowUpRight className="h-5 w-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                 </a>
               </BlurIn>
@@ -269,7 +269,7 @@ export default function Contact() {
                     Studio
                   </dt>
                   <dd className="mt-2 text-sm text-ink-muted">
-                    {business.owner}
+                    {business.name}
                     <br />
                     {business.location}
                   </dd>
@@ -336,7 +336,7 @@ export default function Contact() {
                         rel="noopener noreferrer"
                         className="inline-flex min-h-[32px] items-center hover:text-brand-bright"
                       >
-                        Message me
+                        Message us
                       </a>
                     </dd>
                   </div>

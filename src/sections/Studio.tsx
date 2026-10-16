@@ -45,10 +45,10 @@ export default function Studio() {
                   className="rounded-xl"
                 />
                 <p className="mt-5 font-ui text-lg font-semibold">
-                  {business.name} &middot; {business.owner}
+                  {business.name}
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  {business.tagline} &middot; {business.location}
+                  Founded by {business.owner}, {business.location}
                 </p>
 
                 <dl className="mt-7 divide-y divide-border border-t border-border">

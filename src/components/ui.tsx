@@ -23,7 +23,7 @@ export function Container({
   )
 }
 
-/** `01 / What I do`. The numbered micro-label StemLink puts above every section. */
+/** `01 / What we do`. The numbered micro-label StemLink puts above every section. */
 export function Eyebrow({
   index,
   children,
