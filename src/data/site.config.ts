@@ -155,6 +155,10 @@ export const services: Service[] = [
       'Built for speed on mobile data',
       'Search-ready structure and metadata',
     ],
+    image: {
+      src: 'services/web.webp',
+      alt: 'Two designers at a sunlit desk review the Zyflo Tech home page on a MacBook Pro, one pointing at the headline while the other sketches the page layout in a notebook.',
+    },
   },
   {
     id: 'software',

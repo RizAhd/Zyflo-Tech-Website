@@ -75,7 +75,7 @@ function Band({ service, flip, motionOn }: { service: Service; flip: boolean; mo
               src={`${import.meta.env.BASE_URL}${service.image.src}`}
               alt={service.image.alt}
               width={1600}
-              height={1100}
+              height={1067}
               loading="lazy"
               decoding="async"
               className="h-full w-full object-cover"
