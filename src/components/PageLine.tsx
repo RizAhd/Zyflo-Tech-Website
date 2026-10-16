@@ -14,8 +14,8 @@ import { MOTION_OK } from './motion'
 
   The path is stretched to the page's height. A non-scaling stroke keeps its
   width the same however far it is stretched, and a clip that grows down the
-  page reveals it. Hidden on a phone, where the
-  edge of the screen is better left to the content, and when motion is off.
+  page reveals it. On a phone it is squeezed into the right hand margin, so it
+  wanders beside the content without crossing it. Hidden when motion is off.
 */
 
 // One continuous wandering line, top to bottom. 300 wide, 2000 tall, stretched.
@@ -23,7 +23,7 @@ const PATH =
   'M262 0 C262 110 150 140 170 270 S300 470 215 640 S70 800 150 980 S295 1130 205 1310 S75 1480 160 1650 S280 1790 225 2000'
 
 const LINE_CLASS =
-  'pointer-events-none absolute inset-y-0 right-0 -z-10 hidden h-full w-[min(28vw,380px)] sm:block'
+  'pointer-events-none absolute inset-y-0 right-0 -z-10 block h-full w-9 sm:w-[min(28vw,380px)]'
 
 export default function PageLine({ children }: { children: ReactNode }) {
   const motionOn = typeof window !== 'undefined' && window.matchMedia(MOTION_OK).matches
@@ -80,6 +80,7 @@ export default function PageLine({ children }: { children: ReactNode }) {
               stroke="var(--color-brand)"
               strokeOpacity="0.12"
               strokeWidth="6"
+              className="[stroke-width:3] sm:[stroke-width:6]"
               strokeLinecap="round"
               vectorEffect="non-scaling-stroke"
             />
@@ -96,6 +97,7 @@ export default function PageLine({ children }: { children: ReactNode }) {
               d={PATH}
               stroke="var(--color-brand)"
               strokeWidth="6"
+              className="[stroke-width:3] sm:[stroke-width:6]"
               strokeLinecap="round"
               vectorEffect="non-scaling-stroke"
             />
