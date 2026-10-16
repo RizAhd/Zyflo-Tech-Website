@@ -81,26 +81,9 @@
         src: url('/fonts/geist-mono-variable.woff2') format('woff2');
       }
 
-      /* Before React mounts the visitor sees a calm logo, not a page of
-         unstyled text. The crawlable copy stays in the DOM, visually hidden. */
-      #zyflo-splash {
-        position: fixed;
-        inset: 0;
-        z-index: 100;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #ffffff;
-      }
-      #zyflo-splash img {
-        width: 56px;
-        height: 56px;
-        border-radius: 14px;
-        animation: zyflo-splash 1.2s ease-in-out infinite;
-      }
-      @keyframes zyflo-splash {
-        50% { transform: scale(0.92); opacity: 0.7; }
-      }
+      /* Until React mounts the page is plain white (no splash screen: it only
+         added a beat before the site). The crawlable copy stays in the DOM,
+         visually hidden. */
       #zyflo-static {
         position: absolute;
         width: 1px;
@@ -121,12 +104,11 @@
       no display:none and no aria-hidden, so it stays in the accessibility tree
       and in the text a crawler extracts. With JavaScript off, the noscript rule
       below shows it as an ordinary page. React's createRoot().render() clears
-      #root on mount, taking the splash and this block with it.
+      #root on mount, taking this block with it.
       Do not move it out of #root.
     -->
     <noscript>
       <style>
-        #zyflo-splash { display: none !important; }
         #zyflo-static {
           position: static !important;
           width: auto !important;
@@ -137,7 +119,7 @@
         }
       </style>
     </noscript>
-    <div id="root"><div id="zyflo-splash" aria-hidden="true"><img src="/brand/icon-192.png" alt="" width="56" height="56" /></div><!--ZYFLO:STATIC-FALLBACK--></div>
+    <div id="root"><!--ZYFLO:STATIC-FALLBACK--></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

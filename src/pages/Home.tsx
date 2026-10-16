@@ -10,22 +10,6 @@ import PageLine from '../components/PageLine'
 
 const HomeMore = lazy(() => import('./HomeMore'))
 
-/** True once the browser has had a quiet moment after the first paint. */
-function useAfterFirstPaint() {
-  const [ready, setReady] = useState(false)
-  useEffect(() => {
-    const go = () => setReady(true)
-    const ric = window.requestIdleCallback as typeof window.requestIdleCallback | undefined
-    if (ric) {
-      const id = ric(go, { timeout: 700 })
-      return () => window.cancelIdleCallback(id)
-    }
-    const id = window.setTimeout(go, 150)
-    return () => window.clearTimeout(id)
-  }, [])
-  return ready
-}
-
 function Hero() {
   const [line1, line2] = hero.headline.split('|')
 
@@ -84,11 +68,14 @@ function Hero() {
 }
 
 /*
-  The home page: a simple hero first, with the least possible JavaScript, then
-  the rest of the page once the hero has painted.
+  The home page: the hero first, then the rest of the page. The lower half is
+  its own chunk, requested the moment the hero has been committed: early
+  enough that it is there before anyone scrolls, late enough that it does not
+  compete with the hero for the first paint.
 */
 export default function Home() {
-  const rest = useAfterFirstPaint()
+  const [rest, setRest] = useState(false)
+  useEffect(() => setRest(true), [])
   return (
     <PageLine>
       <Hero />
