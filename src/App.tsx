@@ -24,7 +24,7 @@ import { Ready, ReadyContext } from './ready'
 
   Layout language follows stemlink.online: white ground, eyebrows, a product
   hero, icon cards, a dark CTA band, a form led close. The palette is Zyflo's
-  single brand green rather than StemLink's blue, violet and lime, which is
+  single brand blue on a cream ground rather than StemLink's blue, violet and lime, which is
   what keeps it minimal.
 
   There is no stock or placeholder artwork anywhere on the site. The service
@@ -103,7 +103,7 @@ function Nav() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         hidden && !open ? '-translate-y-full' : 'translate-y-0'
-      } ${solid ? 'bg-white/[0.98] shadow-[0_6px_24px_-16px_rgba(6,52,28,0.45)] backdrop-blur-xl' : 'bg-transparent'}`}
+      } ${solid ? 'bg-background/[0.98] shadow-[0_6px_24px_-16px_rgba(10,22,71,0.45)] backdrop-blur-xl' : 'bg-transparent'}`}
     >
       <Container className="flex h-16 items-center justify-between sm:h-20">
         <Link
@@ -173,7 +173,7 @@ function Nav() {
         <AnimatePresence>
           {open && (
             <motion.div
-              className="fixed inset-0 z-[80] overflow-y-auto overscroll-contain bg-white md:hidden"
+              className="fixed inset-0 z-[80] overflow-y-auto overscroll-contain bg-background md:hidden"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -346,7 +346,7 @@ export default function App() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Chat on WhatsApp"
-          className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-40 inline-flex h-14 w-14 items-center justify-center rounded-full bg-brand-strong text-white shadow-[0_12px_30px_-10px_rgba(6,52,28,0.6)] transition-transform duration-300 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand sm:bottom-6 sm:right-6"
+          className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-40 inline-flex h-14 w-14 items-center justify-center rounded-full bg-brand-strong text-white shadow-[0_12px_30px_-10px_rgba(10,22,71,0.6)] transition-transform duration-300 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand sm:bottom-6 sm:right-6"
         >
           <MessageCircle className="h-6 w-6" aria-hidden="true" />
         </a>

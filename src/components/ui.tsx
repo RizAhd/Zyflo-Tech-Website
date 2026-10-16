@@ -111,14 +111,15 @@ type ButtonProps = {
 }
 
 const VARIANTS: Record<string, string> = {
-  // brand-strong, not brand: white on #008B48 is 4.39:1, which fails AA for
-  // button text. #00753E carries the same green at 5.81:1.
+  // brand-strong for fills and small text: white on #1f3fae is 8.8:1 and it
+  // reads 8.2:1 on the cream ground. The lighter brand blue (6.4:1 with white)
+  // is for icons, rules and large text.
   primary:
     'bg-brand-strong text-white hover:bg-brand shadow-sm hover:shadow-md',
   outline:
-    'border border-border bg-white text-foreground hover:border-brand hover:text-brand-strong',
+    'border border-border bg-card text-foreground hover:border-brand hover:text-brand-strong',
   ghost: 'text-foreground hover:bg-muted',
-  onInk: 'border border-white/25 text-white hover:bg-white hover:text-ink',
+  onInk: 'border border-white/25 text-white hover:bg-card hover:text-ink',
 }
 
 export function Button({
@@ -173,7 +174,7 @@ export function Badge({
       className={`inline-flex items-center gap-2 rounded-full px-3 py-1 font-ui text-xs font-medium ${
         onInk
           ? 'border border-white/20 text-white/80'
-          : 'border border-border bg-white text-muted-foreground'
+          : 'border border-border bg-card text-muted-foreground'
       }`}
     >
       {children}

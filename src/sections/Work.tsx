@@ -34,7 +34,7 @@ export default function Work({
         >
           {shown.map(({ p, i }) => (
             <Tilt key={p.id} max={5} className="h-full">
-              <article className="group h-full overflow-hidden rounded-card border border-border bg-white transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:shadow-[0_22px_50px_-28px_rgba(6,52,28,0.4)]">
+              <article className="group h-full overflow-hidden rounded-card border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:shadow-[0_22px_50px_-28px_rgba(10,22,71,0.4)]">
                 <div className="relative aspect-[16/10] overflow-hidden border-b border-border">
                   <CardParallax className="absolute inset-0">
                     <ProjectScene index={i} />

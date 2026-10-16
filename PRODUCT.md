@@ -45,7 +45,7 @@ hello@zyflo.tech mailbox, a booking link, the city for local search.
 
 ## Brand Commitments
 
-White ground with the Zyflo emerald (#008B48, strong #00753E). Inter and Instrument Sans,
+Light cream ground (#FBF6E9) with royal blue (#2B52D6, strong #1F3FAE) on deep navy bands (#0A1647). The brand moved from white and emerald to royal blue and cream at the owner's request. Inter and Instrument Sans,
 self hosted. Voice is plain, direct and first person. Zero em dashes or en dashes anywhere.
 Motion is on by default with a footer toggle to switch it off. No stock or placeholder
 imagery. No fabricated facts, numbers or testimonials.

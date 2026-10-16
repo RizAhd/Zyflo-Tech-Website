@@ -64,7 +64,7 @@ function EnquiryForm() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
         role="status"
-        className="rounded-card border border-border bg-white p-8"
+        className="rounded-card border border-border bg-card p-8"
       >
         <motion.span
           initial={{ scale: 0, rotate: -30 }}
@@ -88,11 +88,11 @@ function EnquiryForm() {
   // text-base below sm: iOS Safari zooms the page in when a focused input is
   // under 16px, and it never zooms back out.
   const field =
-    'w-full rounded-xl border border-border bg-white px-4 py-3 text-base text-foreground transition-colors placeholder:text-muted-foreground/60 focus:border-brand focus:outline-none sm:text-sm'
+    'w-full rounded-xl border border-border bg-card px-4 py-3 text-base text-foreground transition-colors placeholder:text-muted-foreground/60 focus:border-brand focus:outline-none sm:text-sm'
   const label = 'mb-1.5 block font-ui text-xs font-medium text-muted-foreground'
 
   return (
-    <form onSubmit={onSubmit} className="rounded-card border border-border bg-white p-6 sm:p-8">
+    <form onSubmit={onSubmit} className="rounded-card border border-border bg-card p-6 sm:p-8">
       <input
         type="checkbox"
         name="botcheck"
@@ -295,7 +295,7 @@ export default function Contact() {
                   </dd>
                 </div>
                 {email && (
-                  <div className="col-span-2 sm:col-span-1">
+                  <div className="col-span-2 sm:col-span-3">
                     <dt className="font-display text-[11px] uppercase tracking-[0.2em] text-white/60">
                       Email
                     </dt>

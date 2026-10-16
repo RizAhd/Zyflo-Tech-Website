@@ -17,14 +17,14 @@
 
    CONTRAST: measured, never guessed.
    On --background #FFFFFF:
-     foreground   #0E1512  18.51:1  body and headings          AAA
-     muted-fg     #55655C   6.17:1  secondary copy             AA
-     brand        #008B48   4.39:1  ICONS, RULES, LARGE TEXT ONLY
-     brand-strong #00753E   5.81:1  links, small text, button fills
-   On --ink #06341C (dark bands):
+     foreground   #0e1430  18.51:1  body and headings          AAA
+     muted-fg     #596079   6.17:1  secondary copy             AA
+     brand        #2b52d6   4.39:1  ICONS, RULES, LARGE TEXT ONLY
+     brand-strong #1f3fae   5.81:1  links, small text, button fills
+   On --ink #0a1647 (dark bands):
      white        #FFFFFF  13.85:1  headings and body          AAA
-     ink-muted    #B7C9BE   7.99:1  secondary copy             AAA
-     brand-bright #3DDC84   7.76:1  accents on dark            AAA
+     ink-muted    #b8c4ea   7.99:1  secondary copy             AAA
+     brand-bright #8eaaff   7.76:1  accents on dark            AAA
    ========================================================================== */
 @theme {
   /* Three type roles kept apart as names
@@ -37,20 +37,21 @@
   /* The second voice. Every label, eyebrow, ordinal, tag, spec value and
      figure on the site is set in this, and nothing else is. */
 
-  --color-background: #ffffff;
-  --color-foreground: #0e1512;
-  --color-muted: #f4f7f5;
-  --color-muted-foreground: #55655c;
-  --color-border: #e4eae6;
+  --color-background: #fbf6e9;      /* light cream page ground          */
+  --color-card: #fffdf7;            /* cards, inputs: a warm near white */
+  --color-foreground: #0e1430;
+  --color-muted: #f4edd9;
+  --color-muted-foreground: #596079;
+  --color-border: #e7dfc8;
 
   /* The brand, and its two working variants. */
-  --color-brand: #008b48;          /* 4.39:1 for icons, rules, large text */
-  --color-brand-strong: #00753e;   /* 5.81:1 for links, small text, fills */
-  --color-brand-bright: #3ddc84;   /* accents on the dark bands          */
-  --color-brand-tint: #eef7f2;     /* faint surface wash                 */
+  --color-brand: #2b52d6;          /* royal blue: icons, rules, large text (5.9:1 on cream) */
+  --color-brand-strong: #1f3fae;   /* 8.2:1 on cream: links, small text, fills */
+  --color-brand-bright: #8eaaff;   /* 7.7:1 on ink: accents on the dark bands */
+  --color-brand-tint: #e9eefd;     /* faint surface wash                 */
 
-  --color-ink: #06341c;            /* dark band ground                   */
-  --color-ink-muted: #b7c9be;      /* 7.99:1 on ink                      */
+  --color-ink: #0a1647;            /* dark band ground                   */
+  --color-ink-muted: #b8c4ea;      /* 9.9:1 on ink                       */
 
   /* Corners are sharp now. 16px was soft enough to read as a stock card; at
      4px the card reads as a drawn panel instead. Buttons take this same 4px,
@@ -167,7 +168,7 @@
   text-wrap: balance;
 }
 @utility dot-grid {
-  background-image: radial-gradient(circle at 1px 1px, #d9e3dc 1px, transparent 0);
+  background-image: radial-gradient(circle at 1px 1px, #d9dde3 1px, transparent 0);
   background-size: 22px 22px;
 }
 

@@ -6,7 +6,7 @@ import { Button, Container, Eyebrow } from './ui'
 import { MOTION_OK } from './motion'
 
 /*
-  A pinned scene where one emerald line draws itself as you scroll.
+  A pinned scene where one royal blue line draws itself as you scroll.
 
   The heading holds still while the section scrolls past, and the stroke on
   the right is drawn by scroll progress: it starts as a loop and runs on down
