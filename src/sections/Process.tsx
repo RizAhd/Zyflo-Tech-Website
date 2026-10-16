@@ -1,6 +1,5 @@
 import { process } from '../data/site.config'
 import { Container, SectionHead } from '../components/ui'
-import { StepGlyph } from '../components/scenes'
 import ScrollTimeline from '../components/ScrollTimeline'
 
 const PROCESS_TITLE = (
@@ -36,10 +35,9 @@ export default function Process() {
               lead={PROCESS_LEAD}
             />
             <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
-              {process.map((p, i) => (
+              {process.map((p) => (
                 <div key={p.step} className="h-full rounded-xl p-5">
-                  <StepGlyph index={i} />
-                  <span className="mt-5 block font-display text-sm text-brand">{p.step}</span>
+                  <span className="block font-display text-sm text-brand">{p.step}</span>
                   <h3 className="mt-2 font-ui text-lg font-semibold">{p.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.body}</p>
                 </div>

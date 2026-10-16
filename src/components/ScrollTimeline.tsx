@@ -222,7 +222,9 @@ function Pinned({
           gsap.set(`.jd-${item.id}`, { scale: 0 })
 
           const title = new SplitText(`.title-${item.id}`, { type: 'lines', mask: 'lines' })
-          const body = new SplitText(`.description-${item.id}`, { type: 'lines', mask: 'lines' })
+          const body = // aria none: a <p> may not carry the aria-label SplitText adds by default, and the
+          // lines are ordinary text a screen reader reads as it is.
+          new SplitText(`.description-${item.id}`, { type: 'lines', mask: 'lines', aria: 'none' })
           splits.push(title, body)
 
           // Tied to the track's travel: runs as this item's left edge moves

@@ -32,13 +32,16 @@ function normalise(pathname: string): string {
   return p === '' ? '/' : p
 }
 
-/** "/services" + "#service-ai" -> "/Zyflo-Tech-Website/services/#service-ai" */
+/** "/contact?service=ai#form" -> "/Zyflo-Tech-Website/contact/?service=ai#form" */
 export function hrefFor(to: string): string {
   const hashAt = to.indexOf('#')
-  const path = hashAt >= 0 ? to.slice(0, hashAt) : to
+  const beforeHash = hashAt >= 0 ? to.slice(0, hashAt) : to
   const hash = hashAt >= 0 ? to.slice(hashAt) : ''
+  const queryAt = beforeHash.indexOf('?')
+  const path = queryAt >= 0 ? beforeHash.slice(0, queryAt) : beforeHash
+  const search = queryAt >= 0 ? beforeHash.slice(queryAt) : ''
   const clean = path === '' || path === '/' ? '/' : `${path.replace(/\/+$/, '')}/`
-  return `${BASE}${clean}${hash}`
+  return `${BASE}${clean}${search}${hash}`
 }
 
 // Links that predate the pages ("zyflo.tech/#process") keep working.
@@ -83,7 +86,7 @@ export function useHash(): string {
 
 export function navigate(to: string) {
   const target = hrefFor(to)
-  const current = window.location.pathname + window.location.hash
+  const current = window.location.pathname + window.location.search + window.location.hash
   if (target !== current) history.pushState(null, '', target)
   emit()
 }

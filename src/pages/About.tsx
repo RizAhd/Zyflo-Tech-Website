@@ -1,4 +1,3 @@
-import Principles from '../sections/Principles'
 import Studio from '../sections/Studio'
 import PageCta from '../components/PageCta'
 
@@ -6,7 +5,6 @@ export default function About() {
   return (
     <div className="pt-12 sm:pt-16">
       <Studio />
-      <Principles />
       <PageCta
         eyebrow="Ready when you are"
         title="Tell me what you need."

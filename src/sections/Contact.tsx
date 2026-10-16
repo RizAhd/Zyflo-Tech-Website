@@ -13,6 +13,10 @@ import { BlurIn, SplitHeading } from '../components/motion'
 function EnquiryForm() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
 
+  // A "get a quote for this" link on a service opens the form on that service.
+  const wanted = new URLSearchParams(window.location.search).get('service')
+  const preselected = services.find((s) => s.id === wanted)?.title ?? services[0].title
+
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const form = e.currentTarget
@@ -59,6 +63,7 @@ function EnquiryForm() {
         initial={{ opacity: 0, scale: 0.97 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        role="status"
         className="rounded-card border border-border bg-white p-8"
       >
         <motion.span
@@ -137,7 +142,7 @@ function EnquiryForm() {
             id="f-service"
             name="service"
             className={`${field} min-h-[44px]`}
-            defaultValue={services[0].title}
+            defaultValue={preselected}
           >
             {services.map((s) => (
               <option key={s.id} value={s.title}>
@@ -181,7 +186,7 @@ function EnquiryForm() {
       </div>
 
       {status === 'error' && (
-        <p className="mt-4 text-sm text-red-600">
+        <p role="alert" className="mt-4 text-sm text-red-700">
           That did not send. Please try again, or reach me directly.
         </p>
       )}
@@ -207,6 +212,9 @@ function EnquiryForm() {
               : 'Contact details are being finalised and will appear here shortly.'}
         </p>
       )}
+      <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+        What you write is used only to reply to you. It is not shared or added to a mailing list.
+      </p>
     </form>
   )
 }
@@ -244,11 +252,11 @@ export default function Contact() {
             {(email || whatsapp) && (
               <BlurIn delay={0.18}>
                 <a
-                  href={email ? `mailto:${email}` : whatsapp!}
-                  {...(email ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
+                  href={whatsapp ?? `mailto:${email}`}
+                  {...(whatsapp ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                   className="group mt-9 inline-flex items-center gap-3 font-ui text-xl font-medium text-brand-bright transition-colors hover:text-white sm:text-2xl"
                 >
-                  {email ?? 'Message me on WhatsApp'}
+                  {whatsapp ? 'Message me on WhatsApp' : email}
                   <ArrowUpRight className="h-5 w-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                 </a>
               </BlurIn>
@@ -257,7 +265,7 @@ export default function Contact() {
             <BlurIn delay={0.24} className="mt-12 lg:mt-auto lg:pt-12">
               <dl className="grid grid-cols-2 gap-8 border-t border-white/10 pt-8 sm:grid-cols-3">
                 <div>
-                  <dt className="font-display text-[11px] uppercase tracking-[0.2em] text-white/40">
+                  <dt className="font-display text-[11px] uppercase tracking-[0.2em] text-white/60">
                     Studio
                   </dt>
                   <dd className="mt-2 text-sm text-ink-muted">
@@ -267,7 +275,7 @@ export default function Contact() {
                   </dd>
                 </div>
                 <div>
-                  <dt className="font-display text-[11px] uppercase tracking-[0.2em] text-white/40">
+                  <dt className="font-display text-[11px] uppercase tracking-[0.2em] text-white/60">
                     Hours
                   </dt>
                   <dd className="mt-2 text-sm text-ink-muted">
@@ -277,7 +285,7 @@ export default function Contact() {
                   </dd>
                 </div>
                 <div>
-                  <dt className="font-display text-[11px] uppercase tracking-[0.2em] text-white/40">
+                  <dt className="font-display text-[11px] uppercase tracking-[0.2em] text-white/60">
                     Reply time
                   </dt>
                   <dd className="mt-2 text-sm text-ink-muted">
@@ -286,9 +294,24 @@ export default function Contact() {
                     or two
                   </dd>
                 </div>
+                {email && (
+                  <div className="col-span-2 sm:col-span-1">
+                    <dt className="font-display text-[11px] uppercase tracking-[0.2em] text-white/60">
+                      Email
+                    </dt>
+                    <dd className="mt-2 break-words text-sm text-ink-muted">
+                      <a
+                        href={`mailto:${email}`}
+                        className="inline-flex min-h-[32px] items-center hover:text-brand-bright"
+                      >
+                        {email}
+                      </a>
+                    </dd>
+                  </div>
+                )}
                 {phone && (
                   <div>
-                    <dt className="font-display text-[11px] uppercase tracking-[0.2em] text-white/40">
+                    <dt className="font-display text-[11px] uppercase tracking-[0.2em] text-white/60">
                       Phone
                     </dt>
                     <dd className="mt-2 text-sm text-ink-muted">
@@ -303,7 +326,7 @@ export default function Contact() {
                 )}
                 {whatsapp && (
                   <div>
-                    <dt className="font-display text-[11px] uppercase tracking-[0.2em] text-white/40">
+                    <dt className="font-display text-[11px] uppercase tracking-[0.2em] text-white/60">
                       WhatsApp
                     </dt>
                     <dd className="mt-2 text-sm text-ink-muted">
@@ -320,7 +343,7 @@ export default function Contact() {
                 )}
                 {activeSocials.length > 0 && (
                   <div className="col-span-2 sm:col-span-1">
-                    <dt className="font-display text-[11px] uppercase tracking-[0.2em] text-white/40">
+                    <dt className="font-display text-[11px] uppercase tracking-[0.2em] text-white/60">
                       Elsewhere
                     </dt>
                     <dd className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-ink-muted">

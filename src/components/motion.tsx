@@ -82,7 +82,7 @@ if (typeof window !== 'undefined') {
 type Bezier = [number, number, number, number]
 type EaseName = 'lead' | 'out' | 'snap' | 'soft' | 'exit' | 'stagger'
 
-export const EASE: Record<EaseName, Bezier> = {
+const EASE: Record<EaseName, Bezier> = {
   lead: [0.22, 0.61, 0.28, 1],
   out: [0.17, 0.74, 0.22, 1],
   snap: [0.3, 0.85, 0.32, 1],
@@ -103,7 +103,7 @@ const ez = (name: EaseName) => `zyflo-${name}`
 // Motion gates
 // ---------------------------------------------------------------------------
 /** True when the OS asked for reduced motion and the override is not set. */
-export const prefersReduced = () =>
+const prefersReduced = () =>
   typeof window !== 'undefined' &&
   !document.documentElement.hasAttribute('data-force-motion') &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -242,7 +242,7 @@ const wakeBus = () => startBus()
  * Low level access to the bus. Returns an unsubscribe function. The loop runs
  * only while at least one subscriber exists and the page is actually moving.
  */
-export function subscribeScroll(fn: ScrollListener) {
+function subscribeScroll(fn: ScrollListener) {
   if (typeof window === 'undefined') return () => {}
   scrollListeners.add(fn)
   if (scrollListeners.size === 1) {
@@ -256,29 +256,6 @@ export function subscribeScroll(fn: ScrollListener) {
       stopBus()
     }
   }
-}
-
-/**
- * Scroll velocity, direction and position as refs, so reading them inside a
- * rAF or an event handler never costs a render. Works with or without Lenis,
- * which is what keeps scroll reactive motion alive on touch.
- */
-export function useScrollVelocity() {
-  const velocity = useRef(0)
-  const direction = useRef(0)
-  const y = useRef(0)
-
-  useEffect(
-    () =>
-      subscribeScroll((s) => {
-        velocity.current = s.velocity
-        direction.current = s.direction
-        y.current = s.y
-      }),
-    [],
-  )
-
-  return { velocity, direction, y }
 }
 
 /**
@@ -789,68 +766,6 @@ export function BlurIn({
 }
 
 /**
- * A rail that fills as its parent section scrolls past. GSAP scrub, so it
- * tracks scroll position rather than playing on a timer. Reduced motion users
- * get it fully drawn, since the tween that empties it is never built.
- */
-export function ScrubRail({
-  vertical = false,
-  className = '',
-}: {
-  vertical?: boolean
-  className?: string
-}) {
-  const ref = useRef<HTMLDivElement>(null)
-
-  useLayoutEffect(() => {
-    const el = ref.current
-    const fill = el?.firstElementChild as HTMLElement | null
-    if (!el || !fill) return
-
-    const ctx = gsap.context(() => {
-      const mm = gsap.matchMedia()
-      mm.add(NO_PREF, () => {
-        const prop = vertical ? 'scaleY' : 'scaleX'
-        const tween = gsap.fromTo(
-          fill,
-          { [prop]: 0 },
-          {
-            [prop]: 1,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: el.parentElement ?? el,
-              start: 'top 72%',
-              end: 'bottom 80%',
-              scrub: 0.5,
-            },
-          },
-        )
-        return () => tween.kill()
-      })
-    }, ref)
-
-    return () => ctx.revert()
-  }, [vertical])
-
-  return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={`overflow-hidden bg-border ${vertical ? 'w-px' : 'h-px'} ${className}`}
-    >
-      <div
-        className={`h-full w-full bg-[linear-gradient(90deg,var(--color-brand-strong),var(--color-brand))] ${
-          vertical ? 'origin-top' : 'origin-left'
-        }`}
-      />
-    </div>
-  )
-}
-
-// ---------------------------------------------------------------------------
-// Grids
-// ---------------------------------------------------------------------------
-/**
  * Staggers a grid's direct children in as it enters view. One ScrollTrigger for
  * the whole grid rather than one per card, which matters when the capability
  * wall alone has twenty one of them.
@@ -961,7 +876,7 @@ export function StaggerGrid({
  * phone. The card (the wrapper's parent) is the trigger, which is what makes
  * each figure move on its own schedule down a two column grid.
  */
-export function useCardParallax(ref: RefObject<HTMLElement | null>, distance = 7) {
+function useCardParallax(ref: RefObject<HTMLElement | null>, distance = 7) {
   useLayoutEffect(() => {
     const el = ref.current
     if (!el) return
@@ -1029,113 +944,6 @@ export function CardParallax({
   keeps its props and its DOM shape in both branches, so nothing reflows when
   the branch changes.
 */
-
-/**
- * Cursor tracked glow, the one pointer following highlight on the page, and
- * only on the service cards where there is a large surface for it to wash
- * across. The position is written to CSS custom properties rather than React
- * state, so moving the mouse never triggers a render.
- *
- * The glow eases toward the cursor rather than being pinned under it, which is
- * the difference between a light in the card and a sprite following the mouse.
- * The rAF loop runs only while it is catching up: park the cursor and the loop
- * parks with it.
- */
-export function Spotlight({
-  children,
-  className = '',
-  as: Tag = 'div',
-  id,
-}: {
-  children: ReactNode
-  className?: string
-  as?: 'div' | 'article' | 'li'
-  /** Anchor target. Service cards carry id="service-<id>", which is what the
-      capability rows link to and what the Service nodes in the structured data
-      point at, so the two must not drift apart. */
-  id?: string
-}) {
-  const pointer = usePointerMotion()
-  if (!pointer) {
-    return createElement(Tag, { id, className: `spotlight ${className}` }, children)
-  }
-  return (
-    <SpotlightPointer className={className} as={Tag} id={id}>
-      {children}
-    </SpotlightPointer>
-  )
-}
-
-function SpotlightPointer({
-  children,
-  className,
-  as: Tag,
-  id,
-}: {
-  children: ReactNode
-  className: string
-  as: 'div' | 'article' | 'li'
-  id?: string
-}) {
-  const ref = useRef<HTMLElement>(null)
-  const frame = useRef(0)
-  const target = useRef({ x: 0, y: 0 })
-  const at = useRef({ x: 0, y: 0 })
-
-  useEffect(() => () => cancelAnimationFrame(frame.current), [])
-
-  const write = () => {
-    const el = ref.current
-    if (!el) return
-    el.style.setProperty('--mx', `${at.current.x.toFixed(1)}px`)
-    el.style.setProperty('--my', `${at.current.y.toFixed(1)}px`)
-  }
-
-  const loop = () => {
-    const dx = target.current.x - at.current.x
-    const dy = target.current.y - at.current.y
-    at.current.x += dx * 0.16
-    at.current.y += dy * 0.16
-    write()
-    if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) {
-      frame.current = 0
-      return
-    }
-    frame.current = requestAnimationFrame(loop)
-  }
-
-  const local = (e: ReactPointerEvent) => {
-    const r = ref.current!.getBoundingClientRect()
-    return { x: e.clientX - r.left, y: e.clientY - r.top }
-  }
-
-  return createElement(
-    Tag,
-    {
-      ref,
-      id,
-      // Placed where the cursor arrived, so the glow fades in where it should
-      // be rather than sweeping in from wherever it was last left.
-      onPointerEnter: (e: ReactPointerEvent) => {
-        if (!ref.current || isTouch(e)) return
-        at.current = local(e)
-        target.current = { ...at.current }
-        write()
-      },
-      onPointerMove: (e: ReactPointerEvent) => {
-        if (!ref.current || isTouch(e)) return
-        target.current = local(e)
-        if (!frame.current) frame.current = requestAnimationFrame(loop)
-      },
-      onPointerLeave: () => {
-        cancelAnimationFrame(frame.current)
-        frame.current = 0
-      },
-      className: `spotlight ${className}`,
-    },
-    children,
-  )
-}
 
 /** Card that leans toward the cursor. */
 export function Tilt({

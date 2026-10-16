@@ -472,6 +472,18 @@ function buildHeadTags(page: Page | null): string {
 
   if (page) tags.push(jsonLdScript(buildJsonLd(page)))
 
+  // Optional, set as build environment variables so no account detail lives in
+  // the repository. GSC_VERIFICATION is the content of Google Search Console's
+  // HTML tag; CF_BEACON_TOKEN turns on Cloudflare Web Analytics (no cookies).
+  const gsc = process.env.GSC_VERIFICATION
+  if (gsc && /^[\w-]+$/.test(gsc)) tags.push(`<meta name="google-site-verification" content="${gsc}" />`)
+  const beacon = process.env.CF_BEACON_TOKEN
+  if (beacon && /^[\w-]+$/.test(beacon)) {
+    tags.push(
+      `<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "${beacon}"}'></script>`,
+    )
+  }
+
   return tags.join('\n    ')
 }
 
@@ -536,8 +548,11 @@ function buildRobotsTxt(): string {
 /**
  * One entry per page. Section anchors (#service-web and the like) are parts of
  * a page, not separate documents, so they are not listed here.
- * No lastmod: nothing in the build gives an honest last-modified date.
+ * lastmod is the day the site was built, which is the day every page was last
+ * published.
  */
+const BUILD_DATE = new Date().toISOString().slice(0, 10)
+
 function buildSitemapXml(origin: string): string {
   return [
     '<?xml version="1.0" encoding="UTF-8"?>',
@@ -545,6 +560,7 @@ function buildSitemapXml(origin: string): string {
     ...pages.flatMap((p) => [
       '  <url>',
       `    <loc>${origin}${publicPath(p.path)}</loc>`,
+      `    <lastmod>${BUILD_DATE}</lastmod>`,
       '    <changefreq>monthly</changefreq>',
       `    <priority>${p.path === '/' ? '1.0' : '0.8'}</priority>`,
       '  </url>',
@@ -824,7 +840,6 @@ export default defineConfig({
         // dynamic import; this just guarantees the split is clean and stable.
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            if (id.includes('three') || id.includes('@react-three')) return 'three'
             if (id.includes('gsap')) return 'gsap'
             if (id.includes('react')) return 'react'
           }

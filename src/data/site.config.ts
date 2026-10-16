@@ -84,8 +84,8 @@ export const hero = {
   /** Split on `|` for the line-by-line reveal. */
   headline: 'Digital work that|pulls its weight.',
   lead:
-    'Websites, apps and automations built for real businesses: designed with care, ' +
-    'shipped on time, and handed over so you own every line of it.',
+    'A one person website, app and AI automation studio in Sri Lanka. Built for real ' +
+    'businesses: designed with care, shipped on time, and handed over so you own every line of it.',
   primaryCta: { label: "Start a project", href: '/contact' },
   secondaryCta: { label: 'See what I do', href: '/services' },
 } as const

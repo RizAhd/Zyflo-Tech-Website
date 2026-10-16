@@ -1,17 +1,19 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { Check } from 'lucide-react'
+import { ArrowRight, Check } from 'lucide-react'
 
 import { capabilities, services } from '../data/site.config'
 import { Container, SectionHead } from './ui'
 import { MOTION_OK } from './motion'
 import { ServiceScene } from './scenes'
+import { Link } from '../router'
 
 /*
   The services, one after another, each in its own band.
 
-  As a band scrolls in, the text rises into place and the figure is revealed
-  left to right with a clip, all driven by that band's own scroll progress.
+  As a band scrolls in, the figure is revealed left to right with a clip,
+  driven by that band's own scroll progress. The text does not move: it is
+  there to be read.
   Bands alternate sides. The figures are the same drawn product screens used
   in the tabs above (a page being built, a pipeline running), not photographs.
 
@@ -28,7 +30,6 @@ function Band({ service, flip, motionOn }: { service: Service; flip: boolean; mo
   })
   const opacity = useTransform(scrollYProgress, [0, 0.7], [0, 1])
   const clip = useTransform(scrollYProgress, [0, 0.7], ['inset(0 100% 0 0 round 1.5rem)', 'inset(0 0% 0 0 round 1.5rem)'])
-  const rise = useTransform(scrollYProgress, [0, 1], [-40, 0])
 
   const chips = capabilities.filter((c) => c.service === service.id)
 
@@ -39,7 +40,7 @@ function Band({ service, flip, motionOn }: { service: Service; flip: boolean; mo
         flip ? 'md:[&>*:first-child]:order-2' : ''
       }`}
     >
-      <motion.div style={motionOn ? { y: rise } : undefined}>
+      <div>
         <p className="font-ui text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-strong">
           {service.index}
         </p>
@@ -64,7 +65,14 @@ function Band({ service, flip, motionOn }: { service: Service; flip: boolean; mo
             </li>
           ))}
         </ul>
-      </motion.div>
+        <Link
+          to={`/contact?service=${service.id}`}
+          className="mt-8 inline-flex min-h-[44px] items-center gap-2 rounded-full font-ui text-sm font-medium text-brand-strong hover:text-brand focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
+        >
+          Get a quote for this
+          <ArrowRight className="h-4 w-4" aria-hidden="true" />
+        </Link>
+      </div>
 
       <motion.div style={motionOn ? { opacity, clipPath: clip } : undefined} className="relative">
         <div

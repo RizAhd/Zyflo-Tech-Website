@@ -1,7 +1,8 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, MessageCircle } from 'lucide-react'
 
 import { business, hero } from '../data/site.config'
+import { whatsapp } from '../data/contact'
 import { Badge, Button, Container } from '../components/ui'
 import { BlurIn, Magnetic, SplitHeading } from '../components/motion'
 import { HeroCarousel } from '../components/visuals'
@@ -72,10 +73,19 @@ function Hero() {
           <BlurIn delay={0.24}>
             <div className="mt-9 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
               <Magnetic strength={0.25} className="w-full sm:w-auto">
-                <Button href={hero.primaryCta.href} className="w-full sm:w-auto">
-                  {hero.primaryCta.label}
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
+                {/* WhatsApp is how most visitors reach out, so it leads. Without a
+                    number the button falls back to the contact page. */}
+                {whatsapp ? (
+                  <Button href={whatsapp} external className="w-full sm:w-auto">
+                    <MessageCircle className="h-4 w-4" aria-hidden="true" />
+                    Message on WhatsApp
+                  </Button>
+                ) : (
+                  <Button href={hero.primaryCta.href} className="w-full sm:w-auto">
+                    {hero.primaryCta.label}
+                    <ArrowRight className="h-4 w-4" />
+                  </Button>
+                )}
               </Magnetic>
               <Magnetic strength={0.25} className="w-full sm:w-auto">
                 <Button href={hero.secondaryCta.href} variant="outline" className="w-full sm:w-auto">

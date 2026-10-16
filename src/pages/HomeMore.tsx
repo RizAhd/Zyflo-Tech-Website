@@ -1,6 +1,6 @@
 import { ArrowRight, Globe } from 'lucide-react'
 
-import { services } from '../data/site.config'
+import { business, clients, services } from '../data/site.config'
 import { Container, SectionHead } from '../components/ui'
 import { StaggerGrid } from '../components/motion'
 import PageCta from '../components/PageCta'
@@ -14,6 +14,40 @@ import { SERVICE_ICON } from '../sections/icons'
 export default function HomeMore() {
   return (
     <>
+      {/* Plain facts, each one true and checkable. No counts, no logos. */}
+      <section aria-label="At a glance" className="border-y border-border bg-muted/50">
+        <Container>
+          <ul className="grid grid-cols-2 gap-x-6 gap-y-4 py-6 text-sm sm:flex sm:flex-wrap sm:justify-between">
+            <li>
+              <span className="block font-ui text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
+                Running since
+              </span>
+              <span className="font-ui font-semibold">
+                {business.foundedMonth} {business.foundedYear}
+              </span>
+            </li>
+            <li>
+              <span className="block font-ui text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
+                Shipped for
+              </span>
+              <span className="font-ui font-semibold">{clients.map((c) => c.name).join(', ')}</span>
+            </li>
+            <li>
+              <span className="block font-ui text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
+                Quotes
+              </span>
+              <span className="font-ui font-semibold">Fixed, in LKR</span>
+            </li>
+            <li>
+              <span className="block font-ui text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
+                At the end
+              </span>
+              <span className="font-ui font-semibold">You own the code and accounts</span>
+            </li>
+          </ul>
+        </Container>
+      </section>
+
       <ScrollStroke />
 
       <section className="py-20 sm:py-24">

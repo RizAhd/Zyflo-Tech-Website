@@ -1,47 +1,85 @@
-import { business, navLinks } from '../data/site.config'
-import { email, whatsapp } from '../data/contact'
+import { business, navLinks, services } from '../data/site.config'
+import { email, phone, whatsapp } from '../data/contact'
 import { LOGO_SRC } from '../data/assets'
 import { Container } from '../components/ui'
 import { Link } from '../router'
 
 // ---------------------------------------------------------------------------
+const linkClass =
+  'inline-flex min-h-[44px] items-center text-sm text-ink-muted transition-colors hover:text-brand-bright focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand sm:min-h-[32px]'
+const headClass = 'font-ui text-[11px] font-semibold uppercase tracking-[0.2em] text-white/50'
+
 export default function Footer() {
   const year = new Date().getFullYear()
   return (
-    <footer className="border-t border-white/10 bg-ink py-10 text-white">
-      <Container className="flex flex-col items-center justify-between gap-4 text-center sm:flex-row sm:text-left">
-        <div className="flex items-center gap-2.5">
-          <img src={LOGO_SRC} alt="" width={26} height={26} className="rounded-md" />
-          <span className="font-ui text-sm font-medium">
-            &copy; {year} {business.legalName}
-          </span>
+    <footer className="border-t border-white/10 bg-ink pb-8 pt-14 text-white">
+      <Container>
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.3fr_1.2fr]">
+          <div>
+            <div className="flex items-center gap-2.5">
+              <img src={LOGO_SRC} alt="" width={30} height={30} className="rounded-md" />
+              <span className="font-ui text-base font-semibold">{business.name}</span>
+            </div>
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink-muted">
+              {business.tagline} from a one person studio in {business.location}. Run by {business.owner} since{' '}
+              {business.foundedMonth} {business.foundedYear}.
+            </p>
+          </div>
+
+          <nav aria-label="Pages">
+            <p className={headClass}>Pages</p>
+            <ul className="mt-3">
+              {navLinks.map((l) => (
+                <li key={l.path}>
+                  <Link to={l.path} className={linkClass}>
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <nav aria-label="Services">
+            <p className={headClass}>Services</p>
+            <ul className="mt-3">
+              {services.map((sv) => (
+                <li key={sv.id}>
+                  <Link to={`/services/#service-${sv.id}`} className={linkClass}>
+                    {sv.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div>
+            <p className={headClass}>Contact</p>
+            <ul className="mt-3">
+              {whatsapp && (
+                <li>
+                  <a href={whatsapp} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                    WhatsApp{phone ? `, ${phone}` : ''}
+                  </a>
+                </li>
+              )}
+              {email && (
+                <li>
+                  <a href={`mailto:${email}`} className={`${linkClass} break-all`}>
+                    {email}
+                  </a>
+                </li>
+              )}
+              <li className="py-2 text-sm text-ink-muted">Mon to Sat, 9am to 7pm (+5:30)</li>
+            </ul>
+          </div>
         </div>
-        <p className="text-xs text-ink-muted">
-          {business.tagline} &middot; Built in {business.location}
-        </p>
-        <nav className="flex flex-wrap items-center justify-center gap-x-5 text-xs text-ink-muted" aria-label="Footer">
-          {navLinks.map((l) => (
-            <Link key={l.path} to={l.path} className="inline-flex min-h-[44px] items-center hover:text-brand-bright">
-              {l.label}
-            </Link>
-          ))}
-          {email && (
-            <a href={`mailto:${email}`} className="inline-flex min-h-[44px] items-center hover:text-brand-bright">
-              Email
-            </a>
-          )}
-          {whatsapp && (
-            <a
-              href={whatsapp}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex min-h-[44px] items-center hover:text-brand-bright"
-            >
-              WhatsApp
-            </a>
-          )}
+
+        <div className="mt-12 flex flex-col items-center justify-between gap-2 border-t border-white/10 pt-6 text-center text-xs text-ink-muted sm:flex-row sm:text-left">
+          <p>
+            &copy; {year} {business.legalName}. Built in {business.location}.
+          </p>
           <MotionToggle />
-        </nav>
+        </div>
       </Container>
     </footer>
   )
@@ -67,7 +105,7 @@ function MotionToggle() {
       type="button"
       onClick={flip}
       aria-pressed={isOn}
-      className="inline-flex min-h-[44px] items-center hover:text-brand-bright focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+      className="inline-flex min-h-[44px] items-center text-ink-muted hover:text-brand-bright focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
     >
       Motion: {isOn ? 'on' : 'off'}
     </button>

@@ -1,4 +1,4 @@
-# Read by Netlify and Cloudflare Pages. Vercel uses vercel.json for the same rules.
+# Read by Cloudflare (Workers assets and Pages) and Netlify.
 
 /*
   X-Content-Type-Options: nosniff
