@@ -172,6 +172,10 @@ export const services: Service[] = [
       'Spreadsheet and workflow automation',
       'System integrations that talk to each other',
     ],
+    image: {
+      src: 'services/software.webp',
+      alt: 'A developer talks a shop owner through a new system at a wooden table in the back of her shop, a receipt in her hand, a barcode scanner and receipt printer beside a MacBook.',
+    },
   },
   {
     id: 'mobile',
