@@ -25,7 +25,7 @@ export default function Work({
               Built, shipped and <span className="text-brand-strong">handed over</span>.
             </>
           }
-          lead="A point of sale system for SJD, the website for mradventure.lk, and the invoicing tool the studio runs on. Each one was built by the same person who answers your enquiry."
+          lead="A point of sale system for SJD, the website for mradventure.lk, and the invoicing tool the studio runs on. Each one was built by the same studio that answers your enquiry."
         />
 
         <StaggerGrid
