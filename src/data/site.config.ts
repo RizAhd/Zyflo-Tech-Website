@@ -206,6 +206,10 @@ export const services: Service[] = [
       'Content and reporting pipelines',
       'AI features inside your existing tools',
     ],
+    image: {
+      src: 'services/ai.webp',
+      alt: 'A small team maps a business workflow on a whiteboard covered in boxes, arrows and sticky notes, a MacBook open on the table.',
+    },
   },
   {
     id: 'video',
