@@ -54,7 +54,7 @@ export default function Work({
                 </div>
 
                 <div className="p-6">
-                  <p className="font-display text-[11px] uppercase tracking-[0.2em] text-brand-strong">
+                  <p className="font-mono text-xs font-medium uppercase tracking-[0.08em] text-brand-strong">
                     {p.category}
                   </p>
                   <h3 className="mt-3 font-ui text-xl font-semibold leading-snug">

@@ -7,7 +7,7 @@ import { Link } from '../router'
 // ---------------------------------------------------------------------------
 const linkClass =
   'inline-flex min-h-[44px] items-center text-sm text-ink-muted transition-colors hover:text-brand-bright focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand sm:min-h-[32px]'
-const headClass = 'font-ui text-[11px] font-semibold uppercase tracking-[0.2em] text-white/50'
+const headClass = 'font-mono text-xs font-medium uppercase tracking-[0.08em] text-white/60'
 
 export default function Footer() {
   const year = new Date().getFullYear()

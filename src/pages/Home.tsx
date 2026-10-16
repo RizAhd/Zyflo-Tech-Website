@@ -37,13 +37,13 @@ function Hero() {
           {/* Characters, not words: the headline is the one place on the page
               where the extra granularity earns the extra nodes. Fluid size so
               it never overflows a 360px screen. */}
-          <h1 className="font-ui text-[clamp(2.05rem,8.6vw,2.6rem)] font-semibold leading-[1.05] tracking-tight text-balance sm:text-6xl md:text-7xl">
+          <h1 className="font-ui text-[clamp(2.05rem,8.6vw,2.6rem)] font-semibold leading-[1.02] tracking-[-0.04em] text-balance sm:text-6xl md:text-7xl">
             <SplitHeading as="span" type="chars" className="block">
               {line1}
             </SplitHeading>
             {/* The second line is written by pen, then inked in, in the same face. */}
             <span className="text-brand-strong sm:underline-sweep sm:inline-block">
-              <HandwritingText text={line2} />
+              <HandwritingText text={line2} letterSpacing={-0.04} />
             </span>
           </h1>
 

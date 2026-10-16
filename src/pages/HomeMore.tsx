@@ -19,7 +19,7 @@ export default function HomeMore() {
         <Container>
           <ul className="grid grid-cols-2 gap-x-6 gap-y-4 py-6 text-sm sm:flex sm:flex-wrap sm:justify-between">
             <li>
-              <span className="block font-ui text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
+              <span className="block font-mono text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground">
                 Running since
               </span>
               <span className="font-ui font-semibold">
@@ -27,19 +27,19 @@ export default function HomeMore() {
               </span>
             </li>
             <li>
-              <span className="block font-ui text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
+              <span className="block font-mono text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground">
                 Shipped for
               </span>
               <span className="font-ui font-semibold">{clients.map((c) => c.name).join(', ')}</span>
             </li>
             <li>
-              <span className="block font-ui text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
+              <span className="block font-mono text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground">
                 Quotes
               </span>
               <span className="font-ui font-semibold">Fixed, in LKR</span>
             </li>
             <li>
-              <span className="block font-ui text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
+              <span className="block font-mono text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground">
                 At the end
               </span>
               <span className="font-ui font-semibold">You own the code and accounts</span>

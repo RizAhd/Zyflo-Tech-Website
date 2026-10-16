@@ -265,7 +265,7 @@ export default function Contact() {
             <BlurIn delay={0.24} className="mt-12 lg:mt-auto lg:pt-12">
               <dl className="grid grid-cols-2 gap-8 border-t border-white/10 pt-8 sm:grid-cols-3">
                 <div>
-                  <dt className="font-display text-[11px] uppercase tracking-[0.2em] text-white/60">
+                  <dt className="font-mono text-xs font-medium uppercase tracking-[0.08em] text-white/60">
                     Studio
                   </dt>
                   <dd className="mt-2 text-sm text-ink-muted">
@@ -275,7 +275,7 @@ export default function Contact() {
                   </dd>
                 </div>
                 <div>
-                  <dt className="font-display text-[11px] uppercase tracking-[0.2em] text-white/60">
+                  <dt className="font-mono text-xs font-medium uppercase tracking-[0.08em] text-white/60">
                     Hours
                   </dt>
                   <dd className="mt-2 text-sm text-ink-muted">
@@ -285,7 +285,7 @@ export default function Contact() {
                   </dd>
                 </div>
                 <div>
-                  <dt className="font-display text-[11px] uppercase tracking-[0.2em] text-white/60">
+                  <dt className="font-mono text-xs font-medium uppercase tracking-[0.08em] text-white/60">
                     Reply time
                   </dt>
                   <dd className="mt-2 text-sm text-ink-muted">
@@ -296,7 +296,7 @@ export default function Contact() {
                 </div>
                 {email && (
                   <div className="col-span-2 sm:col-span-3">
-                    <dt className="font-display text-[11px] uppercase tracking-[0.2em] text-white/60">
+                    <dt className="font-mono text-xs font-medium uppercase tracking-[0.08em] text-white/60">
                       Email
                     </dt>
                     <dd className="mt-2 break-words text-sm text-ink-muted">
@@ -311,7 +311,7 @@ export default function Contact() {
                 )}
                 {phone && (
                   <div>
-                    <dt className="font-display text-[11px] uppercase tracking-[0.2em] text-white/60">
+                    <dt className="font-mono text-xs font-medium uppercase tracking-[0.08em] text-white/60">
                       Phone
                     </dt>
                     <dd className="mt-2 text-sm text-ink-muted">
@@ -326,7 +326,7 @@ export default function Contact() {
                 )}
                 {whatsapp && (
                   <div>
-                    <dt className="font-display text-[11px] uppercase tracking-[0.2em] text-white/60">
+                    <dt className="font-mono text-xs font-medium uppercase tracking-[0.08em] text-white/60">
                       WhatsApp
                     </dt>
                     <dd className="mt-2 text-sm text-ink-muted">
@@ -343,7 +343,7 @@ export default function Contact() {
                 )}
                 {activeSocials.length > 0 && (
                   <div className="col-span-2 sm:col-span-1">
-                    <dt className="font-display text-[11px] uppercase tracking-[0.2em] text-white/60">
+                    <dt className="font-mono text-xs font-medium uppercase tracking-[0.08em] text-white/60">
                       Elsewhere
                     </dt>
                     <dd className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-ink-muted">

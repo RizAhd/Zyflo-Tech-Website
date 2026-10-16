@@ -239,7 +239,7 @@ function NotFound() {
     <section className="py-32 sm:py-40">
       <Container>
         <div className="mx-auto max-w-xl text-center">
-          <p className="font-ui text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-strong">
+          <p className="font-mono text-xs font-medium uppercase tracking-[0.08em] text-brand-strong">
             Error 404
           </p>
           <h1 className="mt-4 font-ui text-4xl font-semibold tracking-tight text-balance sm:text-5xl">

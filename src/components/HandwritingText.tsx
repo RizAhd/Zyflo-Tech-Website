@@ -16,7 +16,7 @@ import { MOTION_OK } from './motion'
 
   Differences from the original, for this site:
     - opentype.js is bundled (a lazy chunk), not loaded from a CDN, and the font
-      is the hero's own Instrument Sans SemiBold, self hosted, so the written
+      is the hero's own Geist SemiBold, self hosted, so the written
       line is the same text in the same face as the line above it.
     - the SVG is sized in em from the glyph box and sat on the text baseline,
       so it takes exactly the space the plain text would.
@@ -26,7 +26,7 @@ import { MOTION_OK } from './motion'
     - with motion off it is plain text.
 */
 
-const FONT_URL = `${import.meta.env.BASE_URL}fonts/instrument-sans-600.ttf`
+const FONT_URL = `${import.meta.env.BASE_URL}fonts/geist-600.ttf`
 const EM = 100
 
 let fontPromise: Promise<Font> | null = null

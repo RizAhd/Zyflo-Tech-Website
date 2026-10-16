@@ -41,7 +41,7 @@ function Band({ service, flip, motionOn }: { service: Service; flip: boolean; mo
       }`}
     >
       <div>
-        <p className="font-ui text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-strong">
+        <p className="font-mono text-xs font-medium uppercase tracking-[0.08em] text-brand-strong">
           {service.index}
         </p>
         <h3 className="mt-3 font-ui text-4xl font-semibold leading-[1.08] tracking-tight text-balance sm:text-5xl">

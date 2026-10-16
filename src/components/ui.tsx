@@ -35,10 +35,8 @@ export function Eyebrow({
 }) {
   return (
     <p
-      // font-ui, not font-display: Orbitron draws a slashed zero, so "01 / "
-      // rendered as a slashed zero. StemLink sets its eyebrows in the UI face too and
-      // keeps its techy display font for branding only.
-      className={`font-ui text-[11px] font-semibold uppercase tracking-[0.22em] ${
+      // The mono voice: small, uppercase and tracked out a little.
+      className={`font-mono text-xs font-medium uppercase tracking-[0.08em] ${
         onInk ? 'text-brand-bright' : 'text-brand-strong'
       }`}
     >
@@ -77,7 +75,7 @@ export function SectionHead({
 
       <SplitHeading
         as={h1 ? 'h1' : 'h2'}
-        className={`mt-4 font-ui text-3xl font-semibold leading-[1.12] tracking-tight text-balance sm:text-4xl md:text-5xl ${
+        className={`mt-4 font-ui text-3xl font-semibold leading-[1.1] tracking-[-0.03em] text-balance sm:text-4xl md:text-5xl ${
           onInk ? 'text-white' : 'text-foreground'
         }`}
       >
@@ -87,7 +85,7 @@ export function SectionHead({
       {lead && (
         <BlurIn delay={0.12}>
           <p
-            className={`mt-5 text-base leading-relaxed ${centred ? '' : 'max-w-2xl'} ${
+            className={`mt-5 text-base leading-relaxed sm:text-lg ${centred ? '' : 'max-w-2xl'} ${
               onInk ? 'text-ink-muted' : 'text-muted-foreground'
             }`}
           >

@@ -332,7 +332,7 @@ function Pinned({
 
             <div className="flex h-1/2 w-full items-center justify-start gap-[.5vw]">
               <div className="h-full w-[20%] pt-[2vw] max-[600px]:h-fit max-[600px]:pt-[5vw]">
-                <p className="text-[clamp(0.8rem,1.1vw,1.1rem)] uppercase tracking-[0.2em] text-muted-foreground">
+                <p className="font-mono text-[clamp(0.75rem,1vw,1rem)] uppercase tracking-[0.08em] text-muted-foreground">
                   {topLabel}
                 </p>
               </div>
