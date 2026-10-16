@@ -76,7 +76,7 @@ function Band({ service, flip, motionOn }: { service: Service; flip: boolean; mo
 
       <motion.div style={motionOn ? { opacity, clipPath: clip } : undefined} className="relative">
         <div
-          className="relative aspect-[16/11] w-full overflow-hidden rounded-3xl border border-border bg-[linear-gradient(135deg,#fdfaf1,#e9eefd)]"
+          className="relative aspect-[16/11] w-full overflow-hidden rounded-3xl border border-border bg-white"
           aria-hidden="true"
         >
           <div className="dot-grid pointer-events-none absolute inset-0 opacity-50" />

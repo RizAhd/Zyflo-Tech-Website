@@ -91,7 +91,7 @@ export default function ServiceTabs() {
           {/* The figure comes first on a phone, so the open service is seen
               before the list that controls it. */}
           <div className="order-1 lg:sticky lg:top-28 lg:order-2 lg:col-span-7">
-            <div className="relative aspect-[16/10] overflow-hidden rounded-3xl border border-border bg-[linear-gradient(135deg,#fdfaf1,#e9eefd)] sm:aspect-[16/9] lg:aspect-[16/11]">
+            <div className="relative aspect-[16/10] overflow-hidden rounded-3xl border border-border bg-white sm:aspect-[16/9] lg:aspect-[16/11]">
               <div className="dot-grid pointer-events-none absolute inset-0 opacity-50" aria-hidden="true" />
               <AnimatePresence initial={false} custom={direction} mode="popLayout">
                 <motion.div
