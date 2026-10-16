@@ -51,9 +51,8 @@ export default function ServiceTicker({ className = '' }: { className?: string }
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: '-100%', opacity: 0 }}
               transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-              className="inline-flex items-center gap-2.5 whitespace-nowrap"
+              className="whitespace-nowrap"
             >
-              <span className="font-mono text-xs text-brand">{services[i].index}</span>
               {services[i].title}
             </motion.span>
           )}
