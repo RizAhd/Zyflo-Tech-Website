@@ -586,7 +586,7 @@ export function ScrollProgress() {
 // ---------------------------------------------------------------------------
 // Text
 // ---------------------------------------------------------------------------
-type HeadingTag = 'h1' | 'h2' | 'h3' | 'p' | 'div'
+type HeadingTag = 'h1' | 'h2' | 'h3' | 'p' | 'div' | 'span'
 
 /**
  * Split text rise, driven by scroll.
@@ -657,6 +657,9 @@ export function SplitHeading({
           type: chars ? 'words,chars' : 'words',
           wordsClass: 'split-word',
           charsClass: 'split-char',
+          // A heading may carry the aria-label SplitText adds; a plain span may
+          // not, so there the split letters are left as ordinary text.
+          aria: el.tagName === 'SPAN' ? 'none' : 'auto',
         })
         const items = (chars ? split.chars : split.words) as Element[]
 

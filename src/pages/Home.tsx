@@ -5,7 +5,7 @@ import { business, hero } from '../data/site.config'
 import { whatsapp } from '../data/contact'
 import { Badge, Button, Container } from '../components/ui'
 import { BlurIn, Magnetic, SplitHeading } from '../components/motion'
-import { HeroCarousel } from '../components/visuals'
+import HandwritingText from '../components/HandwritingText'
 import PageLine from '../components/PageLine'
 
 const HomeMore = lazy(() => import('./HomeMore'))
@@ -30,17 +30,9 @@ function Hero() {
   const [line1, line2] = hero.headline.split('|')
 
   return (
-    <section id="top" className="relative overflow-hidden pt-28 pb-16 sm:pt-36 sm:pb-24">
-      <div
-        className="dot-grid pointer-events-none absolute inset-0 opacity-60 [mask-image:radial-gradient(70%_55%_at_50%_28%,black,transparent)]"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute left-1/2 top-[-14rem] h-[30rem] w-[54rem] -translate-x-1/2 rounded-full bg-brand/10 blur-[120px]"
-        aria-hidden="true"
-      />
-
-      <Container className="relative">
+    <section id="top" className="relative flex min-h-svh items-center overflow-hidden pt-24 pb-16 sm:pt-28 sm:pb-20">
+      {/* Pure white behind the headline: no glow, no pattern. */}
+      <Container className="relative w-full">
         <div className="mx-auto max-w-3xl text-center">
           <BlurIn y={10}>
             <Badge>
@@ -55,15 +47,15 @@ function Hero() {
           {/* Characters, not words: the headline is the one place on the page
               where the extra granularity earns the extra nodes. Fluid size so
               it never overflows a 360px screen. */}
-          <SplitHeading
-            as="h1"
-            type="chars"
-            className="mt-6 font-ui text-[clamp(2.05rem,8.6vw,2.6rem)] font-semibold leading-[1.05] tracking-tight text-balance sm:text-6xl md:text-7xl"
-          >
-            {line1}{' '}
-            <br />
-            <span className="text-brand-strong sm:underline-sweep sm:inline-block">{line2}</span>
-          </SplitHeading>
+          <h1 className="mt-6 font-ui text-[clamp(2.05rem,8.6vw,2.6rem)] font-semibold leading-[1.05] tracking-tight text-balance sm:text-6xl md:text-7xl">
+            <SplitHeading as="span" type="chars" className="block">
+              {line1}
+            </SplitHeading>
+            {/* The second line is written by pen, then inked in, in the same face. */}
+            <span className="text-brand-strong sm:underline-sweep sm:inline-block">
+              <HandwritingText text={line2} />
+            </span>
+          </h1>
 
           <BlurIn delay={0.15}>
             <p className="mx-auto mt-7 max-w-xl text-balance text-base leading-relaxed text-muted-foreground sm:text-lg">
@@ -97,19 +89,13 @@ function Hero() {
           </BlurIn>
         </div>
       </Container>
-
-      {/* Full bleed: a marquee that stops at the container edge reads as a
-          cropped list rather than something continuing past the screen. */}
-      <BlurIn delay={0.3} y={30} className="relative mt-16 sm:mt-20">
-        <HeroCarousel />
-      </BlurIn>
     </section>
   )
 }
 
 /*
-  The home page: the hero first, with the least possible JavaScript, then the
-  rest once the hero has painted.
+  The home page: a simple hero first, with the least possible JavaScript, then
+  the rest of the page once the hero has painted.
 */
 export default function Home() {
   const rest = useAfterFirstPaint()
