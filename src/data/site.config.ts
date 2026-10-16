@@ -257,6 +257,10 @@ export const services: Service[] = [
       'Comment and message replies',
       'Monthly reporting on what worked',
     ],
+    image: {
+      src: 'services/social.webp',
+      alt: 'A content creator photographs a colourful mug on a pastel backdrop with her phone and a ring light while a colleague notes shot ideas.',
+    },
   },
 ]
 
