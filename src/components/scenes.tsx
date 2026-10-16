@@ -37,13 +37,13 @@ import { MOTION_OK } from './motion'
 
 gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin)
 
-const LINE = '#dfe2e9'
-const MUTED = '#c3c7d2'
-const WASH = '#f1f2f5'
+const LINE = '#dfe9e3'
+const MUTED = '#c3d2ca'
+const WASH = '#f1f5f3'
 const BRAND = 'var(--color-brand)'
 const STRONG = 'var(--color-brand-strong)'
 const BRIGHT = 'var(--color-brand-bright)'
-const TINT = '#e9eefd'
+const TINT = '#eef7f2'
 
 const q = (el: SVGSVGElement, sel: string) => Array.from(el.querySelectorAll<SVGElement>(sel))
 
@@ -165,7 +165,7 @@ function WebScene() {
         <rect x="6" y="2" width="268" height="18" fill={WASH} />
         <circle cx="18" cy="11" r="2.6" fill="#ff5f57" />
         <circle cx="26" cy="11" r="2.6" fill="#febc2e" />
-        <circle cx="34" cy="11" r="2.6" fill="#2885c8" />
+        <circle cx="34" cy="11" r="2.6" fill="#28c840" />
 
         <path d="M46 20 V11 A5 5 0 0 1 51 6 H122 A5 5 0 0 1 127 11 V20 Z" fill="#fff" />
         <rect x="55" y="9.5" width="7" height="7" rx="2" fill={BRAND} />
@@ -374,7 +374,7 @@ function SoftwareScene() {
       <path d="M8 17 V13 A8 8 0 0 1 16 5 H264 A8 8 0 0 1 272 13 V17 Z" fill={WASH} />
       <circle cx="17" cy="11" r="2.2" fill="#ff5f57" />
       <circle cx="24.5" cy="11" r="2.2" fill="#febc2e" />
-      <circle cx="32" cy="11" r="2.2" fill="#2885c8" />
+      <circle cx="32" cy="11" r="2.2" fill="#28c840" />
       <rect x="112" y="7" width="56" height="8" rx="4" fill="#fff" stroke={LINE} />
 
       {/* sidebar */}
@@ -850,7 +850,7 @@ function AiScene() {
     <svg ref={ref} viewBox={SVC_VB} className={svgCls} aria-hidden="true">
       <defs>
         <pattern id="zy-ai-dots" x="30" y="22" width="13" height="13" patternUnits="userSpaceOnUse">
-          <circle cx="1" cy="1" r="0.75" fill="#e6e8ed" />
+          <circle cx="1" cy="1" r="0.75" fill="#e6ede9" />
         </pattern>
         <clipPath id="zy-ai-canvas">
           <path d="M30 22 H276 V91 A9 9 0 0 1 267 100 H30 Z" />
@@ -862,7 +862,7 @@ function AiScene() {
       <path d="M13 4 H267 A9 9 0 0 1 276 13 V22 H4 V13 A9 9 0 0 1 13 4 Z" fill={WASH} />
       <circle cx="14" cy="13" r="2.2" fill="#ff5f57" />
       <circle cx="22" cy="13" r="2.2" fill="#febc2e" />
-      <circle cx="30" cy="13" r="2.2" fill="#2885c8" />
+      <circle cx="30" cy="13" r="2.2" fill="#28c840" />
       <path d="M45.5 8 H102.5 A3.5 3.5 0 0 1 106 11.5 V22 H42 V11.5 A3.5 3.5 0 0 1 45.5 8 Z" fill="#fff" />
       <circle cx="51" cy="15" r="2.6" fill={BRAND} opacity="0.55" />
       <rect x="58" y="13" width="34" height="4" rx="2" fill={MUTED} />
@@ -1130,7 +1130,7 @@ function VideoScene() {
       {/* title bar: traffic lights, a tab strip, a view toggle */}
       <circle cx="16" cy="11" r="2.6" fill="#ff5f57" />
       <circle cx="25" cy="11" r="2.6" fill="#febc2e" />
-      <circle cx="34" cy="11" r="2.6" fill="#2885c8" />
+      <circle cx="34" cy="11" r="2.6" fill="#28c840" />
       <rect x="46" y="6.5" width="64" height="12" rx="3" fill={TINT} />
       <text x="78" y="15" textAnchor="middle" fontSize="7" fill={MUTED} className="font-ui">
         reel-01.mp4
@@ -1364,9 +1364,9 @@ function MarketingScene() {
       {/* the window */}
       <rect x="6" y="6" width="268" height="92" rx="9" fill="#fff" stroke={LINE} />
       <path d="M6 24 H274" stroke={LINE} />
-      <circle cx="17" cy="15" r="2.4" fill="#e4e6eb" />
-      <circle cx="26" cy="15" r="2.4" fill="#e4e6eb" />
-      <circle cx="35" cy="15" r="2.4" fill="#e4e6eb" />
+      <circle cx="17" cy="15" r="2.4" fill="#e4ebe7" />
+      <circle cx="26" cy="15" r="2.4" fill="#e4ebe7" />
+      <circle cx="35" cy="15" r="2.4" fill="#e4ebe7" />
       <rect x="46" y="12.5" width="30" height="5" rx="2.5" fill={MUTED} opacity="0.55" />
       <rect x="80" y="12.5" width="18" height="5" rx="2.5" fill={MUTED} opacity="0.3" />
 
@@ -1540,7 +1540,7 @@ function SocialScene() {
       <path d="M5 23 H275" stroke={LINE} />
       <circle cx="15" cy="14" r="2.4" fill="#ff5f57" />
       <circle cx="23.5" cy="14" r="2.4" fill="#febc2e" />
-      <circle cx="32" cy="14" r="2.4" fill="#2885c8" />
+      <circle cx="32" cy="14" r="2.4" fill="#28c840" />
       <rect x="60" y="9" width="34" height="10" rx="5" fill={TINT} />
       <rect x="100" y="9" width="28" height="10" rx="5" fill={WASH} />
       <rect x="134" y="9" width="24" height="10" rx="5" fill={WASH} />
@@ -1727,12 +1727,12 @@ const PRJ_VB = '0 0 400 250'
 
 function Frame({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative h-full w-full overflow-hidden bg-[linear-gradient(135deg,#fdfaf1,#e9eefd)]">
+    <div className="relative h-full w-full overflow-hidden bg-white">
       <div
         className="absolute inset-0 opacity-50"
         style={{
           backgroundImage:
-            'linear-gradient(to right,#e3e6ed 1px,transparent 1px),linear-gradient(to bottom,#e3e6ed 1px,transparent 1px)',
+            'linear-gradient(to right,#e3ede7 1px,transparent 1px),linear-gradient(to bottom,#e3ede7 1px,transparent 1px)',
           backgroundSize: '32px 32px',
         }}
         aria-hidden="true"
@@ -1916,7 +1916,7 @@ function SiteScene() {
       <rect x="40" y="18" width="320" height="214" rx="10" fill="#fff" stroke={LINE} />
       <circle cx="56" cy="32" r="3.2" fill="#f2b3ad" />
       <circle cx="67" cy="32" r="3.2" fill="#f0d79c" />
-      <circle cx="78" cy="32" r="3.2" fill="#b7c3dc" />
+      <circle cx="78" cy="32" r="3.2" fill="#b7dcc6" />
       <rect x="140" y="26" width="120" height="12" rx="6" fill={WASH} />
       <path d="M40 46 H360" stroke={LINE} />
 

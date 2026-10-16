@@ -36,7 +36,7 @@ export default function Studio() {
 
           <Parallax distance={40}>
             <Tilt max={5}>
-              <div className="rounded-card border border-border bg-card p-8 shadow-[0_20px_50px_-32px_rgba(10,22,71,0.35)]">
+              <div className="rounded-card border border-border bg-card p-8 shadow-[0_20px_50px_-32px_rgba(6,52,28,0.35)]">
                 <img
                   src={LOGO_SRC}
                   alt="Zyflo Tech logo"
