@@ -17,14 +17,14 @@ Sri Lanka and abroad.)
 
 ## Product Purpose
 
-zyflo.tech is the marketing site of Zyflo Tech, a one person digital studio run by
-Riflan Mohamed in Sri Lanka since March 2022. Success is a visitor sending a WhatsApp
+zyflo.tech is the marketing site of Zyflo Tech, a digital studio founded by
+Riflan Mohamed in Sri Lanka in March 2022. Success is a visitor sending a WhatsApp
 message (confirmed by the owner as the primary action); the enquiry form and email are the
 second path.
 
 ## Positioning
 
-The person you brief is the person who builds it: no sales layer, no project manager.
+The people you brief are the people who build it: no sales layer, no project manager.
 Fixed quotes in LKR agreed before work starts, and full handover of code, hosting and
 domain accounts at the end.
 
@@ -45,21 +45,28 @@ hello@zyflo.tech mailbox, a booking link, the city for local search.
 
 ## Brand Commitments
 
-Pure white ground (#FFFFFF, no tinted surfaces) with the Zyflo emerald (#008B48, strong #00753E) and deep green bands (#06341C). The owner tried royal blue, navy and sage palettes and chose to return to the original emerald. Inter and Instrument Sans,
-self hosted. Voice is plain, direct and first person. Zero em dashes or en dashes anywhere.
-Motion is on by default with a footer toggle to switch it off. No stock or placeholder
-imagery. No fabricated facts, numbers or testimonials.
+Matte black (#111111) and pure white (#FFFFFF) lead: black text, black buttons, black
+bands. Light greys for secondary surfaces. The Zyflo green (#008B48, strong #00753E,
+bright #3DDC84 on black) is the third colour only: highlighted words, icons, links and
+the side line. The logo is the ZYFLO TECH Z (public/brand). Type is Geist for headings
+and body and Geist Mono for eyebrows, ordinals and labels, self hosted. Voice is plain
+and direct, as a studio: "we", "us", "our", never "I", and never a stated team size or
+named staff. Zero em dashes or en dashes anywhere (a site check enforces it). Motion is on
+by default with a footer toggle to switch it off. Photos of people working may be AI
+generated scene photos (MacBooks, detailed real looking screens, natural people), used
+to illustrate a service and never captioned or presented as the studio's staff. No
+other stock or placeholder imagery. No fabricated facts, numbers or testimonials.
 
 ## Evidence on Hand
 
 Real clients: SJD POS (a point of sale system) and mradventure.lk (a live website), plus
 the studio's own offline first invoice and receipt tool. Founded March 2022. WhatsApp
-+94 78 434 2391. No testimonials, reviews, ratings, awards, prices or headcount beyond one
-person exist, so none may appear.
++94 78 434 2391. No testimonials, reviews, ratings, awards, prices or headcount exist,
+so none may appear.
 
 ## Product Principles
 
-1. Say who you are dealing with: one person, named, accountable.
+1. Say who you are dealing with: a small studio, a named founder, fully accountable.
 2. Show real work and real facts, never decoration passed off as proof.
 3. Make the WhatsApp message the easiest thing to do on every page.
 4. Fast on mobile data first; motion must never hide content or slow the first screen.
