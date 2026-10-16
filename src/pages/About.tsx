@@ -1,5 +1,6 @@
 import Studio from '../sections/Studio'
 import PageCta from '../components/PageCta'
+import { startProjectImage } from '../data/site.config'
 
 export default function About() {
   return (
@@ -11,6 +12,7 @@ export default function About() {
         body="A short message is enough. You get an honest answer and a fixed quote in LKR."
         to="/contact"
         label="Start a project"
+        image={startProjectImage}
       />
     </div>
   )

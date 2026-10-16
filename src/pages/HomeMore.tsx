@@ -1,6 +1,6 @@
 import { ArrowRight, Globe } from 'lucide-react'
 
-import { business, clients, services } from '../data/site.config'
+import { business, clients, services, startProjectImage } from '../data/site.config'
 import { Container, SectionHead } from '../components/ui'
 import { StaggerGrid } from '../components/motion'
 import PageCta from '../components/PageCta'
@@ -103,6 +103,7 @@ export default function HomeMore() {
         body="A short message is enough. You get an honest answer, a fixed quote in LKR and a team that stays with it to the end."
         to="/contact"
         label="Start a project"
+        image={startProjectImage}
       />
       <Ready />
     </>

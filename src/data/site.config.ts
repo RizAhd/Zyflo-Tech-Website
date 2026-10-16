@@ -360,6 +360,12 @@ export const about = {
   ],
 } as const
 
+/** The photo beside the "Start a project" band on the home and about pages. */
+export const startProjectImage = {
+  src: 'studio/start-a-project.webp',
+  alt: 'A client smiles and points at a sketched plan in a notebook while a studio lead listens, pen in hand, at a round table in a bright studio.',
+}
+
 // ---------------------------------------------------------------------------
 // Contact section + form
 // ---------------------------------------------------------------------------
