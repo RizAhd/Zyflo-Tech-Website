@@ -106,7 +106,18 @@ test('an old anchor link redirects to its page', async ({ page }) => {
   await expect(page).toHaveURL(/\/process\/$/)
 })
 
-test('a service link opens that service', async ({ page }) => {
+test('a service link scrolls to that service', async ({ page }) => {
   await page.goto('/services/#service-ai')
-  await expect(page.locator('#service-ai')).toHaveAttribute('aria-expanded', 'true')
+  await expect(page.locator('#service-ai h2')).toBeInViewport()
+})
+
+test('each service is described once on the services page', async ({ page }) => {
+  await page.goto('/services/')
+  await page.waitForSelector('main h1')
+  for (const id of ['web', 'software', 'mobile', 'ai', 'video', 'marketing', 'social']) {
+    await expect(page.locator(`#service-${id}`)).toHaveCount(1)
+  }
+  // The first promise appears once in the page text, not in a list and again in a band.
+  const text = await page.locator('main').innerText()
+  expect(text.split('A fast, findable website').length - 1).toBe(1)
 })

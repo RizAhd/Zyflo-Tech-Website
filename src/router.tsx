@@ -118,8 +118,7 @@ export function Link({ to, children, onClick, ...rest }: LinkProps) {
 
 /**
  * After a page change: back to the top of the new page, or to the section a
- * hash points at. The service tabs place themselves from their own hash, so
- * those are left alone.
+ * hash points at.
  */
 export function useScrollOnNavigate(onSettled?: () => void) {
   const path = usePath()
@@ -139,7 +138,7 @@ export function useScrollOnNavigate(onSettled?: () => void) {
     if (!landing) document.getElementById('main')?.focus({ preventScroll: true })
     if (!id) {
       if (!landing) window.scrollTo({ top: 0, behavior: 'auto' })
-    } else if (!id.startsWith('service-')) {
+    } else {
       const seek = () => {
         const el = document.getElementById(id)
         if (el) el.scrollIntoView()
