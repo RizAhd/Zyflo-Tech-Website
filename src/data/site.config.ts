@@ -240,6 +240,10 @@ export const services: Service[] = [
       'Email and WhatsApp campaigns',
       'Analytics and conversion tracking',
     ],
+    image: {
+      src: 'services/marketing.webp',
+      alt: 'Three marketers plan a campaign around a table covered in printed charts, one circling a result with a red marker.',
+    },
   },
   {
     id: 'social',
