@@ -7,6 +7,7 @@ import { Button, Container } from '../components/ui'
 import { BlurIn, Magnetic, SplitHeading } from '../components/motion'
 import HandwritingText from '../components/HandwritingText'
 import PageLine from '../components/PageLine'
+import ServiceTicker from '../components/ServiceTicker'
 
 const HomeMore = lazy(() => import('./HomeMore'))
 
@@ -31,8 +32,11 @@ function Hero() {
             </span>
           </h1>
 
+          {/* The services, one at a time, once the pen has finished. */}
+          <ServiceTicker className="mt-5" />
+
           <BlurIn delay={0.15}>
-            <p className="mx-auto mt-7 max-w-xl text-balance text-base leading-relaxed text-muted-foreground sm:text-lg">
+            <p className="mx-auto mt-5 max-w-xl text-balance text-base leading-relaxed text-muted-foreground sm:text-lg">
               {hero.lead}
             </p>
           </BlurIn>
