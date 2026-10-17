@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#ffffff" />
 
+    <!-- One address. The live site answers on http:// and on www. as well as on
+         https://zyflo.tech, and Google had indexed the http copy and stored its
+         favicon there, leaving https://zyflo.tech with no icon. The real fix is
+         a 301 at Cloudflare (Always Use HTTPS, and www to the bare domain); until
+         that is switched on this sends browsers to the one address. Only ever
+         acts on the real domain, never on localhost or a preview. -->
+    <script>
+      (function () {
+        var l = window.location;
+        var h = l.hostname;
+        if ((h === 'zyflo.tech' || h === 'www.zyflo.tech') && (l.protocol === 'http:' || h === 'www.zyflo.tech')) {
+          l.replace('https://zyflo.tech' + l.pathname + l.search + l.hash);
+        }
+      })();
+    </script>
+
     <!-- Motion gate.
          Animation is ON for everyone by default, whatever the operating system
          reports: many Windows laptops switch "animation effects" off (battery
