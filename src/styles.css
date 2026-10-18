@@ -119,12 +119,12 @@
   }
 }
 
-/* Honour the operating system by default. The `data-force-motion` escape hatch
-   exists because the owner of the site needs a way to see it the way a visitor
-   without that setting sees it: a machine with Windows animation effects turned
-   off reports prefers-reduced-motion, and this reset would otherwise flatten
-   every animation on the page with no way to check the work. Set by ?motion=on,
-   cleared by ?motion=off, and never set on its own.
+/* Motion is always on. A machine with Windows animation effects turned off
+   (or battery saver) reports prefers-reduced-motion, and honouring that left
+   the whole site looking frozen, so index.html sets `data-force-motion` on
+   <html> for every visitor and this reset never applies. It stays as a plain
+   fallback for the one case where the attribute is absent: ?motion=off, the
+   hook the site's own tests use.
 
    The JS side of the same gate is the MOTION_OK constant exported from
    src/components/motion.tsx, which reads the settled attribute. Scripts must

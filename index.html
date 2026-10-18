@@ -22,13 +22,15 @@
     </script>
 
     <!-- Motion gate.
-         Animation is ON for everyone by default, whatever the operating system
-         reports: many Windows laptops switch "animation effects" off (battery
-         saver does it too), which used to leave the whole site looking frozen.
+         Animation is always ON, whatever the operating system reports: many
+         Windows laptops switch "animation effects" off (battery saver does it
+         too), which used to leave the whole site looking frozen. There is no
+         switch for it on the site any more, and a setting saved by the old
+         footer button is cleared here so it can never turn motion off.
 
-         A visitor can still turn it off: the "Motion" button in the footer
-         stores 'off', and ?motion=off does the same. That choice is remembered
-         and wins over the default. ?motion=on turns it back on.
+         The one exception is ?motion=off, a hook for the site's own tests (a
+         still page makes contrast measurable). It applies to that page load
+         only and nothing is remembered.
 
          Runs during head parsing, before first paint and before the module
          script, so no frame renders in the wrong state and MOTION_OK in
@@ -36,15 +38,17 @@
     <script>
       (function () {
         try {
-          var q = new URLSearchParams(location.search).get('motion')
-          if (q === 'on' || q === 'off') localStorage.setItem('zyflo-motion', q)
-          if (localStorage.getItem('zyflo-motion') !== 'off') {
-            document.documentElement.setAttribute('data-force-motion', '')
-          }
+          localStorage.removeItem('zyflo-motion')
         } catch (e) {
-          // Storage can be blocked. Fall back to the default: motion on.
-          document.documentElement.setAttribute('data-force-motion', '')
+          // Storage can be blocked: nothing was saved, nothing to clear.
         }
+        var off = false
+        try {
+          off = new URLSearchParams(location.search).get('motion') === 'off'
+        } catch (e) {
+          off = false
+        }
+        if (!off) document.documentElement.setAttribute('data-force-motion', '')
       })()
     </script>
 

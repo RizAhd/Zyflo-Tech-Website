@@ -120,5 +120,8 @@ crawlers that do not run JavaScript. It is clipped out of sight, and shown norma
 
 ## Motion
 
-Motion is on by default. A visitor can switch it off with the Motion button in the footer, and the
-choice is remembered. `?motion=off` and `?motion=on` do the same from a link.
+Motion is always on, whatever the visitor's operating system reports (many Windows laptops turn
+animation effects off, which used to leave the site looking frozen). There is no switch for it on the
+site, and a setting saved by the old footer button is cleared on load. `?motion=off` is kept as a hook
+for the tests only: it applies to that one page load, so contrast can be measured on a still page, and
+nothing is remembered.

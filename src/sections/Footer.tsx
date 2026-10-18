@@ -73,40 +73,12 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-2 border-t border-white/10 pt-6 text-center text-xs text-ink-muted sm:flex-row sm:text-left">
+        <div className="mt-12 border-t border-white/10 pt-6 text-center text-xs text-ink-muted sm:text-left">
           <p>
             &copy; {year} {business.legalName}. Built in {business.location}.
           </p>
-          <MotionToggle />
         </div>
       </Container>
     </footer>
-  )
-}
-
-/**
- * Motion is on by default (see the gate script in index.html). This lets a
- * visitor who is bothered by movement switch it off, and the choice is
- * remembered. It reloads because the animations are armed once at load.
- */
-function MotionToggle() {
-  const isOn = document.documentElement.hasAttribute('data-force-motion')
-  const flip = () => {
-    try {
-      localStorage.setItem('zyflo-motion', isOn ? 'off' : 'on')
-    } catch {
-      /* storage blocked: nothing to remember, the reload still applies the default */
-    }
-    window.location.reload()
-  }
-  return (
-    <button
-      type="button"
-      onClick={flip}
-      aria-pressed={isOn}
-      className="inline-flex min-h-[44px] items-center text-ink-muted hover:text-brand-bright focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
-    >
-      Motion: {isOn ? 'on' : 'off'}
-    </button>
   )
 }

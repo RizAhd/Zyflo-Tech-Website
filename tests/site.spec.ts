@@ -94,6 +94,20 @@ test('no em or en dashes on any page', async ({ page }) => {
   }
 })
 
+// Motion is always on: not switched off by the operating system, not by a setting
+// saved by the old footer button, and there is no button to do it.
+test('motion is always on and has no switch', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.addInitScript(() => localStorage.setItem('zyflo-motion', 'off'))
+  await page.goto('/')
+  await page.waitForSelector('main h1')
+  await expect(page.locator('html')).toHaveAttribute('data-force-motion', '')
+  expect(await page.evaluate(() => localStorage.getItem('zyflo-motion'))).toBeNull()
+  await page.locator('footer').waitFor({ state: 'attached' })
+  await expect(page.getByRole('button', { name: /motion/i })).toHaveCount(0)
+  await expect(page.locator('footer')).not.toContainText(/motion:/i)
+})
+
 test('titles are unique across pages', async ({ page }) => {
   const titles = new Set<string>()
   for (const { path } of PAGES) {

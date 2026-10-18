@@ -51,8 +51,8 @@ bright #3DDC84 on black) is the third colour only: highlighted words, icons, lin
 the side line. The logo is the ZYFLO TECH Z (public/brand). Type is Geist for headings
 and body and Geist Mono for eyebrows, ordinals and labels, self hosted. Voice is plain
 and direct, as a studio: "we", "us", "our", never "I", and never a stated team size or
-named staff. Zero em dashes or en dashes anywhere (a site check enforces it). Motion is on
-by default with a footer toggle to switch it off. Photos of people working may be AI
+named staff. Zero em dashes or en dashes anywhere (a site check enforces it). Motion is always
+on, with no switch for it. Photos of people working may be AI
 generated scene photos (MacBooks, detailed real looking screens, natural people), used
 to illustrate a service and never captioned or presented as the studio's staff. No
 other stock or placeholder imagery. No fabricated facts, numbers or testimonials.
@@ -75,5 +75,7 @@ so none may appear.
 ## Accessibility & Inclusion
 
 Target WCAG 2.2 AA: 4.5:1 text contrast, visible keyboard focus, 44px touch targets,
-labelled form fields, no content that moves without a way to stop it, and a plain readable
-state when motion is off.
+labelled form fields, and a plain readable state when motion is off (`?motion=off`, used by
+the tests). One known gap, by the owner's decision (2026-10-18): motion is always on and the
+footer switch is gone, so anything that moves on its own for more than five seconds (the
+rotating service line, the side line) cannot be paused (WCAG 2.2.2).
