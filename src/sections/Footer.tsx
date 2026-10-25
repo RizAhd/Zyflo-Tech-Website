@@ -1,33 +1,66 @@
+import { ArrowUpRight, Mail, MessageCircle, Phone } from 'lucide-react'
+
 import { business, navLinks, services } from '../data/site.config'
 import { email, phone, whatsapp } from '../data/contact'
 import { LOGO_WHITE_SRC } from '../data/assets'
 import { Container } from '../components/ui'
 import { Link } from '../router'
 
-// ---------------------------------------------------------------------------
+/*
+  The footer in the GrowthLab form: the wordmark large on black with one line
+  about the studio, a "have a project" block where GrowthLab puts its
+  newsletter (the studio has no newsletter, so it points at WhatsApp
+  instead), then the link columns and the contact details.
+*/
+
 const linkClass =
-  'inline-flex min-h-[44px] items-center text-sm text-ink-muted transition-colors hover:text-brand-bright focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand sm:min-h-[32px]'
-const headClass = 'font-mono text-xs font-medium uppercase tracking-[0.08em] text-white/60'
+  'inline-flex min-h-[44px] items-center text-[15px] text-ink-muted transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand sm:min-h-[34px]'
+const headClass = 'font-ui text-base font-semibold text-white'
 
 export default function Footer() {
   const year = new Date().getFullYear()
   return (
-    <footer className="border-t border-white/10 bg-ink pb-8 pt-14 text-white">
+    <footer className="bg-ink pb-8 pt-16 text-white sm:pt-20">
       <Container>
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.3fr_1.2fr]">
+        <div className="grid gap-12 lg:grid-cols-2">
           <div>
-            <div className="flex items-center gap-2.5">
-              <img src={LOGO_WHITE_SRC} alt="" width={30} height={26} />
-              <span className="font-ui text-base font-semibold">{business.name}</span>
+            <div className="flex items-center gap-4">
+              <img src={LOGO_WHITE_SRC} alt="" width={52} height={45} className="h-10 w-auto sm:h-12" />
+              <span className="font-ui text-5xl font-semibold tracking-[-0.02em] sm:text-6xl">{business.name}</span>
             </div>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink-muted">
-              {business.tagline} from a studio in {business.location}, founded by {business.owner}.
+            <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-ink-muted">
+              {business.tagline} from a studio in {business.location}, founded by {business.owner}: websites, apps,
+              AI automation and the marketing that brings people to them.
             </p>
           </div>
 
+          <div className="lg:justify-self-end">
+            <p className="font-ui text-xl font-semibold">Have a project in mind?</p>
+            <p className="mt-2 text-[15px] text-ink-muted">A short message is enough. We reply within a day or two.</p>
+            {whatsapp && (
+              <a
+                href={whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-5 inline-flex min-h-[48px] items-center gap-2 rounded-full bg-white px-6 font-ui text-sm font-semibold text-ink transition-colors hover:bg-brand-bright focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              >
+                <MessageCircle className="h-4 w-4" aria-hidden="true" />
+                Message us on WhatsApp
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              </a>
+            )}
+          </div>
+        </div>
+
+        <div className="mt-14 grid gap-10 border-t border-white/10 pt-12 sm:grid-cols-2 lg:grid-cols-[1fr_1.4fr_1.3fr]">
           <nav aria-label="Pages">
             <p className={headClass}>Pages</p>
             <ul className="mt-3">
+              <li>
+                <Link to="/" className={linkClass}>
+                  Home
+                </Link>
+              </li>
               {navLinks.map((l) => (
                 <li key={l.path}>
                   <Link to={l.path} className={linkClass}>
@@ -52,28 +85,46 @@ export default function Footer() {
           </nav>
 
           <div>
-            <p className={headClass}>Contact</p>
-            <ul className="mt-3">
+            <p className={headClass}>Have a question?</p>
+            <ul className="mt-4 space-y-4">
+              {phone && (
+                <li className="flex gap-3">
+                  <Phone className="mt-1 h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+                  <span>
+                    <a href={`tel:${phone.replace(/[^\d+]/g, '')}`} className="font-ui text-[15px] font-medium text-white hover:text-brand-bright">
+                      {phone}
+                    </a>
+                    <span className="block text-sm text-ink-muted">Mon to Sat, 9am to 7pm (+5:30)</span>
+                  </span>
+                </li>
+              )}
               {whatsapp && (
-                <li>
-                  <a href={whatsapp} target="_blank" rel="noopener noreferrer" className={linkClass}>
-                    WhatsApp{phone ? `, ${phone}` : ''}
-                  </a>
+                <li className="flex gap-3">
+                  <MessageCircle className="mt-1 h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+                  <span>
+                    <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="font-ui text-[15px] font-medium text-white hover:text-brand-bright">
+                      WhatsApp
+                    </a>
+                    <span className="block text-sm text-ink-muted">The quickest way to reach us</span>
+                  </span>
                 </li>
               )}
               {email && (
-                <li>
-                  <a href={`mailto:${email}`} className={`${linkClass} break-all`}>
-                    {email}
-                  </a>
+                <li className="flex gap-3">
+                  <Mail className="mt-1 h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+                  <span className="min-w-0">
+                    <a href={`mailto:${email}`} className="break-all font-ui text-[15px] font-medium text-white hover:text-brand-bright">
+                      {email}
+                    </a>
+                    <span className="block text-sm text-ink-muted">We reply within a day or two</span>
+                  </span>
                 </li>
               )}
-              <li className="py-2 text-sm text-ink-muted">Mon to Sat, 9am to 7pm (+5:30)</li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-12 border-t border-white/10 pt-6 text-center text-xs text-ink-muted sm:text-left">
+        <div className="mt-12 border-t border-white/10 pt-6 text-center text-sm text-ink-muted sm:text-left">
           <p>
             &copy; {year} {business.legalName}. Built in {business.location}.
           </p>

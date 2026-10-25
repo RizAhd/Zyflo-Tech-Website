@@ -2,7 +2,7 @@ import { lazy, Suspense, useCallback, useEffect, useRef, useState, type Componen
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowRight, Menu, MessageCircle, X } from 'lucide-react'
+import { ArrowUpRight, Menu, MessageCircle, X } from 'lucide-react'
 
 import { business, navLinks, pages } from './data/site.config'
 import { whatsapp } from './data/contact'
@@ -112,7 +112,7 @@ function Nav() {
           aria-label={`${business.name}, home`}
         >
           <img src={LOGO_SRC} alt="" width={34} height={34} className="rounded-lg" />
-          <span className="font-ui text-[17px] font-semibold tracking-tight">Zyflo Tech</span>
+          <span className="font-ui text-xl font-semibold tracking-tight">Zyflo Tech</span>
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
@@ -123,7 +123,7 @@ function Nav() {
                 key={l.path}
                 to={l.path}
                 aria-current={active ? 'page' : undefined}
-                className={`relative rounded font-ui text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand ${
+                className={`relative rounded font-ui text-[15px] font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand ${
                   active ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
@@ -149,7 +149,7 @@ function Nav() {
             <Magnetic strength={0.22}>
               <Button href="/contact">
                 Start a project
-                <ArrowRight className="h-4 w-4" />
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
               </Button>
             </Magnetic>
           </span>
@@ -219,7 +219,7 @@ function Nav() {
                 })}
                 <Button href="/contact" className="mt-8 w-full" onClick={() => setOpen(false)}>
                   Start a project
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                 </Button>
               </Container>
             </motion.div>
