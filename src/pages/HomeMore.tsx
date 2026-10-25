@@ -1,12 +1,10 @@
 import { ArrowUpRight, Globe, KeyRound, LifeBuoy, MessagesSquare, ShoppingCart } from 'lucide-react'
 
-import { about, capabilities, clients, homeStatement, startProjectImage } from '../data/site.config'
+import { about, capabilities, clients, homeStatement, projects, services, startProjectImage } from '../data/site.config'
 import { Button, CenterHead, Container, Marquee, SplitHead } from '../components/ui'
 import { BlurIn } from '../components/motion'
 import ScrollRevealText from '../components/ScrollRevealText'
 import ProcessCards from '../components/ProcessCards'
-import ServiceRows from '../components/ServiceRows'
-import WorkCases from '../components/WorkCases'
 import ClosingCta from '../components/ClosingCta'
 import { Link } from '../router'
 import { Ready } from '../ready'
@@ -14,17 +12,18 @@ import { Ready } from '../ready'
 /*
   What follows the hero on the home page, in the GrowthLab order: a strip of
   what gets built, a statement, who it was shipped for, the process on black,
-  why businesses pick the studio, the services as rows, the work, and a
-  closing call. GrowthLab's testimonials, pricing plans and blog are left out
+  why businesses pick the studio, the services as a short list, the work as
+  small cards, and a closing call. The services page and the work page carry
+  the detail, so here each is a brief way in. GrowthLab's testimonials, pricing plans and blog are left out
   on purpose: the studio has none of those yet, and nothing here is invented.
 
   Nothing is said twice on this page: the strip lists the specific things
-  built (not the seven service names, which the rows carry), the statement
+  built (not the seven service names, which the list carries), the statement
   does not repeat the facts in the hero band, and every photo appears once.
 */
 
 const img = (path: string) => `${import.meta.env.BASE_URL}${path}`
-// GrowthLab's values section has three: the fourth point (fixed quotes in LKR)
+// GrowthLab's values section has three: the fourth point (fixed quotes)
 // is already one of the facts in the hero band, so it is not said again here.
 const VALUES = about.points.filter((pt) => pt.label !== 'Fixed quotes')
 const VALUE_ICON = [MessagesSquare, KeyRound, LifeBuoy]
@@ -136,15 +135,19 @@ function Process() {
   return (
     <section className="bg-ink py-24 text-white sm:py-32">
       <Container>
-        <SplitHead
-          onInk
-          title={
-            <>
-              How a project <span className="text-brand-bright">runs</span>
-            </>
-          }
-          lead="Four steps, so you always know where things stand and what happens next."
-        />
+        {/* The heading stays pinned under the header while the cards below
+            line up, and leaves with them at the end of the section. */}
+        <div className="z-10 bg-ink lg:sticky lg:top-6 lg:pb-6 lg:pt-4">
+          <SplitHead
+            onInk
+            title={
+              <>
+                How a project <span className="text-brand-bright">runs</span>
+              </>
+            }
+            lead="Four steps, so you always know where things stand and what happens next."
+          />
+        </div>
         <ProcessCards />
         <div className="mt-14">
           <Button href="/process" variant="accent">
@@ -162,35 +165,37 @@ function Values() {
     <section className="py-24 sm:py-32">
       <Container>
         <SplitHead title="Why businesses pick us" lead="Straight dealing, from the first message to long after launch." />
-        {/* GrowthLab's arrangement: the photo and the first value side by side,
-            the other two values beneath. */}
-        <ul className="mt-12 grid gap-x-12 gap-y-12 md:grid-cols-2">
-          <li aria-hidden="true">
-            <BlurIn y={24}>
-              <img
-                src={img(startProjectImage.src)}
-                alt=""
-                width={1600}
-                height={1067}
-                loading="lazy"
-                decoding="async"
-                className="aspect-[16/10] w-full rounded-[20px] object-cover"
-              />
-            </BlurIn>
-          </li>
-          {VALUES.map((pt, i) => {
-            const Icon = VALUE_ICON[i] ?? MessagesSquare
-            return (
-              <li key={pt.label} className={i === 0 ? 'md:self-end' : 'md:px-5'}>
-                <BlurIn y={16} delay={i * 0.05}>
-                  <Icon className="h-7 w-7 text-foreground" aria-hidden="true" />
-                  <h3 className="mt-10 font-ui text-xl font-semibold">{pt.label}</h3>
-                  <p className="mt-2 max-w-md text-base leading-[1.4] text-muted-foreground">{pt.value}.</p>
-                </BlurIn>
-              </li>
-            )
-          })}
-        </ul>
+        {/* The photo on the left, the three values stacked on the right and
+            spread to the photo's full height, each on its own ruled line. */}
+        <div className="mt-12 grid gap-10 md:grid-cols-2 md:gap-14">
+          <BlurIn y={24} className="h-full">
+            <img
+              src={img('services/marketing.webp')}
+              alt=""
+              width={1600}
+              height={1067}
+              loading="lazy"
+              decoding="async"
+              className="aspect-[4/3] h-full w-full rounded-[20px] object-cover"
+            />
+          </BlurIn>
+          <ul className="flex flex-col justify-between divide-y divide-border">
+            {VALUES.map((pt, i) => {
+              const Icon = VALUE_ICON[i] ?? MessagesSquare
+              return (
+                <li key={pt.label} className="flex items-start gap-5 py-7 first:pt-0 last:pb-0">
+                  <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-ink text-white">
+                    <Icon className="h-5 w-5" aria-hidden="true" />
+                  </span>
+                  <BlurIn y={12} delay={i * 0.05}>
+                    <h3 className="font-ui text-2xl font-semibold">{pt.label}</h3>
+                    <p className="mt-2 text-lg leading-[1.4] text-muted-foreground">{pt.value}.</p>
+                  </BlurIn>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
       </Container>
     </section>
   )
@@ -208,27 +213,91 @@ function Services() {
           }
           lead="From the website to the automation behind it, and the marketing that brings people to it."
         />
-      </Container>
-      <ServiceRows />
-      <Container className="mt-10 text-center">
-        <Button href="/services" variant="outline">
-          Every service in detail
-          <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-        </Button>
+        {/* One small line per service. The services page carries the detail. */}
+        <ul className="mx-auto mt-12 grid max-w-5xl gap-x-12 border-t border-border sm:grid-cols-2">
+          {services.map((s) => (
+            <li key={s.id} className="border-b border-border">
+              <Link
+                to={`/services/#service-${s.id}`}
+                className="group flex min-h-[64px] items-center gap-4 py-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              >
+                <span className="w-7 shrink-0 font-ui text-sm font-medium text-muted-foreground">{s.index}</span>
+                <span className="flex-1 font-ui text-lg font-semibold leading-snug transition-colors group-hover:text-brand-strong">
+                  {s.title}
+                </span>
+                <span
+                  className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-surface transition-colors group-hover:bg-ink group-hover:text-white"
+                  aria-hidden="true"
+                >
+                  <ArrowUpRight className="h-4 w-4" />
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <div className="mt-10 text-center">
+          <Button href="/services" variant="outline">
+            Every service in detail
+            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+          </Button>
+        </div>
       </Container>
     </section>
   )
 }
 
 function Work() {
+  // Real screenshots first; the work page has the full story of each.
+  const shown = [...projects].sort((a, b) => Number(Boolean(b.image)) - Number(Boolean(a.image)))
   return (
-    <section className="pb-24 sm:pb-32">
+    <section className="pb-8">
       <Container>
-        <CenterHead
-          title="Work that shipped"
-          lead="A closer look at what each project took."
-        />
-        <WorkCases />
+        <CenterHead title="Work that shipped" lead="A closer look at what each project took is on the work page." />
+        <ul className="mt-12 grid gap-5 md:grid-cols-3">
+          {shown.map((p, i) => (
+            <li key={p.id}>
+              <BlurIn y={20} delay={i * 0.06} className="h-full">
+                <Link
+                  to="/work"
+                  className="group flex h-full flex-col overflow-hidden rounded-[20px] bg-surface transition-colors hover:bg-[#ececec] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden bg-ink">
+                    {p.image ? (
+                      <img
+                        src={img(p.image.src)}
+                        alt={p.image.alt}
+                        width={1200}
+                        height={750}
+                        loading="lazy"
+                        decoding="async"
+                        className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                      />
+                    ) : (
+                      <div
+                        className="flex h-full flex-col justify-end bg-[radial-gradient(circle_at_85%_15%,rgba(0,139,72,0.5),transparent_60%)] p-6 text-white"
+                        aria-hidden="true"
+                      >
+                        <span className="font-ui text-3xl font-semibold leading-none">{p.title}</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex flex-1 flex-col p-6">
+                    <span className="text-sm font-medium text-brand-strong">{p.category}</span>
+                    <h3 className="mt-1 font-ui text-xl font-semibold">{p.title}</h3>
+                    <p className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
+                      <span className="h-2 w-2 rounded-full bg-brand" aria-hidden="true" />
+                      {p.client}
+                    </p>
+                    <span className="mt-5 inline-flex items-center gap-1.5 font-ui text-sm font-semibold text-foreground md:mt-auto md:pt-5">
+                      See the work
+                      <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
+                    </span>
+                  </div>
+                </Link>
+              </BlurIn>
+            </li>
+          ))}
+        </ul>
       </Container>
     </section>
   )
@@ -254,6 +323,7 @@ export default function HomeMore() {
         to="/contact"
         label="Start a project"
         showWhatsapp
+        image={startProjectImage}
       />
       <Ready />
     </>

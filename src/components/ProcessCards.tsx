@@ -12,12 +12,13 @@ import { BlurIn } from './motion'
   it, then the third and the fourth, until all four stand in one row. All the
   columns end at the same line, so that row then scrolls away together.
 
-  Each card is a photo tinted from Zyflo green into black (GrowthLab tints
-  its photos orange), with the big number and the step at its foot: 285 by
-  454px, 48px padding, 112px bold numbers. On a phone the cards simply stack.
+  Each card is a full colour photo with a soft dark shade at the top and
+  foot, so the white number and words stay readable, and the step written at
+  its foot: 285 by 454px, 48px padding, 112px bold numbers. On a phone the
+  cards simply stack.
 */
 
-const PHOTOS = ['services/software.webp', 'services/ai.webp', 'services/web.webp', 'studio/start-a-project.webp']
+const PHOTOS = ['services/software.webp', 'services/ai.webp', 'services/web.webp', 'services/mobile.webp']
 const STAIR = ['', 'lg:pt-[454px]', 'lg:pt-[908px]', 'lg:pt-[1362px]']
 const img = (path: string) => `${import.meta.env.BASE_URL}${path}`
 
@@ -35,13 +36,12 @@ export default function ProcessCards() {
                 height={533}
                 loading="lazy"
                 decoding="async"
-                className="absolute inset-0 h-full w-full object-cover grayscale"
+                className="absolute inset-0 h-full w-full object-cover"
               />
               <div
-                className="absolute inset-0 bg-[linear-gradient(160deg,rgba(0,139,72,0.92)_0%,rgba(0,90,48,0.82)_45%,rgba(10,10,10,0.95)_100%)] mix-blend-multiply"
+                className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.45)_0%,rgba(10,10,10,0.05)_32%,rgba(10,10,10,0.15)_55%,rgba(10,10,10,0.88)_100%)]"
                 aria-hidden="true"
               />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_35%,rgba(10,10,10,0.75)_100%)]" aria-hidden="true" />
 
               <span className="relative self-end font-ui text-[88px] font-bold leading-[1.2] text-white sm:text-[112px]" aria-hidden="true">
                 {p.step}
