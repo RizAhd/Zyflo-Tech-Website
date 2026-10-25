@@ -8,10 +8,14 @@
    architecture (semantic tokens consumed everywhere, never raw hex in
    components) with Magic UI style animated accents.
 
-   TYPE. Geist for everything people read (headings and body), Geist Mono for
-   the small voice: eyebrows, ordinals, labels. Both are Vercel's, made for
-   this black and white look, and self hosted (index.html). Headings track
-   tight (-0.03em, the hero -0.04em); mono labels track out a little.
+   TYPE. Urbanist for everything people read: soft, geometric headings and
+   plain body copy (the GrowthLab direction the owner chose). Anton, a tall
+   condensed face, is kept for one job: the huge ZYFLO TECH word in the hero.
+   Both self hosted (index.html). Headings track slightly tight.
+
+   SURFACES. The page stays pure white. Where GrowthLab puts white cards on a
+   cream ground, this site puts light grey cards (--color-surface) on white,
+   and the dark sections are the matte black ink.
 
    CONTRAST: measured, never guessed.
    Palette: matte black and pure white lead (black text, black buttons,
@@ -30,11 +34,14 @@
 @theme {
   /* Type roles kept apart as names, so a future split is a one line change
      here rather than a sweep through every component. */
-  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
-  --font-ui: "Geist", ui-sans-serif, system-ui, sans-serif;
-  /* The second voice: eyebrows, ordinals, labels and small figures. */
-  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-  --font-display: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-sans: "Urbanist", ui-sans-serif, system-ui, sans-serif;
+  --font-ui: "Urbanist", ui-sans-serif, system-ui, sans-serif;
+  /* Small labels and numbers used to be a monospace; they are Urbanist now,
+     so `font-mono` stays as a name and simply resolves to the same face. */
+  --font-mono: "Urbanist", ui-sans-serif, system-ui, sans-serif;
+  /* The hero's one huge word. */
+  --font-poster: "Anton", "Impact", "Arial Narrow", sans-serif;
+  --font-display: "Urbanist", ui-sans-serif, system-ui, sans-serif;
 
   --color-background: #ffffff;      /* white page ground                 */
   --color-card: #ffffff;            /* cards and inputs                  */
@@ -42,6 +49,7 @@
   --color-muted: #ffffff;           /* bands stay pure white; borders mark them */
   --color-muted-foreground: #525252;
   --color-border: #e6e6e6;
+  --color-surface: #f5f5f5;         /* light grey cards on the white page */
 
   /* The brand, and its two working variants. */
   --color-brand: #008b48;          /* emerald: icons, rules, large text   */
@@ -107,7 +115,7 @@
   h5,
   h6 {
     font-weight: 600;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em;
   }
   ::selection {
     background: var(--color-brand);
@@ -158,8 +166,7 @@
    read as deliberate rather than as body text. */
 @utility font-display {
   font-family: var(--font-display);
-  font-weight: 500;
-  letter-spacing: 0.04em;
+  font-weight: 600;
 }
 
 @utility font-ui {

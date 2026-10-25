@@ -16,7 +16,7 @@ import { MOTION_OK } from './motion'
 
   Differences from the original, for this site:
     - the tracing happens at build time (vite.config.ts, `virtual:pen-paths`)
-      from the hero's own Geist SemiBold, so the page ships a few kilobytes of
+      from the hero's own Urbanist SemiBold, so the page ships a few kilobytes of
       path data instead of a font parser and a font file, and the pen starts
       the moment the headline appears.
     - the SVG is sized in em from the glyph box and sat on the text baseline,

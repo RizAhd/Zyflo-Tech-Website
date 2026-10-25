@@ -77,31 +77,32 @@
     <link rel="manifest" href="/site.webmanifest" />
 
     <!--
-      Geist and Geist Mono (Vercel, SIL OFL) are self-hosted from /public/fonts,
-      so the page makes no third party request and the headline never swaps
-      from a fallback face after load. Geist is one variable file for every
-      weight, and it is what the first screen uses, so it is preloaded.
+      Urbanist (all text) and Anton (the one huge word in the hero), both SIL
+      OFL, are self-hosted from /public/fonts, so the page makes no third party
+      request and the headline never swaps from a fallback face after load.
+      Both are on the first screen, so both are preloaded.
     -->
-    <link rel="preload" as="font" type="font/woff2" href="/fonts/geist-variable.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/urbanist-variable.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/anton-400.woff2" crossorigin />
 
     <style>
       /* Paint the ground before any CSS loads, which kills the flash of colour */
       html { background: #ffffff; }
 
-      /* Each family is one variable file covering every weight. */
+      /* Urbanist is one variable file covering every weight. */
       @font-face {
-        font-family: 'Geist';
+        font-family: 'Urbanist';
         font-style: normal;
         font-weight: 100 900;
         font-display: swap;
-        src: url('/fonts/geist-variable.woff2') format('woff2');
+        src: url('/fonts/urbanist-variable.woff2') format('woff2');
       }
       @font-face {
-        font-family: 'Geist Mono';
+        font-family: 'Anton';
         font-style: normal;
-        font-weight: 100 900;
+        font-weight: 400;
         font-display: swap;
-        src: url('/fonts/geist-mono-variable.woff2') format('woff2');
+        src: url('/fonts/anton-400.woff2') format('woff2');
       }
 
       /* Until React mounts the page is plain white (no splash screen: it only

@@ -666,7 +666,7 @@ function buildLlmsTxt(): string {
 const PEN_ID = 'virtual:pen-paths'
 const PEN_RESOLVED = `\0${PEN_ID}`
 const PEN_EM = 100
-const PEN_TRACKING = -0.04
+const PEN_TRACKING = -0.02
 
 function zyfloPen(): Plugin {
   return {
@@ -676,7 +676,7 @@ function zyfloPen(): Plugin {
     },
     load(id) {
       if (id !== PEN_RESOLVED) return null
-      const file = path.resolve(import.meta.dirname, 'src/assets/fonts/geist-600.ttf')
+      const file = path.resolve(import.meta.dirname, 'src/assets/fonts/urbanist-600.woff')
       this.addWatchFile(file)
       const buf = fs.readFileSync(file)
       const font = opentype.parse(buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength))
