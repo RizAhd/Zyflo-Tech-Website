@@ -33,7 +33,7 @@ function QuotePill({ id, onInk = false }: { id: string; onInk?: boolean }) {
   return (
     <Link
       to={`/contact?service=${id}`}
-      className={`inline-flex min-h-[44px] shrink-0 items-center gap-2 rounded-full px-5 font-ui text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
+      className={`inline-flex min-h-[52px] shrink-0 items-center gap-2 rounded-full px-7 font-ui text-base font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
         onInk ? 'bg-white text-ink hover:bg-[#ebebeb]' : 'bg-ink text-white hover:bg-[#2b2b2b]'
       }`}
     >
@@ -56,7 +56,7 @@ export default function ServiceRows() {
             key={s.id}
             className={`border-b transition-colors duration-300 ${isOpen ? 'border-transparent bg-ink text-white' : 'border-border'}`}
           >
-            <div className="mx-auto flex w-full max-w-6xl items-center gap-4 px-5 py-6 sm:gap-8 sm:px-8 sm:py-7">
+            <div className="mx-auto flex w-full max-w-[75rem] items-center gap-4 px-5 py-6 sm:gap-8 sm:px-8 sm:py-7">
               <span className={`w-8 shrink-0 font-ui text-sm font-medium ${isOpen ? 'text-white/70' : 'text-muted-foreground'}`}>
                 {s.index}
               </span>
@@ -69,11 +69,11 @@ export default function ServiceRows() {
                   onClick={() => setOpen(i)}
                   className="group flex w-full flex-col items-start rounded-lg text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
                 >
-                  <span className={`text-xs font-medium uppercase tracking-[0.08em] ${isOpen ? 'text-brand-bright' : 'text-brand-strong'}`}>
+                  <span className={`text-sm font-medium ${isOpen ? 'text-brand-bright' : 'text-brand-strong'}`}>
                     {GROUP[s.id] ?? 'Service'}
                   </span>
                   <span
-                    className={`mt-1 font-ui text-2xl font-semibold leading-tight tracking-tight transition-colors sm:text-4xl ${
+                    className={`mt-1 font-ui text-2xl font-semibold leading-[1.2] transition-colors sm:text-4xl md:text-5xl ${
                       isOpen ? 'text-white' : 'text-foreground group-hover:text-brand-strong'
                     }`}
                   >
@@ -98,7 +98,7 @@ export default function ServiceRows() {
                   transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                   className="overflow-hidden"
                 >
-                  <div className="mx-auto grid w-full max-w-6xl gap-8 px-5 pb-10 sm:px-8 md:grid-cols-12 md:gap-10 md:pb-12">
+                  <div className="mx-auto grid w-full max-w-[75rem] gap-8 px-5 pb-10 sm:px-8 md:grid-cols-12 md:gap-10 md:pb-12">
                     <div className="md:col-span-5 md:col-start-2">
                       <img
                         src={img(s.image.src)}
@@ -111,7 +111,7 @@ export default function ServiceRows() {
                       />
                     </div>
                     <div className="flex flex-col justify-center md:col-span-6">
-                      <p className="max-w-lg text-base leading-relaxed text-white/80 sm:text-lg">{s.promise}</p>
+                      <p className="max-w-lg text-base leading-[1.4] text-white/80 sm:text-lg">{s.promise}</p>
                       <ul className="mt-6 grid gap-3 sm:grid-cols-2" aria-label={`${s.title} includes`}>
                         {s.deliverables.map((d) => (
                           <li key={d} className="rounded-2xl bg-white px-4 py-4 font-ui text-base font-medium leading-snug text-ink">

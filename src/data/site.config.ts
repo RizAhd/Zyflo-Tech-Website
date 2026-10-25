@@ -101,11 +101,12 @@ export const homeFacts = [
   { value: 'LKR', label: 'Fixed quotes, agreed upfront' },
 ] as const
 
+/** Kept apart from the facts above and the values lower down, so nothing on the home page is said twice. */
 export const homeStatement = {
-  tags: ['Since March 2022', 'Fixed quotes in LKR', 'Full handover', 'Remote, anywhere'],
+  tags: ['Remote by default', 'Replies within a day or two'],
   text:
-    'We do not hand you a template. Every project starts with what your business actually ' +
-    'needs, gets a fixed quote before any work begins, and ends with you owning every line of it.',
+    'No templates and no guesswork. Every build starts from how your business actually works, ' +
+    'and it is judged on what it changes for you, not on how busy it looks.',
 } as const
 
 // ---------------------------------------------------------------------------
