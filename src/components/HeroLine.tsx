@@ -12,8 +12,8 @@ import { MOTION_OK } from './motion'
   line: in Bebas Neue "SCALING YOUR VISION WITH MARKETING" is 11.72 em wide,
   so the size is the available width divided by 11.8. On a phone the line
   breaks after VISION and the size is set by "SCALING YOUR VISION" (6.38 em).
-  The words stay left aligned so the fixed part never moves while the last
-  word changes.
+  On a wide screen the words stay left aligned so the fixed part never moves
+  while the last word changes; on a phone the two lines are centred.
 
   A screen reader gets the whole sentence once, as plain text; the moving
   version is hidden from it. With motion off the first word simply stays.
@@ -33,7 +33,7 @@ export default function HeroLine() {
   }, [motionOn])
 
   return (
-    <p className="font-poster uppercase leading-[0.95] text-ink">
+    <p className="font-poster text-center uppercase leading-[0.95] text-ink sm:text-left">
       <span className="sr-only">Scaling your vision with AI, software, websites, apps and marketing.</span>
       <span
         aria-hidden="true"
