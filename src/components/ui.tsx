@@ -46,6 +46,67 @@ export function Eyebrow({
   )
 }
 
+/**
+ * The GrowthLab section heading: a large title on the left and one short
+ * line, smaller and muted, set against the right edge. Stacks on a phone.
+ */
+export function SplitHead({
+  title,
+  lead,
+  onInk = false,
+  h1 = false,
+  className = '',
+}: {
+  title: ReactNode
+  lead?: ReactNode
+  onInk?: boolean
+  h1?: boolean
+  className?: string
+}) {
+  return (
+    <div className={`flex flex-col gap-5 md:flex-row md:items-end md:justify-between md:gap-12 ${className}`}>
+      <SplitHeading
+        as={h1 ? 'h1' : 'h2'}
+        className={`max-w-xl font-ui text-4xl font-semibold leading-[1.05] tracking-[-0.02em] text-balance sm:text-5xl md:text-6xl ${
+          onInk ? 'text-white' : 'text-foreground'
+        }`}
+      >
+        {title}
+      </SplitHeading>
+      {lead && (
+        <BlurIn delay={0.1}>
+          <p
+            className={`max-w-sm text-base leading-relaxed md:pb-2 md:text-right ${
+              onInk ? 'text-ink-muted' : 'text-muted-foreground'
+            }`}
+          >
+            {lead}
+          </p>
+        </BlurIn>
+      )}
+    </div>
+  )
+}
+
+/**
+ * A heading centred over its section, GrowthLab's "Work That Delivers
+ * Results" form: big title, one muted line under it.
+ */
+export function CenterHead({ title, lead }: { title: ReactNode; lead?: ReactNode }) {
+  return (
+    <div className="mx-auto max-w-3xl text-center">
+      <SplitHeading className="font-ui text-4xl font-semibold leading-[1.05] tracking-[-0.02em] text-balance sm:text-5xl md:text-6xl">
+        {title}
+      </SplitHeading>
+      {lead && (
+        <BlurIn delay={0.1}>
+          <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">{lead}</p>
+        </BlurIn>
+      )}
+    </div>
+  )
+}
+
 export function SectionHead({
   index,
   eyebrow,

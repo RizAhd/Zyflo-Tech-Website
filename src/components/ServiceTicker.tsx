@@ -17,7 +17,16 @@ import { MOTION_OK } from './motion'
 const START_AFTER = 2600
 const EVERY = 2200
 
-export default function ServiceTicker({ className = '' }: { className?: string }) {
+export default function ServiceTicker({
+  className = '',
+  onInk = false,
+  startAfter = START_AFTER,
+}: {
+  className?: string
+  onInk?: boolean
+  /** Milliseconds before the first service shows. */
+  startAfter?: number
+}) {
   const motionOn = typeof window !== 'undefined' && window.matchMedia(MOTION_OK).matches
   const [i, setI] = useState(-1)
 
@@ -27,12 +36,12 @@ export default function ServiceTicker({ className = '' }: { className?: string }
     const start = window.setTimeout(() => {
       setI(0)
       tick = window.setInterval(() => setI((n) => (n + 1) % services.length), EVERY)
-    }, START_AFTER)
+    }, startAfter)
     return () => {
       window.clearTimeout(start)
       window.clearInterval(tick)
     }
-  }, [motionOn])
+  }, [motionOn, startAfter])
 
   if (!motionOn) return null
 
@@ -41,7 +50,9 @@ export default function ServiceTicker({ className = '' }: { className?: string }
       <span className="sr-only">Services: {services.map((s) => s.title).join(', ')}.</span>
       <span
         aria-hidden="true"
-        className="relative mx-auto flex h-[1.6em] items-center justify-center overflow-hidden font-ui text-base font-medium text-brand-strong sm:text-xl"
+        className={`relative flex h-[1.6em] items-center overflow-hidden font-ui text-base font-medium sm:text-xl ${
+          onInk ? 'text-brand-bright' : 'mx-auto justify-center text-brand-strong'
+        }`}
       >
         <AnimatePresence initial={false} mode="wait">
           {i >= 0 && (

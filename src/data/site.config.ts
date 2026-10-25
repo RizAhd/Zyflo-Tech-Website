@@ -90,6 +90,24 @@ export const hero = {
   secondaryCta: { label: 'See what we do', href: '/services' },
 } as const
 
+/**
+ * The home page's facts and statement. Every line is already true elsewhere
+ * on the site: founded March 2022, seven services, fixed quotes in LKR, full
+ * handover, remote work with clients anywhere (see the FAQ).
+ */
+export const homeFacts = [
+  { value: '2022', label: 'Building since March 2022' },
+  { value: '7', label: 'Services under one roof' },
+  { value: 'LKR', label: 'Fixed quotes, agreed upfront' },
+] as const
+
+export const homeStatement = {
+  tags: ['Since March 2022', 'Fixed quotes in LKR', 'Full handover', 'Remote, anywhere'],
+  text:
+    'We do not hand you a template. Every project starts with what your business actually ' +
+    'needs, gets a fixed quote before any work begins, and ends with you owning every line of it.',
+} as const
+
 // ---------------------------------------------------------------------------
 // Capabilities: the 21 things built most often, three for every service.
 //
@@ -274,6 +292,8 @@ export interface Project {
   summary: string
   tags: string[]
   href?: string
+  /** Who it was built for, as the work cards name it. */
+  client: string
   /** A real screenshot in /public, used instead of the drawn figure. */
   image?: { src: string; alt: string }
 }
@@ -287,6 +307,7 @@ export const projects: Project[] = [
       'An offline-first invoicing tool that generates invoices and receipts, adapts the document ' +
       'to payment status, and exports clean single-page PDFs. Built and used in-house.',
     tags: ['Offline-first', 'PDF export', 'Local storage'],
+    client: 'Zyflo Tech, in house',
   },
   {
     id: 'sjd-pos',
@@ -296,6 +317,7 @@ export const projects: Project[] = [
       'A point of sale system built and shipped for SJD, a client of the studio. ' +
       'Designed around the way the shop actually sells.',
     tags: ['POS', 'Custom software', 'Shipped'],
+    client: 'SJD',
   },
   {
     id: 'mradventure',
@@ -305,6 +327,7 @@ export const projects: Project[] = [
       'The website for Mr Adventure Tours & Travels, an island-wide taxi and cab service in ' +
       'Sri Lanka. Designed, built and launched by Zyflo Tech, and live today.',
     tags: ['Website', 'WhatsApp bookings', 'Live'],
+    client: 'Mr Adventure Tours & Travels',
     href: 'https://mradventure.lk',
     image: {
       src: 'work/mradventure.webp',
