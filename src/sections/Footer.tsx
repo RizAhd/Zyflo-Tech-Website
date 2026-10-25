@@ -10,7 +10,8 @@ import { Link } from '../router'
   The footer in the GrowthLab form: the wordmark large on black with one line
   about the studio, a "have a project" block where GrowthLab puts its
   newsletter (the studio has no newsletter, so it points at WhatsApp
-  instead), then the link columns and the contact details.
+  instead), then the link columns and the contact details, and the name set
+  huge across the foot.
 */
 
 const linkClass =
@@ -20,15 +21,15 @@ const headClass = 'font-ui text-base font-semibold text-white'
 export default function Footer() {
   const year = new Date().getFullYear()
   return (
-    <footer className="bg-ink pb-8 pt-16 text-white sm:pt-20">
+    <footer className="overflow-hidden bg-ink pt-16 text-white sm:pt-20">
       <Container>
         <div className="grid gap-12 lg:grid-cols-2">
           <div>
             <div className="flex items-center gap-4">
               <img src={LOGO_WHITE_SRC} alt="" width={52} height={45} className="h-10 w-auto sm:h-12" />
-              <span className="font-ui text-5xl font-semibold tracking-[-0.02em] sm:text-6xl">{business.name}</span>
+              <span className="font-ui text-5xl font-semibold sm:text-6xl">{business.name}</span>
             </div>
-            <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-ink-muted">
+            <p className="mt-5 max-w-sm text-[15px] leading-[1.4] text-ink-muted">
               {business.tagline} from a studio in {business.location}, founded by {business.owner}: websites, apps,
               AI automation and the marketing that brings people to them.
             </p>
@@ -36,13 +37,13 @@ export default function Footer() {
 
           <div className="lg:justify-self-end">
             <p className="font-ui text-xl font-semibold">Have a project in mind?</p>
-            <p className="mt-2 text-[15px] text-ink-muted">A short message is enough. We reply within a day or two.</p>
+            <p className="mt-2 text-[15px] text-ink-muted">Tell us what you need and we will tell you honestly what it takes.</p>
             {whatsapp && (
               <a
                 href={whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-5 inline-flex min-h-[48px] items-center gap-2 rounded-full bg-white px-6 font-ui text-sm font-semibold text-ink transition-colors hover:bg-brand-bright focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                className="mt-5 inline-flex min-h-[52px] items-center gap-2 rounded-full bg-white px-7 font-ui text-base font-semibold text-ink transition-colors hover:bg-brand-bright focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
               >
                 <MessageCircle className="h-4 w-4" aria-hidden="true" />
                 Message us on WhatsApp
@@ -116,7 +117,7 @@ export default function Footer() {
                     <a href={`mailto:${email}`} className="break-all font-ui text-[15px] font-medium text-white hover:text-brand-bright">
                       {email}
                     </a>
-                    <span className="block text-sm text-ink-muted">We reply within a day or two</span>
+                    <span className="block text-sm text-ink-muted">For longer briefs and files</span>
                   </span>
                 </li>
               )}
@@ -130,6 +131,15 @@ export default function Footer() {
           </p>
         </div>
       </Container>
+
+      {/* GrowthLab ends on its name set huge across the foot of the page,
+          fading out and cut by the edge. Sized so "Zyflo Tech" (4.54 em wide
+          in Urbanist Bold) fills the width. Decorative. */}
+      <div className="mx-auto mt-10 w-full max-w-[1320px] overflow-hidden px-5 sm:px-8 xl:px-0" aria-hidden="true">
+        <p className="-mb-[0.22em] whitespace-nowrap bg-[linear-gradient(180deg,#3ddc84_0%,#008b48_35%,rgba(17,17,17,0)_92%)] bg-clip-text font-ui text-[calc((100vw-2.5rem)/4.6)] font-bold leading-none tracking-[-0.02em] text-transparent sm:text-[calc((100vw-4rem)/4.6)] xl:text-[calc(1320px/4.6)]">
+          {business.name}
+        </p>
+      </div>
     </footer>
   )
 }
