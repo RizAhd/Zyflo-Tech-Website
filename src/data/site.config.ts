@@ -92,13 +92,13 @@ export const hero = {
 
 /**
  * The home page's facts and statement. Every line is already true elsewhere
- * on the site: founded March 2022, seven services, fixed quotes in LKR, full
+ * on the site: founded March 2022, seven services, fixed quotes (LKR, USD, GBP or the client's currency), full
  * handover, remote work with clients anywhere (see the FAQ).
  */
 export const homeFacts = [
   { value: '2022', label: 'Building since March 2022' },
   { value: '7', label: 'Services under one roof' },
-  { value: 'LKR', label: 'Fixed quotes, agreed upfront' },
+  { value: 'Fixed', label: 'Quotes in LKR, USD, GBP or your currency' },
 ] as const
 
 /** Kept apart from the facts above and the values lower down, so nothing on the home page is said twice. */
@@ -344,7 +344,7 @@ export const process = [
   {
     step: '01',
     title: 'Understand',
-    body: 'A proper conversation about what the business actually needs, before a single mockup. You get a written scope and a fixed quote in LKR.',
+    body: 'A proper conversation about what the business actually needs, before a single mockup. You get a written scope and a fixed quote in your currency.',
   },
   {
     step: '02',
@@ -378,7 +378,7 @@ export const about = {
   /** Honest capability claims, deliberately not fabricated statistics. */
   points: [
     { label: 'Direct contact', value: 'You talk to the builder' },
-    { label: 'Fixed quotes', value: 'Priced in LKR, agreed upfront' },
+    { label: 'Fixed quotes', value: 'In LKR, USD, GBP or your currency, agreed upfront' },
     { label: 'Full handover', value: 'You own the code & accounts' },
     { label: 'After launch', value: 'Support that continues' },
   ],
@@ -410,6 +410,7 @@ export const contactSection = {
     'Rs 150,000 to 400,000',
     'Rs 400,000 to 1,000,000',
     'Over Rs 1,000,000',
+    'Another currency (say which in your message)',
   ],
 } as const
 
@@ -421,7 +422,7 @@ export const contactSection = {
 //   1. Answer in the FIRST sentence, then add at most two more.
 //   2. Keep every answer to roughly 40 to 70 words.
 //   3. State no price and no delivery time in days. Cost is
-//      quoted per project in LKR after a scoping conversation, and the budget
+//      quoted per project (in LKR, USD, GBP or the client's currency) after a scoping conversation, and the budget
 //      bands in `contactSection.budgetOptions` are the only figures to point at.
 //   4. Say nothing that is not already true elsewhere on this page.
 // ---------------------------------------------------------------------------
@@ -434,8 +435,9 @@ export const faqs: Faq[] = [
   {
     q: 'How much does a website or app cost?',
     a:
-      'Every project is quoted individually in Lankan rupees, as a fixed price agreed before ' +
-      'any work starts. The cost depends on how many pages or screens you need and how much ' +
+      'Every project is quoted individually as a fixed price agreed before any work starts, in ' +
+      'Sri Lankan rupees, US dollars, pounds or the currency you work in. ' +
+      'The cost depends on how many pages or screens you need and how much ' +
       'of the work is custom. The enquiry form has budget bands starting under Rs 50,000, so ' +
       'pick the one that fits and the scope is built around it.',
   },
@@ -520,7 +522,7 @@ export const pages: PageMeta[] = [
     title: 'Zyflo Tech: Web, Apps, AI and Marketing in Sri Lanka',
     description:
       'Zyflo Tech builds websites, apps, software, AI automation, AI video, marketing and ' +
-      'social media for businesses in Sri Lanka. Fixed quotes in LKR, full handover.',
+      'social media for businesses in Sri Lanka and abroad. Fixed quotes, full handover.',
     heading: 'We build the tech your business runs on.',
     lead: 'Websites, apps and AI automation for businesses in Sri Lanka and abroad, designed with care and handed over so you own every line of it.',
   },
@@ -539,7 +541,7 @@ export const pages: PageMeta[] = [
     name: 'Process',
     title: 'How a Project Runs: Four Steps | Zyflo Tech',
     description:
-      'Every Zyflo Tech project runs the same four steps with a fixed quote in LKR up front: ' +
+      'Every Zyflo Tech project runs the same four steps with a fixed quote up front: ' +
       'understand, design, build and hand over, with support after launch.',
     heading: 'No mystery, no surprises at the end.',
     lead: 'Every project runs the same four steps, so you always know where things stand and what happens next.',
@@ -570,7 +572,7 @@ export const pages: PageMeta[] = [
     title: 'Contact Zyflo Tech: Start a Project or Ask a Question',
     description:
       'Tell Zyflo Tech what you want to build. Message on WhatsApp, email or use the enquiry ' +
-      'form, and get a fixed quote in LKR. Answers to common questions about cost and ownership.',
+      'form, and get a fixed quote in your currency. Answers to common questions about cost and ownership.',
     heading: "Let's talk about what you need.",
     lead: 'Tell us what you are trying to build and we will tell you honestly whether we are the right fit for it.',
   },
@@ -583,7 +585,7 @@ export const seo = {
   title: 'Zyflo Tech: Web, Apps, AI and Marketing in Sri Lanka',
   description:
     'Zyflo Tech builds websites, apps, software, AI automation, AI video, marketing and ' +
-    'social media for businesses in Sri Lanka. Fixed quotes in LKR, full handover.',
+    'social media for businesses in Sri Lanka and abroad. Fixed quotes, full handover.',
   keywords:
     'web development Sri Lanka, software development Sri Lanka, mobile app development, ' +
     'AI automation, AI video generation, digital marketing Sri Lanka, social media management',

@@ -11,7 +11,7 @@ export default function About() {
             Tell us what you <span className="text-brand-strong">need</span>.
           </>
         }
-        body="You get an honest answer and a fixed quote in LKR."
+        body="You get an honest answer and a fixed quote, in LKR, USD, GBP or your currency."
         to="/contact"
         label="Start a project"
         showWhatsapp

@@ -312,7 +312,7 @@ function buildJsonLd(page: Page): JsonLdNode {
     founder: hasUrl ? { '@id': personId } : person,
     foundingDate: business.foundingDate,
     numberOfEmployees: { '@type': 'QuantitativeValue', value: 1 },
-    currenciesAccepted: 'LKR',
+    currenciesAccepted: 'LKR, USD, GBP',
     openingHoursSpecification: [
       {
         '@type': 'OpeningHoursSpecification',
@@ -581,8 +581,8 @@ function buildLlmsTxt(): string {
     '',
     `${business.name} was founded by ${business.owner}. ` +
       'There is no sales layer and no project manager in between: the people you brief are ' +
-      'the people who build the project and hand it over. Quotes are fixed and priced in Sri Lankan ' +
-      'rupees (LKR) before work starts, and the code, hosting and domain accounts are ' +
+      'the people who build the project and hand it over. Quotes are fixed and agreed before work ' +
+      'starts, in Sri Lankan rupees (LKR), US dollars (USD), pounds (GBP) or the currency the client works in, and the code, hosting and domain accounts are ' +
       'handed to the client at the end.',
     '',
     '## Track record',

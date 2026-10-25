@@ -11,7 +11,7 @@ web
 Owners and managers of small and mid size businesses in Sri Lanka and abroad who need a
 website, a point of sale or business app, AI automation, video, marketing or social media
 run for them. They compare a few providers, often on a phone, and most reach out on
-WhatsApp. They want to know who they will be dealing with, what it costs in rupees and
+WhatsApp. They want to know who they will be dealing with, what it costs and
 whether they will own what is built. (Confirmed by the owner: audience is businesses in
 Sri Lanka and abroad.)
 
@@ -25,7 +25,7 @@ second path.
 ## Positioning
 
 The people you brief are the people who build it: no sales layer, no project manager.
-Fixed quotes in LKR agreed before work starts, and full handover of code, hosting and
+Fixed quotes in LKR, USD, GBP or the client's currency, agreed before work starts, and full handover of code, hosting and
 domain accounts at the end.
 
 ## Operating Context

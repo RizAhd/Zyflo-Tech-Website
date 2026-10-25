@@ -2,7 +2,7 @@
 
 > Digital tech solutions from a studio in Sri Lanka. Zyflo Tech builds websites, software, mobile apps, AI automation, AI video, digital marketing and social media management for businesses.
 
-Zyflo Tech was founded by Riflan Mohamed. There is no sales layer and no project manager in between: the people you brief are the people who build the project and hand it over. Quotes are fixed and priced in Sri Lankan rupees (LKR) before work starts, and the code, hosting and domain accounts are handed to the client at the end.
+Zyflo Tech was founded by Riflan Mohamed. There is no sales layer and no project manager in between: the people you brief are the people who build the project and hand it over. Quotes are fixed and agreed before work starts, in Sri Lankan rupees (LKR), US dollars (USD), pounds (GBP) or the currency the client works in, and the code, hosting and domain accounts are handed to the client at the end.
 
 ## Track record
 
@@ -10,12 +10,12 @@ Zyflo Tech was founded in March 2022. Shipped work: SJD POS (POS system) and mra
 
 ## Pages
 
-- [Home](https://zyflo.tech/): Zyflo Tech builds websites, apps, software, AI automation, AI video, marketing and social media for businesses in Sri Lanka. Fixed quotes in LKR, full handover.
+- [Home](https://zyflo.tech/): Zyflo Tech builds websites, apps, software, AI automation, AI video, marketing and social media for businesses in Sri Lanka and abroad. Fixed quotes, full handover.
 - [Services](https://zyflo.tech/services/): Seven services from one studio in Sri Lanka: website building, software and mobile apps, AI automation, AI video, digital marketing and social media management.
-- [Process](https://zyflo.tech/process/): Every Zyflo Tech project runs the same four steps with a fixed quote in LKR up front: understand, design, build and hand over, with support after launch.
+- [Process](https://zyflo.tech/process/): Every Zyflo Tech project runs the same four steps with a fixed quote up front: understand, design, build and hand over, with support after launch.
 - [Work](https://zyflo.tech/work/): Shipped work from Zyflo Tech: a point of sale system for SJD, the website for mradventure.lk and the studio’s own offline first invoice and receipt tool.
 - [About](https://zyflo.tech/about/): Zyflo Tech is a digital studio founded by Riflan Mohamed. Running since March 2022, based in Sri Lanka, with direct contact, fixed quotes and full handover.
-- [Contact](https://zyflo.tech/contact/): Tell Zyflo Tech what you want to build. Message on WhatsApp, email or use the enquiry form, and get a fixed quote in LKR. Answers to common questions about cost and ownership.
+- [Contact](https://zyflo.tech/contact/): Tell Zyflo Tech what you want to build. Message on WhatsApp, email or use the enquiry form, and get a fixed quote in your currency. Answers to common questions about cost and ownership.
 
 ## Services
 
@@ -36,7 +36,7 @@ Zyflo Tech was founded in March 2022. Shipped work: SJD POS (POS system) and mra
 
 ## How a project runs
 
-01. **Understand**: A proper conversation about what the business actually needs, before a single mockup. You get a written scope and a fixed quote in LKR.
+01. **Understand**: A proper conversation about what the business actually needs, before a single mockup. You get a written scope and a fixed quote in your currency.
 02. **Design**: You see the real thing laid out and agree on it before code starts, so there are no surprises at the end.
 03. **Build**: Built in visible stages with a link you can open any time. You watch it come together instead of waiting in the dark.
 04. **Hand over**: Launched, documented, and yours: accounts, code and all. Plus support after launch, not a disappearing act.
