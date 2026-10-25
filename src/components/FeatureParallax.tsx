@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { ArrowRight, Check } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 
 import { services } from '../data/site.config'
 import { Container } from './ui'
@@ -30,7 +30,7 @@ function Band({ service, flip, motionOn }: { service: Service; flip: boolean; mo
     offset: ['start end', 'center start'],
   })
   const opacity = useTransform(scrollYProgress, [0, 0.7], [0, 1])
-  const clip = useTransform(scrollYProgress, [0, 0.7], ['inset(0 100% 0 0 round 1.5rem)', 'inset(0 0% 0 0 round 1.5rem)'])
+  const clip = useTransform(scrollYProgress, [0, 0.7], ['inset(0 100% 0 0 round 20px)', 'inset(0 0% 0 0 round 20px)'])
 
   return (
     <div
@@ -41,34 +41,30 @@ function Band({ service, flip, motionOn }: { service: Service; flip: boolean; mo
       }`}
     >
       <div>
-        <p className="font-mono text-xs font-medium uppercase tracking-[0.08em] text-brand-strong">
-          {service.index}
-        </p>
-        <h2 className="mt-3 font-ui text-4xl font-semibold leading-[1.06] tracking-[-0.03em] text-balance sm:text-5xl">
+        <p className="font-ui text-base font-medium text-muted-foreground">{service.index}</p>
+        <h2 className="mt-3 font-ui text-4xl font-semibold leading-[1.2] text-balance sm:text-5xl">
           {service.title}
         </h2>
-        <p className="mt-6 max-w-md text-base leading-relaxed text-muted-foreground sm:text-lg">
-          {service.promise}
-        </p>
-        <ul className="mt-7 max-w-md space-y-2.5">
+        <p className="mt-5 max-w-md text-lg leading-[1.4] text-muted-foreground">{service.promise}</p>
+        {/* GrowthLab shows what a service includes as soft square chips. */}
+        <ul className="mt-7 grid max-w-lg gap-3 sm:grid-cols-2" aria-label={`${service.title} includes`}>
           {service.deliverables.map((d) => (
-            <li key={d} className="flex items-start gap-2.5 text-sm text-foreground/80 sm:text-base">
-              <Check className="mt-1 h-4 w-4 shrink-0 text-brand" aria-hidden="true" />
+            <li key={d} className="rounded-[16px] bg-surface px-4 py-4 font-ui text-base font-medium leading-snug text-foreground">
               {d}
             </li>
           ))}
         </ul>
         <Link
           to={`/contact?service=${service.id}`}
-          className="mt-8 inline-flex min-h-[44px] items-center gap-2 rounded-full font-ui text-sm font-medium text-brand-strong hover:text-brand focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
+          className="mt-8 inline-flex min-h-[52px] items-center gap-2 rounded-full bg-ink px-7 font-ui text-base font-semibold text-white transition-colors hover:bg-[#2b2b2b] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
         >
-          Get a quote for this
-          <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          Get a quote
+          <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
         </Link>
       </div>
 
       <motion.div style={motionOn ? { opacity, clipPath: clip } : undefined} className="relative">
-        <div className="relative aspect-[16/11] w-full overflow-hidden rounded-3xl border border-border bg-white">
+        <div className="relative aspect-[16/11] w-full overflow-hidden rounded-[20px] bg-surface">
           <img
             src={`${import.meta.env.BASE_URL}${service.image.src}`}
             alt={service.image.alt}

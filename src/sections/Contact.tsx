@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, ArrowUpRight, Check } from 'lucide-react'
+import { ArrowRight, Check, Mail, MapPin, MessageCircle, Phone } from 'lucide-react'
 
-import { business, contact, contactSection, isTodo, services } from '../data/site.config'
+import { business, contact, contactSection, isTodo, services, startProjectImage } from '../data/site.config'
 import { activeSocials, email, formKey, phone, whatsapp } from '../data/contact'
-import { Button, Container, Eyebrow } from '../components/ui'
-import { BlurIn, SplitHeading } from '../components/motion'
+import { Button, CenterHead, Container, SplitHead } from '../components/ui'
+import { BlurIn } from '../components/motion'
 
 // ---------------------------------------------------------------------------
 // Enquiry form
@@ -64,7 +64,7 @@ function EnquiryForm() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
         role="status"
-        className="rounded-card border border-border bg-card p-8"
+        className="rounded-[20px] bg-surface p-8"
       >
         <motion.span
           initial={{ scale: 0, rotate: -30 }}
@@ -87,12 +87,13 @@ function EnquiryForm() {
 
   // text-base below sm: iOS Safari zooms the page in when a focused input is
   // under 16px, and it never zooms back out.
+  // GrowthLab's fields: soft filled boxes, no outline until focused.
   const field =
-    'w-full rounded-xl border border-border bg-card px-4 py-3 text-base text-foreground transition-colors placeholder:text-muted-foreground/60 focus:border-brand focus:outline-none sm:text-sm'
-  const label = 'mb-1.5 block font-ui text-xs font-medium text-muted-foreground'
+    'w-full rounded-xl border border-transparent bg-surface px-4 py-3.5 text-base text-foreground transition-colors placeholder:text-muted-foreground focus:border-foreground focus:bg-white focus:outline-none'
+  const label = 'mb-2 block font-ui text-base font-medium text-foreground'
 
   return (
-    <form onSubmit={onSubmit} className="rounded-card border border-border bg-card p-6 sm:p-8">
+    <form onSubmit={onSubmit}>
       <input
         type="checkbox"
         name="botcheck"
@@ -204,7 +205,7 @@ function EnquiryForm() {
           WhatsApp (or email) pre-written; with a key it posts straight to the
           inbox. */}
       {!formKey && (
-        <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
+        <p className="mt-4 text-xs leading-[1.4] text-muted-foreground">
           {whatsapp
             ? 'Pressing send opens WhatsApp with your enquiry already written. We read every message and reply within a day or two.'
             : email
@@ -212,7 +213,7 @@ function EnquiryForm() {
               : 'Contact details are being finalised and will appear here shortly.'}
         </p>
       )}
-      <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+      <p className="mt-2 text-xs leading-[1.4] text-muted-foreground">
         What you write is used only to reply to you. It is not shared or added to a mailing list.
       </p>
     </form>
@@ -220,156 +221,108 @@ function EnquiryForm() {
 }
 
 // ---------------------------------------------------------------------------
-// Contact
+// Contact, in GrowthLab's form: the heading on the left and the promise on
+// the right, then the enquiry form beside a photo, then the ways to reach
+// the studio as four cards.
 // ---------------------------------------------------------------------------
+const img = (path: string) => `${import.meta.env.BASE_URL}${path}`
+
+function ReachCard({
+  icon: Icon,
+  title,
+  sub,
+  href,
+  external,
+}: {
+  icon: typeof Mail
+  title: string
+  sub: string
+  href?: string
+  external?: boolean
+}) {
+  const inner = (
+    <>
+      <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-ink text-white">
+        <Icon className="h-5 w-5" aria-hidden="true" />
+      </span>
+      <span className="mt-6 block break-words font-ui text-lg font-semibold text-foreground">{title}</span>
+      <span className="mt-1 block text-sm leading-[1.4] text-muted-foreground">{sub}</span>
+    </>
+  )
+  const cls = 'block h-full rounded-[20px] bg-surface p-6 text-center [&>span:first-child]:mx-auto'
+  return href ? (
+    <a
+      href={href}
+      {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      className={`${cls} transition-colors hover:bg-[#ececec] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand`}
+    >
+      {inner}
+    </a>
+  ) : (
+    <div className={cls}>{inner}</div>
+  )
+}
+
 export default function Contact() {
   return (
-    <section id="contact" className="relative overflow-hidden bg-ink py-24 text-white sm:py-32">
-      <div
-        className="pointer-events-none absolute left-1/2 top-0 h-[26rem] w-[46rem] -translate-x-1/2 rounded-full bg-white/[0.05] blur-[120px]"
-        aria-hidden="true"
-      />
+    <>
+      <section id="contact" className="pb-20 pt-32 sm:pb-24 sm:pt-40">
+        <Container>
+          <SplitHead h1 title={contactSection.heading} lead={contactSection.lead} />
 
-      <Container className="relative">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-          {/* flex-col plus mt-auto on the details block: the left column is
-              shorter than the form, which left a wide void beneath it. */}
-          <div className="flex flex-col">
-            <BlurIn y={12}>
-              <Eyebrow onInk>
-                Let us build together
-              </Eyebrow>
+          <div className="mt-12 grid gap-10 lg:grid-cols-2 lg:gap-12">
+            <BlurIn delay={0.12} y={24}>
+              <EnquiryForm />
             </BlurIn>
-            <SplitHeading as="h1" className="mt-4 font-ui text-3xl font-semibold leading-[1.12] tracking-tight text-balance text-white sm:text-4xl md:text-5xl">
-              {contactSection.heading}
-            </SplitHeading>
-            <BlurIn delay={0.12}>
-              <p className="mt-5 max-w-2xl text-base leading-relaxed text-ink-muted">
-                {contactSection.lead}
-              </p>
-            </BlurIn>
-
-            {(email || whatsapp) && (
-              <BlurIn delay={0.18}>
-                <a
-                  href={whatsapp ?? `mailto:${email}`}
-                  {...(whatsapp ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                  className="group mt-9 inline-flex items-center gap-3 font-ui text-xl font-medium text-brand-bright transition-colors hover:text-white sm:text-2xl"
-                >
-                  {whatsapp ? 'Message us on WhatsApp' : email}
-                  <ArrowUpRight className="h-5 w-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                </a>
-              </BlurIn>
-            )}
-
-            <BlurIn delay={0.24} className="mt-12 lg:mt-auto lg:pt-12">
-              <dl className="grid grid-cols-2 gap-8 border-t border-white/10 pt-8 sm:grid-cols-3">
-                <div>
-                  <dt className="font-mono text-xs font-medium uppercase tracking-[0.08em] text-white/60">
-                    Studio
-                  </dt>
-                  <dd className="mt-2 text-sm text-ink-muted">
-                    {business.name}
-                    <br />
-                    {business.location}
-                  </dd>
-                </div>
-                <div>
-                  <dt className="font-mono text-xs font-medium uppercase tracking-[0.08em] text-white/60">
-                    Hours
-                  </dt>
-                  <dd className="mt-2 text-sm text-ink-muted">
-                    Mon to Sat
-                    <br />
-                    9am to 7pm (+5:30)
-                  </dd>
-                </div>
-                <div>
-                  <dt className="font-mono text-xs font-medium uppercase tracking-[0.08em] text-white/60">
-                    Reply time
-                  </dt>
-                  <dd className="mt-2 text-sm text-ink-muted">
-                    Within a day
-                    <br />
-                    or two
-                  </dd>
-                </div>
-                {email && (
-                  <div className="col-span-2 sm:col-span-3">
-                    <dt className="font-mono text-xs font-medium uppercase tracking-[0.08em] text-white/60">
-                      Email
-                    </dt>
-                    <dd className="mt-2 break-words text-sm text-ink-muted">
-                      <a
-                        href={`mailto:${email}`}
-                        className="inline-flex min-h-[32px] items-center hover:text-brand-bright"
-                      >
-                        {email}
-                      </a>
-                    </dd>
-                  </div>
-                )}
-                {phone && (
-                  <div>
-                    <dt className="font-mono text-xs font-medium uppercase tracking-[0.08em] text-white/60">
-                      Phone
-                    </dt>
-                    <dd className="mt-2 text-sm text-ink-muted">
-                      <a
-                        href={`tel:${phone.replace(/[^\d+]/g, '')}`}
-                        className="inline-flex min-h-[32px] items-center hover:text-brand-bright"
-                      >
-                        {phone}
-                      </a>
-                    </dd>
-                  </div>
-                )}
-                {whatsapp && (
-                  <div>
-                    <dt className="font-mono text-xs font-medium uppercase tracking-[0.08em] text-white/60">
-                      WhatsApp
-                    </dt>
-                    <dd className="mt-2 text-sm text-ink-muted">
-                      <a
-                        href={whatsapp}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex min-h-[32px] items-center hover:text-brand-bright"
-                      >
-                        Message us
-                      </a>
-                    </dd>
-                  </div>
-                )}
-                {activeSocials.length > 0 && (
-                  <div className="col-span-2 sm:col-span-1">
-                    <dt className="font-mono text-xs font-medium uppercase tracking-[0.08em] text-white/60">
-                      Elsewhere
-                    </dt>
-                    <dd className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-ink-muted">
-                      {activeSocials.map((s) => (
-                        <a
-                          key={s.label}
-                          href={s.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="hover:text-brand-bright"
-                        >
-                          {s.label}
-                        </a>
-                      ))}
-                    </dd>
-                  </div>
-                )}
-              </dl>
+            <BlurIn delay={0.18} y={24} className="hidden lg:block">
+              <img
+                src={img(startProjectImage.src)}
+                alt=""
+                width={1600}
+                height={1067}
+                loading="lazy"
+                decoding="async"
+                className="h-full min-h-[32rem] w-full rounded-[20px] object-cover"
+              />
             </BlurIn>
           </div>
+        </Container>
+      </section>
 
-          <BlurIn delay={0.12} y={32}>
-            <EnquiryForm />
-          </BlurIn>
-        </div>
-      </Container>
-    </section>
+      <section className="pb-8">
+        <Container>
+          <CenterHead title="Other ways to reach us" lead="WhatsApp is the quickest. Every message is read and answered within a day or two." />
+          <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {whatsapp && (
+              <li>
+                <ReachCard icon={MessageCircle} title="WhatsApp" sub="Message us, the quickest way in" href={whatsapp} external />
+              </li>
+            )}
+            {email && (
+              <li>
+                <ReachCard icon={Mail} title={email} sub="For longer briefs and files" href={`mailto:${email}`} />
+              </li>
+            )}
+            {phone && (
+              <li>
+                <ReachCard icon={Phone} title={phone} sub="Mon to Sat, 9am to 7pm (+5:30)" href={`tel:${phone.replace(/[^\d+]/g, '')}`} />
+              </li>
+            )}
+            <li>
+              <ReachCard icon={MapPin} title={business.location} sub={`${business.name}, working with clients anywhere`} />
+            </li>
+          </ul>
+          {activeSocials.length > 0 && (
+            <p className="mt-8 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm">
+              {activeSocials.map((s) => (
+                <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer" className="font-medium text-foreground hover:text-brand-strong">
+                  {s.label}
+                </a>
+              ))}
+            </p>
+          )}
+        </Container>
+      </section>
+    </>
   )
 }
