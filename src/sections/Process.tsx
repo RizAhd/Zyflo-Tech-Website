@@ -39,7 +39,7 @@ export default function Process() {
                 <div key={p.step} className="h-full rounded-xl p-5">
                   <span className="block font-display text-sm text-brand-strong">{p.step}</span>
                   <h3 className="mt-2 font-ui text-lg font-semibold">{p.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.body}</p>
+                  <p className="mt-2 text-sm leading-[1.4] text-muted-foreground">{p.body}</p>
                 </div>
               ))}
             </div>

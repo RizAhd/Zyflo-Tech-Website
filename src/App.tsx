@@ -22,14 +22,13 @@ import { Ready, ReadyContext } from './ready'
 /*
   Zyflo Tech, six pages.
 
-  Layout language follows stemlink.online: white ground, eyebrows, a product
-  hero, icon cards, a dark CTA band, a form led close. The palette is Zyflo's
-  black and white with a green accent rather than StemLink's blue, violet and lime, which is
-  what keeps it minimal.
+  The look follows the GrowthLab template (marketinglab.framer.ai): Urbanist
+  type, bold headings, tall pill buttons, rounded cards, dark sections and a
+  big line across the top of the home page. The colours, the logo and every
+  word are Zyflo's own: matte black and white with the green accent.
 
-  There is no stock or placeholder artwork anywhere on the site. The service
-  figures, the work cards and the process glyphs are drawn in DOM and SVG (see
-  components/scenes.tsx). The only images are the actual logo.
+  The images are the studio's own photos (public/services, public/studio),
+  the real mradventure.lk screenshot and the logo. There is no stock artwork.
 
   This file is the frame every page shares: the header, the footer and the
   WhatsApp button. Each page is its own chunk, fetched when it is opened, and
@@ -112,7 +111,7 @@ function Nav() {
           aria-label={`${business.name}, home`}
         >
           <img src={LOGO_SRC} alt="" width={34} height={34} className="rounded-lg" />
-          <span className="font-ui text-xl font-semibold tracking-tight">Zyflo Tech</span>
+          <span className="font-ui text-xl font-semibold">Zyflo Tech</span>
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
@@ -242,10 +241,10 @@ function NotFound() {
           <p className="font-mono text-xs font-medium uppercase tracking-[0.08em] text-brand-strong">
             Error 404
           </p>
-          <h1 className="mt-4 font-ui text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
+          <h1 className="mt-4 font-ui text-4xl font-semibold text-balance sm:text-5xl">
             That page does not exist.
           </h1>
-          <p className="mt-5 text-base leading-relaxed text-muted-foreground">
+          <p className="mt-5 text-base leading-[1.4] text-muted-foreground">
             The link may be old or mistyped. These are the pages that do exist.
           </p>
           <div className="mt-9 flex flex-wrap justify-center gap-3">

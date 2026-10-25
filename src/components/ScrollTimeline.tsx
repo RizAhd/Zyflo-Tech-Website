@@ -313,12 +313,12 @@ function Pinned({
             {(() => {
               const H = h1 ? 'h1' : 'h2'
               return (
-                <H className="mt-4 font-ui text-[clamp(1.9rem,3.1vw,3.4rem)] font-semibold leading-[1.08] tracking-tight text-balance max-[600px]:text-[8.4vw]">
+                <H className="mt-4 font-ui text-[clamp(1.9rem,3.1vw,3.4rem)] font-semibold leading-[1.08] text-balance max-[600px]:text-[8.4vw]">
                   {heading}
                 </H>
               )
             })()}
-            <p className="mt-5 max-w-md text-[clamp(0.95rem,1.15vw,1.2rem)] leading-relaxed text-muted-foreground max-[600px]:text-[4.4vw]">
+            <p className="mt-5 max-w-md text-[clamp(0.95rem,1.15vw,1.2rem)] leading-[1.4] text-muted-foreground max-[600px]:text-[4.4vw]">
               {lead}
             </p>
           </div>

@@ -8,10 +8,11 @@
    architecture (semantic tokens consumed everywhere, never raw hex in
    components) with Magic UI style animated accents.
 
-   TYPE. Urbanist for everything people read: soft, geometric headings and
-   plain body copy (the GrowthLab direction the owner chose). Anton, a tall
-   condensed face, is kept for one job: the huge ZYFLO TECH word in the hero.
-   Both self hosted (index.html). Headings track slightly tight.
+   TYPE. GrowthLab's system, measured from the live template: Urbanist for
+   everything, headings bold (700) at normal letter spacing with a 1.1 line
+   height, text at medium weight (500) with a 1.4 line height. Bebas Neue is
+   kept for one job: the huge DIGITAL word in the hero (GrowthLab's MARKETING
+   is the same face). Both self hosted (index.html).
 
    SURFACES. The page stays pure white. Where GrowthLab puts white cards on a
    cream ground, this site puts light grey cards (--color-surface) on white,
@@ -40,7 +41,7 @@
      so `font-mono` stays as a name and simply resolves to the same face. */
   --font-mono: "Urbanist", ui-sans-serif, system-ui, sans-serif;
   /* The hero's one huge word. */
-  --font-poster: "Anton", "Impact", "Arial Narrow", sans-serif;
+  --font-poster: "Bebas Neue", "Impact", "Arial Narrow", sans-serif;
   --font-display: "Urbanist", ui-sans-serif, system-ui, sans-serif;
 
   --color-background: #ffffff;      /* white page ground                 */
@@ -65,7 +66,7 @@
      which is what replaced rounded-full. Chips and tags go tighter still.
      The only circles left on the site are the ring nodes and the traffic
      lights inside the service figures, and both are drawn, not radiused. */
-  --radius-card: 16px;
+  --radius-card: 20px;
 
   --animate-marquee: marquee 42s linear infinite;
   --animate-beam: beam 6s linear infinite;
@@ -100,7 +101,8 @@
      line height than the default so long paragraphs breathe. */
   body {
     font-family: var(--font-sans);
-    line-height: 1.65;
+    font-weight: 500;
+    line-height: 1.4;
     font-optical-sizing: auto;
   }
   p {
@@ -114,8 +116,8 @@
   h4,
   h5,
   h6 {
-    font-weight: 600;
-    letter-spacing: -0.02em;
+    font-weight: 700;
+    letter-spacing: 0;
   }
   ::selection {
     background: var(--color-brand);
@@ -164,6 +166,12 @@
    10px, tracked wide because uppercase mono at this size closes up. */
 /* Numeric and label voice: slightly tracked out so indices and small figures
    read as deliberate rather than as body text. */
+/* The hero's big line (Bebas Neue). */
+@utility font-poster {
+  font-family: var(--font-poster);
+  font-weight: 400;
+}
+
 @utility font-display {
   font-family: var(--font-display);
   font-weight: 600;

@@ -19,7 +19,7 @@ export function Container({
   className?: string
 }) {
   return (
-    <div className={`mx-auto w-full max-w-6xl px-5 sm:px-8 ${className}`}>{children}</div>
+    <div className={`mx-auto w-full max-w-[75rem] px-5 sm:px-8 ${className}`}>{children}</div>
   )
 }
 
@@ -35,8 +35,8 @@ export function Eyebrow({
 }) {
   return (
     <p
-      // The mono voice: small, uppercase and tracked out a little.
-      className={`font-mono text-xs font-medium uppercase tracking-[0.08em] ${
+      // GrowthLab's small label: plain case, medium weight, a step under body size.
+      className={`font-ui text-sm font-semibold ${
         onInk ? 'text-brand-bright' : 'text-brand-strong'
       }`}
     >
@@ -67,7 +67,7 @@ export function SplitHead({
     <div className={`flex flex-col gap-5 md:flex-row md:items-end md:justify-between md:gap-12 ${className}`}>
       <SplitHeading
         as={h1 ? 'h1' : 'h2'}
-        className={`max-w-xl font-ui text-4xl font-semibold leading-[1.05] tracking-[-0.02em] text-balance sm:text-5xl md:text-6xl ${
+        className={`max-w-2xl font-ui text-4xl font-bold leading-[1.1] text-balance sm:text-5xl md:text-[64px] ${
           onInk ? 'text-white' : 'text-foreground'
         }`}
       >
@@ -76,7 +76,7 @@ export function SplitHead({
       {lead && (
         <BlurIn delay={0.1}>
           <p
-            className={`max-w-sm text-base leading-relaxed md:pb-2 md:text-right ${
+            className={`max-w-sm text-base leading-[1.4] sm:text-lg md:pb-2 md:text-right ${
               onInk ? 'text-ink-muted' : 'text-muted-foreground'
             }`}
           >
@@ -95,12 +95,12 @@ export function SplitHead({
 export function CenterHead({ title, lead }: { title: ReactNode; lead?: ReactNode }) {
   return (
     <div className="mx-auto max-w-3xl text-center">
-      <SplitHeading className="font-ui text-4xl font-semibold leading-[1.05] tracking-[-0.02em] text-balance sm:text-5xl md:text-6xl">
+      <SplitHeading className="font-ui text-4xl font-bold leading-[1.1] text-balance sm:text-5xl md:text-[64px]">
         {title}
       </SplitHeading>
       {lead && (
         <BlurIn delay={0.1}>
-          <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">{lead}</p>
+          <p className="mx-auto mt-5 max-w-xl text-base leading-[1.4] text-muted-foreground sm:text-lg">{lead}</p>
         </BlurIn>
       )}
     </div>
@@ -136,7 +136,7 @@ export function SectionHead({
 
       <SplitHeading
         as={h1 ? 'h1' : 'h2'}
-        className={`mt-4 font-ui text-3xl font-semibold leading-[1.1] tracking-[-0.03em] text-balance sm:text-4xl md:text-5xl ${
+        className={`mt-4 font-ui text-4xl font-bold leading-[1.1] text-balance sm:text-5xl md:text-[64px] ${
           onInk ? 'text-white' : 'text-foreground'
         }`}
       >
@@ -146,7 +146,7 @@ export function SectionHead({
       {lead && (
         <BlurIn delay={0.12}>
           <p
-            className={`mt-5 text-base leading-relaxed sm:text-lg ${centred ? '' : 'max-w-2xl'} ${
+            className={`mt-5 text-base leading-[1.4] sm:text-lg ${centred ? '' : 'max-w-2xl'} ${
               onInk ? 'text-ink-muted' : 'text-muted-foreground'
             }`}
           >
@@ -192,7 +192,7 @@ export function Button({
   onClick,
   external,
 }: ButtonProps) {
-  const cls = `inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full px-6 py-3 font-ui text-sm font-medium transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50 ${VARIANTS[variant]} ${className}`
+  const cls = `inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full px-7 py-3.5 font-ui text-base font-semibold transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50 ${VARIANTS[variant]} ${className}`
 
   // Paths inside the site go through the router; anything else is a plain anchor.
   if (href?.startsWith('/')) {

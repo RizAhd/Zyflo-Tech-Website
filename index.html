@@ -77,13 +77,13 @@
     <link rel="manifest" href="/site.webmanifest" />
 
     <!--
-      Urbanist (all text) and Anton (the one huge word in the hero), both SIL
-      OFL, are self-hosted from /public/fonts, so the page makes no third party
+      Urbanist (all text) and Bebas Neue (the one huge word in the hero), both
+      SIL OFL, are self-hosted from /public/fonts, so the page makes no third party
       request and the headline never swaps from a fallback face after load.
       Both are on the first screen, so both are preloaded.
     -->
     <link rel="preload" as="font" type="font/woff2" href="/fonts/urbanist-variable.woff2" crossorigin />
-    <link rel="preload" as="font" type="font/woff2" href="/fonts/anton-400.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/bebas-neue-400.woff2" crossorigin />
 
     <style>
       /* Paint the ground before any CSS loads, which kills the flash of colour */
@@ -98,11 +98,11 @@
         src: url('/fonts/urbanist-variable.woff2') format('woff2');
       }
       @font-face {
-        font-family: 'Anton';
+        font-family: 'Bebas Neue';
         font-style: normal;
         font-weight: 400;
         font-display: swap;
-        src: url('/fonts/anton-400.woff2') format('woff2');
+        src: url('/fonts/bebas-neue-400.woff2') format('woff2');
       }
 
       /* Until React mounts the page is plain white (no splash screen: it only
