@@ -6,37 +6,31 @@ import { whatsapp } from '../data/contact'
 import { Button, Container } from '../components/ui'
 import { BlurIn, Magnetic, SplitHeading } from '../components/motion'
 import HandwritingText from '../components/HandwritingText'
-import PosterWord from '../components/PosterWord'
-import ServiceTicker from '../components/ServiceTicker'
+import HeroLine from '../components/HeroLine'
 
 const HomeMore = lazy(() => import('./HomeMore'))
 const img = (path: string) => `${import.meta.env.BASE_URL}${path}`
 
 /*
-  The hero, in the GrowthLab form: a small line of labels, one huge word
-  across the full width, then a full width photo band that carries the real
-  heading, the facts, the buttons and the services.
+  The hero, in the GrowthLab form: one big line across the full width (its
+  last word changing), then a full width photo band that carries the real
+  heading, the facts and the buttons.
 */
 function Hero() {
   const [line1, line2] = hero.headline.split('|')
-  const year = new Date().getFullYear()
 
   return (
-    <section id="top" className="pt-20 sm:pt-24">
-      <div className="mx-auto w-full max-w-[1400px] px-5 sm:px-8">
-        <BlurIn y={10}>
-          <div className="flex items-baseline justify-between font-ui text-lg font-semibold tracking-tight sm:text-2xl md:text-3xl">
-            <span>&copy;{year}</span>
-            <span className="uppercase">Studio</span>
-          </div>
+    <section id="top" className="pt-24 sm:pt-28">
+      <div className="mx-auto w-full max-w-[1320px] px-5 sm:px-8 xl:px-0">
+        <BlurIn y={16}>
+          <HeroLine />
         </BlurIn>
-        <PosterWord image={img('studio/studio.webp')} className="mt-2 sm:mt-4" />
       </div>
 
       {/* The band: full bleed, a real photo under a black to green shade. */}
-      <div className="relative mt-6 overflow-hidden bg-ink text-white sm:mt-10">
+      <div className="relative mt-5 overflow-hidden bg-ink text-white sm:mt-8">
         <img
-          src={img('services/video.webp')}
+          src={img('studio/studio.webp')}
           alt=""
           width={1600}
           height={1067}
@@ -59,8 +53,8 @@ function Hero() {
             {homeFacts.map((f, i) => (
               <li key={f.label} className={i === 1 ? 'sm:justify-self-center' : i === 2 ? 'sm:justify-self-end' : ''}>
                 <BlurIn delay={0.2 + i * 0.06}>
-                  <span className="block font-ui text-2xl font-semibold tracking-tight sm:text-4xl">{f.value}</span>
-                  <span className="mt-1 block max-w-[11rem] text-xs leading-snug text-white/80 sm:text-sm">{f.label}</span>
+                  <span className="block font-ui text-2xl font-bold sm:text-[28px]">{f.value}</span>
+                  <span className="mt-1 block max-w-[12rem] text-sm leading-[1.4] text-white/85 sm:text-base">{f.label}</span>
                 </BlurIn>
               </li>
             ))}
@@ -70,7 +64,7 @@ function Hero() {
             <div className="lg:col-span-8">
               {/* Characters, not words: the headline is the one place on the page
                   where the extra granularity earns the extra nodes. */}
-              <h1 className="font-ui text-[clamp(2.1rem,7.4vw,4.75rem)] font-semibold leading-[1.02] tracking-[-0.03em]">
+              <h1 className="font-ui text-[clamp(2.1rem,7.4vw,4.5rem)] font-bold leading-[1.05]">
                 <SplitHeading as="span" type="chars" className="block">
                   {line1}
                 </SplitHeading>
@@ -80,7 +74,7 @@ function Hero() {
                 </span>
               </h1>
               <BlurIn delay={0.15}>
-                <p className="mt-5 max-w-xl text-base leading-relaxed text-white/80 sm:text-lg">{hero.lead}</p>
+                <p className="mt-5 max-w-xl text-base leading-[1.4] text-white/80 sm:text-lg">{hero.lead}</p>
               </BlurIn>
               <BlurIn delay={0.24}>
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -108,14 +102,6 @@ function Hero() {
               </BlurIn>
             </div>
 
-            {/* The services, one at a time, once the pen has finished. */}
-            <div className="lg:col-span-4 lg:justify-self-end">
-              <p className="text-xs font-medium uppercase tracking-[0.08em] text-white/70">What we build</p>
-              <div className="mt-2 inline-flex min-h-[44px] items-center rounded-full border border-white/25 bg-white/5 px-5 backdrop-blur-sm">
-                <span className="mr-3 h-2 w-2 shrink-0 rounded-full bg-brand-bright" aria-hidden="true" />
-                <ServiceTicker onInk startAfter={900} />
-              </div>
-            </div>
           </div>
         </Container>
       </div>
