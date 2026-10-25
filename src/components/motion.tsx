@@ -102,26 +102,27 @@ const ez = (name: EaseName) => `zyflo-${name}`
 // ---------------------------------------------------------------------------
 // Motion gates
 // ---------------------------------------------------------------------------
-/** True when the OS asked for reduced motion and the override is not set. */
+/** True only on a page opened with ?motion=off (motion is otherwise always on). */
 const prefersReduced = () =>
-  typeof window !== 'undefined' &&
-  !document.documentElement.hasAttribute('data-force-motion') &&
-  window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  typeof window !== 'undefined' && !document.documentElement.hasAttribute('data-force-motion')
 
 /**
  * The media query every motion gate is built on.
  *
  * gsap.matchMedia only understands media queries, and a media query cannot see
- * a DOM attribute, so the `data-force-motion` override is applied by swapping
- * in a query that always matches. Read once at module load, which is safe: the
- * inline script in index.html sets the attribute during head parsing, and this
- * module is loaded from a deferred module script afterwards.
+ * a DOM attribute, so the attribute is turned into a query: one that always
+ * matches when `data-force-motion` is set (every visitor, see index.html), and
+ * one that never matches when it is not. The attribute is missing only on a
+ * page opened with ?motion=off, the tests' hook for a still page, so there
+ * every scroll and entrance effect stays in its final state. Read once at
+ * module load, which is safe: the inline script in index.html sets the
+ * attribute during head parsing, before this deferred module runs.
  */
 export const MOTION_OK =
   typeof document !== 'undefined' &&
   document.documentElement.hasAttribute('data-force-motion')
     ? '(min-width: 0px)'
-    : '(prefers-reduced-motion: no-preference)'
+    : 'not all'
 
 const NO_PREF = MOTION_OK
 const FINE = '(pointer: fine)'
